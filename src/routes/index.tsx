@@ -1,4 +1,5 @@
 import { Button } from '@/shared/ui/button';
+import { Checkbox } from '@/shared/ui/checkbox';
 import { Field, FieldLabel } from '@/shared/ui/field';
 import { Input } from '@/shared/ui/input';
 import { createFileRoute } from '@tanstack/react-router';
@@ -31,6 +32,7 @@ function RouteComponent() {
             <Input placeholder="*****" id="password" type="password" />
           </Field>
         </div>
+
         <div className="grid grid-cols-2 gap-2">
           <Button className="w-full" variant="default">
             Submit
@@ -50,6 +52,14 @@ function RouteComponent() {
           <Button className="w-full" variant="link">
             Link
           </Button>
+        </div>
+        <div className="flex items-center gap-2">
+          <Field orientation="horizontal" data-disabled>
+            <Checkbox id="toggle-checkbox" name="toggle-checkbox" />
+            <FieldLabel htmlFor="toggle-checkbox">
+              Enable notifications
+            </FieldLabel>
+          </Field>
         </div>
       </form>
     </div>
