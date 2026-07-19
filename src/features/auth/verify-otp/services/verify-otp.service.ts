@@ -1,11 +1,9 @@
 import { axiosInstance } from '@/shared/lib/axios';
 import axios from 'axios';
-import {
-  verifyOtpApiResponse,
-  type VerifyOtpInput,
-} from '../validation/verify-otp.schema';
+import type { VerifyOtpInput } from '../types/verify-otp.types';
+import { verifyOtpApiResponse } from '../validation/verify-otp.schema';
 
-const VERIFY_URL = '/api/auth/verify-email';
+const VERIFY_URL = '/api/auth/confirm-email-verification';
 
 interface IVerifyOtpApiResponse {
   status: boolean;

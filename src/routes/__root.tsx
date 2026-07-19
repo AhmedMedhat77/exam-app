@@ -1,5 +1,5 @@
-import DashboardLayout from '@/features/(App)/layout/dashboard-layout';
-import AuthLayout from '@/features/(Auth)/layout/auth-layout';
+import DashboardLayout from '@/features/app/layout/dashboard-layout';
+import AuthLayout from '@/features/auth/layout/auth-layout';
 import {
   Navigate,
   Outlet,

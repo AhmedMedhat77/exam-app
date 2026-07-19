@@ -1,4 +1,5 @@
 import { Button } from '@/shared/ui/button';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Link, useNavigate } from '@tanstack/react-router';
 import { Loader2 } from 'lucide-react';
 import {
@@ -6,11 +7,14 @@ import {
   useEffect,
   useRef,
   useState,
-  type KeyboardEvent,
   type ClipboardEvent,
+  type KeyboardEvent,
 } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 import { useResendOtp } from '../hooks/resend-otp';
 import { useVerifyOtp } from '../hooks/verify-otp';
+import { verifyOtpSchema } from '../validation/verify-otp.schema';
 
 const OTP_LENGTH = 6;
 const RESEND_COOLDOWN = 60;
@@ -21,9 +25,28 @@ interface VerifyOtpFormProps {
 
 export default function VerifyOtpForm({ email }: VerifyOtpFormProps) {
   const navigate = useNavigate();
-  const [otp, setOtp] = useState<string[]>(Array(OTP_LENGTH).fill(''));
   const [countdown, setCountdown] = useState(RESEND_COOLDOWN);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
+  const {
+    handleSubmit,
+    setValue,
+    getValues,
+    watch,
+    formState: { errors },
+  } = useForm<
+    z.input<typeof verifyOtpSchema>,
+    any,
+    z.output<typeof verifyOtpSchema>
+  >({
+    resolver: zodResolver(verifyOtpSchema),
+    defaultValues: {
+      email,
+      code: Array(OTP_LENGTH).fill(NaN),
+    },
+  });
+
+  const code = watch('code') || [];
 
   const { mutate: verifyOtp, isPending, error, isError } = useVerifyOtp();
   const { mutate: resendOtp, isPending: isResending } = useResendOtp();
@@ -49,59 +72,63 @@ export default function VerifyOtpForm({ email }: VerifyOtpFormProps) {
       // Only allow digits
       if (value && !/^\d$/.test(value)) return;
 
-      const newOtp = [...otp];
-      newOtp[index] = value;
-      setOtp(newOtp);
+      const currentCode = getValues('code') || [];
+      const newCode = [...currentCode];
+      newCode[index] = value ? Number(value) : NaN;
+      setValue('code', newCode, { shouldValidate: true });
 
       // Auto-focus next input
       if (value && index < OTP_LENGTH - 1) {
         inputRefs.current[index + 1]?.focus();
       }
     },
-    [otp]
+    [getValues, setValue]
   );
 
   const handleKeyDown = useCallback(
     (index: number, e: KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Backspace' && !otp[index] && index > 0) {
+      const currentCode = getValues('code') || [];
+      if (
+        e.key === 'Backspace' &&
+        (currentCode[index] === undefined || isNaN(currentCode[index])) &&
+        index > 0
+      ) {
         inputRefs.current[index - 1]?.focus();
       }
     },
-    [otp]
+    [getValues]
   );
 
-  const handlePaste = useCallback((e: ClipboardEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    const pastedData = e.clipboardData.getData('text').replace(/\D/g, '');
-    if (!pastedData) return;
+  const handlePaste = useCallback(
+    (e: ClipboardEvent<HTMLInputElement>) => {
+      e.preventDefault();
+      const pastedData = e.clipboardData.getData('text').replace(/\D/g, '');
+      if (!pastedData) return;
 
-    const newOtp = Array(OTP_LENGTH).fill('');
-    for (let i = 0; i < Math.min(pastedData.length, OTP_LENGTH); i++) {
-      newOtp[i] = pastedData[i];
-    }
-    setOtp(newOtp);
-
-    // Focus last filled input or the next empty one
-    const focusIndex = Math.min(pastedData.length, OTP_LENGTH) - 1;
-    inputRefs.current[focusIndex]?.focus();
-  }, []);
-
-  const otpCode = otp.join('');
-  const isComplete = otpCode.length === OTP_LENGTH;
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!isComplete) return;
-
-    verifyOtp(
-      { email, code: otpCode },
-      {
-        onSuccess: () => {
-          navigate({ to: '/login' });
-        },
+      const newCode = Array(OTP_LENGTH).fill(NaN);
+      for (let i = 0; i < Math.min(pastedData.length, OTP_LENGTH); i++) {
+        newCode[i] = Number(pastedData[i]);
       }
-    );
-  };
+      setValue('code', newCode, { shouldValidate: true });
+
+      // Focus last filled input or the next empty one
+      const focusIndex = Math.min(pastedData.length, OTP_LENGTH) - 1;
+      inputRefs.current[focusIndex]?.focus();
+    },
+    [setValue]
+  );
+
+  const isComplete =
+    code.length === OTP_LENGTH &&
+    code.every((val) => typeof val === 'number' && !isNaN(val));
+
+  const onSubmit = handleSubmit((data) => {
+    verifyOtp(data, {
+      onSuccess: () => {
+        navigate({ to: '/login' });
+      },
+    });
+  });
 
   const handleResend = () => {
     if (countdown > 0 || isResending) return;
@@ -111,12 +138,18 @@ export default function VerifyOtpForm({ email }: VerifyOtpFormProps) {
       {
         onSuccess: () => {
           setCountdown(RESEND_COOLDOWN);
-          setOtp(Array(OTP_LENGTH).fill(''));
+          setValue('code', Array(OTP_LENGTH).fill(NaN), {
+            shouldValidate: true,
+          });
           inputRefs.current[0]?.focus();
         },
       }
     );
   };
+
+  const codeError = errors.code
+    ? errors.code.message || 'OTP must be 6 digits'
+    : undefined;
 
   return (
     <div className="flex flex-col w-[90%] gap-2">
@@ -150,28 +183,35 @@ export default function VerifyOtpForm({ email }: VerifyOtpFormProps) {
         </Link>
       </p>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-6 mt-4">
+      <form onSubmit={onSubmit} className="flex flex-col gap-6 mt-4">
         {/* OTP Inputs */}
         <div className="flex items-center justify-center gap-2">
-          {Array.from({ length: OTP_LENGTH }).map((_, index) => (
-            <input
-              key={index}
-              ref={(el) => {
-                inputRefs.current[index] = el;
-              }}
-              type="text"
-              inputMode="numeric"
-              maxLength={1}
-              value={otp[index]}
-              onChange={(e) => handleChange(index, e.target.value)}
-              onKeyDown={(e) => handleKeyDown(index, e)}
-              onPaste={index === 0 ? handlePaste : undefined}
-              className="w-11 h-12 text-center text-lg font-medium border border-gray-300 rounded-md outline-none transition-all
-                focus:border-primary focus:ring-2 focus:ring-primary/20
-                text-gray-800"
-              aria-label={`Digit ${index + 1}`}
-            />
-          ))}
+          {Array.from({ length: OTP_LENGTH }).map((_, index) => {
+            const val = code[index];
+            const displayVal =
+              val === undefined || val === null || isNaN(val)
+                ? ''
+                : String(val);
+            return (
+              <input
+                key={index}
+                ref={(el) => {
+                  inputRefs.current[index] = el;
+                }}
+                type="text"
+                inputMode="numeric"
+                maxLength={1}
+                value={displayVal}
+                onChange={(e) => handleChange(index, e.target.value)}
+                onKeyDown={(e) => handleKeyDown(index, e)}
+                onPaste={index === 0 ? handlePaste : undefined}
+                className="w-11 h-12 text-center text-lg font-medium border border-gray-300 rounded-md outline-none transition-all
+                  focus:border-primary focus:ring-2 focus:ring-primary/20
+                  text-gray-800"
+                aria-label={`Digit ${index + 1}`}
+              />
+            );
+          })}
         </div>
 
         {/* Resend Timer */}
@@ -191,9 +231,11 @@ export default function VerifyOtpForm({ email }: VerifyOtpFormProps) {
         </p>
 
         {/* Error */}
-        {isError && (
+        {(isError || codeError) && (
           <div className="text-center bg-destructive/20 p-3 border-2 border-destructive">
-            <span className="text-destructive">{error?.message}</span>
+            <span className="text-destructive">
+              {codeError || error?.message}
+            </span>
           </div>
         )}
 

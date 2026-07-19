@@ -5,14 +5,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Link } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
 import { useLogin } from '../hooks/useLogin';
-import { type LoginInput, loginSchema } from '../validation/login.schema';
-
-// API Hook
+import type { LoginInput } from '../types/login.types';
+import { loginSchema } from '../validation/login.schema';
 
 export default function LoginForm() {
-  // React Hook-From
+  // API Hook
   const { mutate, isPending, error, isError } = useLogin();
-
+  // React Hook-From
   const {
     register,
     formState: { errors, isValid, isSubmitted, isSubmitting },

@@ -17,5 +17,3 @@ export const loginSchema = z.object({
       'Password must contain at least one special character'
     ),
 });
-
-export type LoginInput = z.infer<typeof loginSchema>;

@@ -1,8 +1,11 @@
 import { z } from 'zod';
 
-export const verifyOtp = z.object({
+export const verifyOtpSchema = z.object({
   email: z.email('Invalid email address'),
-  code: z.string().length(6, 'OTP must be 6 digits'),
+  code: z
+    .array(z.number())
+    .length(6, 'OTP must be 6 digits')
+    .transform((arr) => arr.join('')),
 });
 
 export const verifyOtpApiResponse = z.object({
@@ -10,5 +13,3 @@ export const verifyOtpApiResponse = z.object({
   code: z.number(),
   message: z.string(),
 });
-
-export type VerifyOtpInput = z.infer<typeof verifyOtp>;

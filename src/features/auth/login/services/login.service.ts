@@ -1,6 +1,6 @@
 import { axiosInstance } from '@/shared/lib/axios';
 import axios from 'axios';
-import type { LoginInput } from '../validation/login.schema';
+import type { LoginInput } from '../types/login.types';
 
 const URL = '/api/auth';
 

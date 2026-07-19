@@ -1,4 +1,4 @@
-import VerifyOtpPage from '@/features/(Auth)/verify-otp/page/verify-otp-page';
+import VerifyOtpPage from '@/features/auth/verify-otp/page/verify-otp-page';
 import { createFileRoute, redirect } from '@tanstack/react-router';
 import { z } from 'zod';
 
