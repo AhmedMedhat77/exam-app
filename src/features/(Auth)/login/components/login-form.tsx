@@ -5,7 +5,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Link } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
 import { type LoginInput, loginSchema } from '../validation/login.schema';
+import { useLogin } from '../hooks/useLogin';
+
+// API Hook
+
 export default function LoginForm() {
+  // React Hook-From
+  const { mutate, isPending, error, isError } = useLogin();
+
   const {
     register,
     formState: { errors, isValid, isSubmitted, isSubmitting },
@@ -14,10 +21,15 @@ export default function LoginForm() {
     resolver: zodResolver(loginSchema),
   });
 
+  // Loading State
+  const isLoading = (isSubmitted && !isValid) || isSubmitting || isPending;
+  const isApiError = isError;
+
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    mutate(data);
   });
 
+  console.log(JSON.stringify(error, null, 2));
   return (
     <form className="flex flex-col gap-4 w-[90%] mx-auto" onSubmit={onSubmit}>
       <CustomInput
@@ -39,13 +51,15 @@ export default function LoginForm() {
         Forgot your password?
       </Link>
 
-      <Button
-        type="submit"
-        disabled={(isSubmitted && !isValid) || isSubmitting}
-      >
-        Login
+      <Button type="submit" className={'min-h-12'} disabled={isLoading}>
+        {isLoading ? 'Loading...' : 'Login'}
       </Button>
 
+      {isApiError && (
+        <div className="text-center bg-destructive/20 p-3 border-2 border-destructive">
+          <span className="text-destructive">{error?.message}</span>
+        </div>
+      )}
       {/* Sign Up Link */}
       <span className="text-gray-500 text-center text-sm">
         Don't have an account?{' '}
