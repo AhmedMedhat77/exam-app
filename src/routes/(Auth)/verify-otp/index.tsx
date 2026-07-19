@@ -3,7 +3,7 @@ import { createFileRoute, redirect } from '@tanstack/react-router';
 import { z } from 'zod';
 
 const verifyOtpSearchSchema = z.object({
-  email: z.string().email(),
+  email: z.email(),
 });
 
 export const Route = createFileRoute('/(Auth)/verify-otp/')({
