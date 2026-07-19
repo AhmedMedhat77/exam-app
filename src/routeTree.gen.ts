@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as appIndexRouteImport } from './routes/(app)/index'
 import { Route as AuthCreateAccountIndexRouteImport } from './routes/(Auth)/create-account/index'
 import { Route as AuthLoginIndexRouteImport } from './routes/(Auth)/login/index'
+import { Route as AuthVerifyOtpIndexRouteImport } from './routes/(Auth)/verify-otp/index'
 
 const appIndexRoute = appIndexRouteImport.update({
   id: '/(app)/',
@@ -28,35 +29,49 @@ const AuthLoginIndexRoute = AuthLoginIndexRouteImport.update({
   path: '/login/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthVerifyOtpIndexRoute = AuthVerifyOtpIndexRouteImport.update({
+  id: '/(Auth)/verify-otp/',
+  path: '/verify-otp/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof appIndexRoute
   '/create-account/': typeof AuthCreateAccountIndexRoute
   '/login/': typeof AuthLoginIndexRoute
+  '/verify-otp/': typeof AuthVerifyOtpIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof appIndexRoute
   '/create-account': typeof AuthCreateAccountIndexRoute
   '/login': typeof AuthLoginIndexRoute
+  '/verify-otp': typeof AuthVerifyOtpIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/(app)/': typeof appIndexRoute
   '/(Auth)/create-account/': typeof AuthCreateAccountIndexRoute
   '/(Auth)/login/': typeof AuthLoginIndexRoute
+  '/(Auth)/verify-otp/': typeof AuthVerifyOtpIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/create-account/' | '/login/'
+  fullPaths: '/' | '/create-account/' | '/login/' | '/verify-otp/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/create-account' | '/login'
-  id: '__root__' | '/(app)/' | '/(Auth)/create-account/' | '/(Auth)/login/'
+  to: '/' | '/create-account' | '/login' | '/verify-otp'
+  id:
+    | '__root__'
+    | '/(app)/'
+    | '/(Auth)/create-account/'
+    | '/(Auth)/login/'
+    | '/(Auth)/verify-otp/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   appIndexRoute: typeof appIndexRoute
   AuthCreateAccountIndexRoute: typeof AuthCreateAccountIndexRoute
   AuthLoginIndexRoute: typeof AuthLoginIndexRoute
+  AuthVerifyOtpIndexRoute: typeof AuthVerifyOtpIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +97,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLoginIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(Auth)/verify-otp/': {
+      id: '/(Auth)/verify-otp/'
+      path: '/verify-otp'
+      fullPath: '/verify-otp/'
+      preLoaderRoute: typeof AuthVerifyOtpIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +111,7 @@ const rootRouteChildren: RootRouteChildren = {
   appIndexRoute: appIndexRoute,
   AuthCreateAccountIndexRoute: AuthCreateAccountIndexRoute,
   AuthLoginIndexRoute: AuthLoginIndexRoute,
+  AuthVerifyOtpIndexRoute: AuthVerifyOtpIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

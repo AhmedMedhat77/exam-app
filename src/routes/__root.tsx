@@ -12,7 +12,12 @@ export const Route = createRootRoute({
   component: RootComponent,
 });
 
-const AuthRoutes = ['/login', '/create-account', '/forgot-password'];
+const AuthRoutes = [
+  '/login',
+  '/create-account',
+  '/verify-otp',
+  '/forgot-password',
+];
 
 function RootComponent() {
   const isAuth = false;
