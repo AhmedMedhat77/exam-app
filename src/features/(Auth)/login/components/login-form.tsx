@@ -29,7 +29,6 @@ export default function LoginForm() {
     mutate(data);
   });
 
-  console.log(JSON.stringify(error, null, 2));
   return (
     <form className="flex flex-col gap-4 w-[90%] mx-auto" onSubmit={onSubmit}>
       <CustomInput
