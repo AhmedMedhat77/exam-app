@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as appIndexRouteImport } from './routes/(app)/index'
+import { Route as AuthCreateAccountIndexRouteImport } from './routes/(Auth)/create-account/index'
 import { Route as AuthLoginIndexRouteImport } from './routes/(Auth)/login/index'
 
 const appIndexRoute = appIndexRouteImport.update({
   id: '/(app)/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthCreateAccountIndexRoute = AuthCreateAccountIndexRouteImport.update({
+  id: '/(Auth)/create-account/',
+  path: '/create-account/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthLoginIndexRoute = AuthLoginIndexRouteImport.update({
@@ -25,27 +31,31 @@ const AuthLoginIndexRoute = AuthLoginIndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof appIndexRoute
+  '/create-account/': typeof AuthCreateAccountIndexRoute
   '/login/': typeof AuthLoginIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof appIndexRoute
+  '/create-account': typeof AuthCreateAccountIndexRoute
   '/login': typeof AuthLoginIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/(app)/': typeof appIndexRoute
+  '/(Auth)/create-account/': typeof AuthCreateAccountIndexRoute
   '/(Auth)/login/': typeof AuthLoginIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login/'
+  fullPaths: '/' | '/create-account/' | '/login/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login'
-  id: '__root__' | '/(app)/' | '/(Auth)/login/'
+  to: '/' | '/create-account' | '/login'
+  id: '__root__' | '/(app)/' | '/(Auth)/create-account/' | '/(Auth)/login/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   appIndexRoute: typeof appIndexRoute
+  AuthCreateAccountIndexRoute: typeof AuthCreateAccountIndexRoute
   AuthLoginIndexRoute: typeof AuthLoginIndexRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof appIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(Auth)/create-account/': {
+      id: '/(Auth)/create-account/'
+      path: '/create-account'
+      fullPath: '/create-account/'
+      preLoaderRoute: typeof AuthCreateAccountIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(Auth)/login/': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   appIndexRoute: appIndexRoute,
+  AuthCreateAccountIndexRoute: AuthCreateAccountIndexRoute,
   AuthLoginIndexRoute: AuthLoginIndexRoute,
 }
 export const routeTree = rootRouteImport

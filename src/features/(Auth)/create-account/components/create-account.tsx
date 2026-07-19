@@ -3,26 +3,31 @@ import CustomInput from '@/shared/ui/CustomInput';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Link } from '@tanstack/react-router';
+import { ChevronRight, Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
-import { useLogin } from '../hooks/useLogin';
-import { type LoginInput, loginSchema } from '../validation/login.schema';
+import { useCreateAccount } from '../hooks/create-account';
+import {
+  type CreateAccountInput,
+  createAccount,
+} from '../validation/create-account.schema';
 
 // API Hook
 
-export default function LoginForm() {
+export default function CreateAccountForm() {
   // React Hook-From
-  const { mutate, isPending, error, isError } = useLogin();
+  const { mutate, isPending, error, isError } = useCreateAccount();
 
   const {
     register,
     formState: { errors, isValid, isSubmitted, isSubmitting },
     handleSubmit,
-  } = useForm<LoginInput>({
-    resolver: zodResolver(loginSchema),
+  } = useForm<CreateAccountInput>({
+    resolver: zodResolver(createAccount),
   });
 
   // Loading State
-  const isLoading = (isSubmitted && !isValid) || isSubmitting || isPending;
+  const isLoading = isSubmitting || isPending;
+  const isDisabled = (isSubmitted && !isValid) || isSubmitting;
   const isApiError = isError;
 
   const onSubmit = handleSubmit((data) => {
@@ -32,31 +37,25 @@ export default function LoginForm() {
   return (
     <div className="flex flex-col w-[90%] gap-2">
       <h1 className="text-start text-2xl mb-8 font-medium text-gray-800">
-        Login
+        Create Account
       </h1>
 
       <form className="flex flex-col gap-4 w-full mx-auto" onSubmit={onSubmit}>
         <CustomInput
-          label="Username"
-          placeholder="User 123"
-          {...register('username')}
-          error={errors.username?.message}
-        />
-        <CustomInput
-          label="Password"
-          type="password"
-          placeholder="Password"
-          {...register('password')}
-          error={errors.password?.message}
+          label="Email"
+          type="email"
+          placeholder="user@example.com"
+          {...register('email')}
+          error={errors.email?.message}
         />
 
-        {/* Forget Password Link */}
-        <Link to="/" className="text-blue-500 text-sm text-end">
-          Forgot your password?
-        </Link>
-
-        <Button type="submit" className={'min-h-12'} disabled={isLoading}>
-          {isLoading ? 'Loading...' : 'Login'}
+        <Button
+          type="submit"
+          className={'min-h-12'}
+          disabled={isLoading || isDisabled}
+        >
+          {isLoading ? <Loader2 className="animate-spin" /> : 'Next'}
+          <ChevronRight className="size-4" />
         </Button>
 
         {isApiError && (
@@ -66,9 +65,9 @@ export default function LoginForm() {
         )}
         {/* Sign Up Link */}
         <span className="text-gray-500 text-center text-sm">
-          Don't have an account?{' '}
+          Already have an account?
           <span className="text-blue-500 cursor-pointer">
-            <Link to="/create-account">Sign Up</Link>
+            <Link to="/">Login</Link>
           </span>
         </span>
       </form>
