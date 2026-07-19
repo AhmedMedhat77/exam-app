@@ -10,7 +10,9 @@ export default function AuthLayout({
   return (
     <div className="flex items-center justify-center h-screen w-full bg-muted">
       <div className="grid grid-cols-1 md:grid-cols-2 h-screen w-full overflow-hidden">
-        <section className="bg-[#EFF6FFBF]/75 relative flex flex-col justify-between p-8 md:p-16 lg:p-20 overflow-hidden h-full">
+        <section className="bg-[#EFF6FFBF]/75 relative hidden md:flex flex-col justify-between p-8 md:p-16 lg:p-20  h-full  overflow-hidden">
+          <div className="size-125 bg-primary/10 blur-3xl rounded-full absolute top-0 -right-20 " />
+          <div className="size-100 bg-primary/10 blur-3xl rounded-full absolute -bottom-30 left-0 " />
           {/* Top: Logo */}
           <div className="flex items-center gap-3">
             <img src={folderCodeIcon} alt="Exam App Logo" className="size-10" />
