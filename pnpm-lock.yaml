@@ -96,6 +96,9 @@ importers:
       oxlint:
         specifier: ^1.71.0
         version: 1.74.0
+      prettier:
+        specifier: 3.9.5
+        version: 3.9.5
       typescript:
         specifier: ~6.0.2
         version: 6.0.3

@@ -1,9 +1,9 @@
-import { Button } from "@/shared/ui/button";
-import { Field, FieldLabel } from "@/shared/ui/field";
-import { Input } from "@/shared/ui/input";
-import { createFileRoute } from "@tanstack/react-router";
+import { Button } from '@/shared/ui/button';
+import { Field, FieldLabel } from '@/shared/ui/field';
+import { Input } from '@/shared/ui/input';
+import { createFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute('/')({
   component: RouteComponent,
 });
 
