@@ -16,7 +16,7 @@ export default function UserInfoForm({ email }: IUserInfoFormProps) {
   }, [email, navigate]);
 
   return (
-    <form className='flex flex-col gap-4 '>
+    <form className="flex flex-col gap-4 ">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <CustomInput label="First Name" placeholder="First Name" required />
         <CustomInput label="Last Name" placeholder="Last Name" required />
