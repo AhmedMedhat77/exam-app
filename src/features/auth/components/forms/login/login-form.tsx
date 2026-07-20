@@ -49,7 +49,10 @@ export default function LoginForm() {
         />
 
         {/* Forget Password Link */}
-        <Link to={ROUTES.HOME} className="text-blue-500 text-sm text-end">
+        <Link
+          to={ROUTES.FORGOT_PASSWORD}
+          className="text-blue-500 text-sm text-end"
+        >
           Forgot your password?
         </Link>
 

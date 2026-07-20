@@ -11,6 +11,8 @@ const AuthRoutes: string[] = [
   ROUTES.REGISTER_USER_INFO,
   ROUTES.REGISTER_PASSWORD,
   ROUTES.FORGOT_PASSWORD,
+  ROUTES.FORGOT_PASSWORD_SENT,
+  ROUTES.RESET_PASSWORD,
 ];
 
 export default function RootLayout() {

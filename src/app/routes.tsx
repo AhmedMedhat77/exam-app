@@ -6,4 +6,6 @@ export const ROUTES = {
   REGISTER_USER_INFO: '/register/user-info',
   REGISTER_PASSWORD: '/register/password',
   FORGOT_PASSWORD: '/forgot-password',
+  FORGOT_PASSWORD_SENT: '/forgot-password/sent',
+  RESET_PASSWORD: '/reset-password',
 } as const;
