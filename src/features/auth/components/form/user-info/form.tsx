@@ -4,6 +4,10 @@ import {
   type IUserInfoFormValues,
 } from '@/features/auth/schemas/user-info.schema';
 import { useRegisterStore } from '@/features/auth/store/register.store';
+import {
+  handleGetFromSessionStorage,
+  handleSaveToSessionStorage,
+} from '@/features/auth/utils/session-storage';
 import { Button } from '@/shared/ui/button';
 import CustomInput from '@/shared/ui/custom-input';
 import { Field } from '@/shared/ui/field';
@@ -22,27 +26,43 @@ export default function UserInfoForm({ email }: IUserInfoFormProps) {
   const navigate = useNavigate();
   // To Avoid Re renders
   const setFields = useRegisterStore((s) => s.setFields);
-  const storedData = useRegisterStore((s) => s);
   const {
     handleSubmit,
     control,
     register,
-    formState: { errors },
+    reset,
+    formState: { errors, isSubmitted },
   } = useForm<IUserInfoFormValues>({
     resolver: zodResolver(userInfoSchema),
   });
 
+  // ===================== CONSTANTS =====================
+  const isDisabled = Object.keys(errors).length === 0 && isSubmitted;
+
+  // ====================== HANDLERS ======================
   const onSubmit = handleSubmit((data) => {
     setFields(data);
-    console.log(storedData);
+    handleSaveToSessionStorage('userData', data);
   });
 
+  // ====================== EFFECTS  ======================
   useEffect(() => {
     // To Return to create Account Screen , i don't validate on email on Form since it will auto redirect if it's not exists
     if (!email) navigate(ROUTES.CREATE_ACCOUNT);
     // To Set the email From props in fields and lift state To Next screen
     if (email) setFields({ email });
   }, [email, navigate]);
+
+  // Email is added From The Above Effect
+  useEffect(() => {
+    const userData =
+      handleGetFromSessionStorage<IUserInfoFormValues>('userData');
+    console.log({ userData });
+
+    if (userData) {
+      reset(userData);
+    }
+  }, []);
 
   return (
     <form className="flex flex-col gap-4 " onSubmit={onSubmit}>
@@ -88,7 +108,7 @@ export default function UserInfoForm({ email }: IUserInfoFormProps) {
         />
       </Field>
 
-      <Button variant="primary-foreground" type="submit">
+      <Button variant="primary-foreground" type="submit" disabled={isDisabled}>
         Next
       </Button>
     </form>
