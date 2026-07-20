@@ -110,7 +110,7 @@ export default function UserInfoForm({ email }: IUserInfoFormProps) {
       </Field>
 
       <Button variant="primary-foreground" type="submit" disabled={isDisabled}>
-        Next <ChevronRight className='size-4'/>
+        Next <ChevronRight className="size-4" />
       </Button>
     </form>
   );
