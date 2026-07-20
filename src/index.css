@@ -209,7 +209,8 @@
 }
 
 @keyframes pulse-shadow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 4px 1px rgba(21, 93, 252, 0.12);
   }
   50% {
@@ -220,4 +221,3 @@
 .animate-pulse-shadow {
   animation: pulse-shadow 3s ease-in-out infinite;
 }
-

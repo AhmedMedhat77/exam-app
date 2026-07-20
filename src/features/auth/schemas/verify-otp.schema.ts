@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const verifyOtpSchema = z.object({
-  email: z.string().email('Invalid email address'),
+  email: z.email('Invalid email address'),
   code: z
     .array(z.number())
     .length(6, 'OTP must be 6 digits')

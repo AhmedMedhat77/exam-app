@@ -40,7 +40,7 @@ export default function CreateAccountForm() {
 
   useEffect(() => {
     if (email) reset({ email });
-  }, []);
+  }, [email]);
 
   return (
     <div className="flex flex-col w-[90%] gap-2">
