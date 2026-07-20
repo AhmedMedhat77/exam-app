@@ -35,7 +35,10 @@ function InputComponent(
 function Flag({ country, ...props }: { country?: string; [key: string]: any }) {
   return (
     <div className="" {...props}>
-      <img src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${country}.svg`} alt="" />
+      <img
+        src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${country}.svg`}
+        alt=""
+      />
     </div>
   );
 }

@@ -27,7 +27,7 @@ export default function UserInfoForm({ email }: IUserInfoFormProps) {
         international
         country="EG"
         defaultCountry="EG"
-        label='Phone'
+        label="Phone"
         onChange={(value?: string) => console.log(value)}
       />
       <Button variant="primary-foreground">Next</Button>
