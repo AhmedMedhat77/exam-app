@@ -1,8 +1,9 @@
+import { ROUTES } from '@/app/routes';
+import { useForgotPassword } from '@/features/auth/hooks/forgot-password/use-forgot-password';
 import {
   forgotPasswordSchema,
   type ForgotPasswordFormValues,
 } from '@/features/auth/schemas/forgot-password/forgot-password.schema';
-import { useForgotPassword } from '@/features/auth/hooks/forgot-password/use-forgot-password';
 import { Button } from '@/shared/ui/button';
 import CustomInput from '@/shared/ui/custom-input';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -10,7 +11,6 @@ import { ChevronRight, Loader2 } from 'lucide-react';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router';
-import { ROUTES } from '@/app/routes';
 
 interface ForgotPasswordFormProps {
   email?: string;
@@ -33,8 +33,10 @@ export default function ForgotPasswordForm({
   const isLoading = isSubmitting || isPending;
 
   useEffect(() => {
-    reset({ email });
-  }, [email, reset]);
+    if (email) {
+      reset({ email });
+    }
+  }, [email]);
 
   const onSubmit = handleSubmit((values) => {
     mutate(values);
