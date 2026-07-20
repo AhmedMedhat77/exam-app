@@ -54,6 +54,7 @@ export default function SendEmailForm({ email }: ISendEmailFormProps) {
 
         <Button
           type="submit"
+          variant="primary-foreground"
           className={'min-h-12'}
           disabled={isLoading || isDisabled}
         >

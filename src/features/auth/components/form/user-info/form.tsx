@@ -14,6 +14,7 @@ import { Field } from '@/shared/ui/field';
 import { Label } from '@/shared/ui/label';
 import CustomPhoneInput from '@/shared/ui/phone-input';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { ChevronRight } from 'lucide-react';
 import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
@@ -109,7 +110,7 @@ export default function UserInfoForm({ email }: IUserInfoFormProps) {
       </Field>
 
       <Button variant="primary-foreground" type="submit" disabled={isDisabled}>
-        Next
+        Next <ChevronRight className='size-4'/>
       </Button>
     </form>
   );

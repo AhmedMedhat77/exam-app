@@ -28,6 +28,7 @@ export default memo(function SubmitButton({
   return (
     <Button
       type="submit"
+      variant="primary-foreground"
       className="min-h-12"
       disabled={!isComplete || isPending}
     >
