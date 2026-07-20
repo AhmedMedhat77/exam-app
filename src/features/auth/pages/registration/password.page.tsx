@@ -9,7 +9,7 @@ export default function PasswordPage() {
       <h1 className="text-start text-2xl font-medium text-gray-800">
         Create Account
       </h1>
-      <h2 className="font-bold text-primary text-lg">Create your password</h2>
+      <h2 className="font-bold text-primary text-lg">Create a strong password</h2>
       <PasswordForm />
     </div>
   );

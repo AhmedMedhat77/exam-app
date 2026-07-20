@@ -1,8 +1,8 @@
+import { useRegister } from '@/features/auth/hooks/registration/use-register';
 import {
   passwordSchema,
   type PasswordFormValues,
 } from '@/features/auth/schemas/registration/password.schema';
-import { useRegister } from '@/features/auth/hooks/registration/use-register';
 import { useRegistrationStore } from '@/features/auth/store/registration.store';
 import { Button } from '@/shared/ui/button';
 import CustomInput from '@/shared/ui/custom-input';
@@ -40,6 +40,7 @@ export default function PasswordForm() {
     <div className="flex flex-col w-[90%] gap-2">
       <form className="flex flex-col gap-4 w-full mx-auto" onSubmit={onSubmit}>
         <CustomInput
+          required
           label="Password"
           type="password"
           placeholder="Enter your password"
@@ -48,6 +49,7 @@ export default function PasswordForm() {
           error={errors.password?.message}
         />
         <CustomInput
+          required
           label="Confirm Password"
           type="password"
           placeholder="Confirm your password"
@@ -58,7 +60,6 @@ export default function PasswordForm() {
 
         <Button
           type="submit"
-          variant="primary-foreground"
           className="min-h-12"
           disabled={isLoading || isDisabled}
         >
