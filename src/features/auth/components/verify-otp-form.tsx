@@ -16,6 +16,7 @@ import { useResendOtp } from '../hooks/use-resend-otp';
 import { useVerifyOtp } from '../hooks/use-verify-otp';
 import { verifyOtpSchema } from '../schemas/verify-otp.schema';
 import { ROUTES } from '@/app/routes';
+import StepCounter from './step-counter';
 
 const OTP_LENGTH = 6;
 const RESEND_COOLDOWN = 60;
@@ -152,16 +153,7 @@ export default function VerifyOtpForm({ email }: VerifyOtpFormProps) {
   return (
     <div className="flex flex-col w-[90%] gap-2">
       {/* Stepper */}
-      <div className="flex items-center justify-center gap-0 mb-6">
-        {/* Step 1 — completed */}
-        <div className="size-3 rounded-full bg-primary" />
-        <div className="w-20 h-0.5 bg-primary" />
-        {/* Step 2 — active */}
-        <div className="size-3 rounded-full bg-primary" />
-        <div className="w-20 h-0.5 bg-gray-300" />
-        {/* Step 3 — upcoming */}
-        <div className="size-3 rounded-full bg-gray-300" />
-      </div>
+      <StepCounter currentStep={2} steps={4} />
 
       <h1 className="text-start text-2xl font-medium text-gray-800">
         Create Account

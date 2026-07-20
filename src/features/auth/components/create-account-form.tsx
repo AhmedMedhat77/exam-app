@@ -12,6 +12,8 @@ import {
 import { ROUTES } from '@/app/routes';
 import { useEffect } from 'react';
 
+import StepCounter from './step-counter';
+
 export default function CreateAccountForm() {
   const [searchParams] = useSearchParams();
   const email = searchParams.get('email');
@@ -42,6 +44,7 @@ export default function CreateAccountForm() {
 
   return (
     <div className="flex flex-col w-[90%] gap-2">
+      <StepCounter currentStep={1} steps={4} />
       <h1 className="text-start text-2xl mb-8 font-medium text-gray-800">
         Create Account
       </h1>
