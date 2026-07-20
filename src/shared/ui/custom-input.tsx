@@ -21,6 +21,9 @@ function CustomInput({ label, error, ...props }: CustomInputProps) {
       {label && (
         <FieldLabel className="text-gray-800 text-md" htmlFor={_props.id}>
           {label}
+          {props.required && (
+            <span className="text-xs text-danger ml-1">*</span>
+          )}
         </FieldLabel>
       )}
       <Input {..._props} aria-invalid={!!error} />

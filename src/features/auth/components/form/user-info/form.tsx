@@ -1,4 +1,6 @@
 import { ROUTES } from '@/app/routes';
+import { Button } from '@/shared/ui/button';
+import CustomInput from '@/shared/ui/custom-input';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
@@ -13,5 +15,14 @@ export default function UserInfoForm({ email }: IUserInfoFormProps) {
     if (!email) navigate(ROUTES.CREATE_ACCOUNT);
   }, [email, navigate]);
 
-  return <form></form>;
+  return (
+    <form className='flex flex-col gap-4 '>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <CustomInput label="First Name" placeholder="First Name" required />
+        <CustomInput label="Last Name" placeholder="Last Name" required />
+      </div>
+      <CustomInput label="Username" placeholder="user123" required />
+      <Button variant="primary-foreground">Next</Button>
+    </form>
+  );
 }

@@ -11,6 +11,7 @@ export default function UserInfoPage() {
       <h1 className="text-start text-2xl font-medium text-gray-800">
         Create Account
       </h1>
+      <h2 className="font-bold text-primary text-lg">Tell us more about you</h2>
       <UserInfoForm email={email} />
     </div>
   );
