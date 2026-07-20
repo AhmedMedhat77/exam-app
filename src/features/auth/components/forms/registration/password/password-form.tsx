@@ -37,7 +37,7 @@ export default function PasswordForm() {
   });
 
   return (
-    <div className="flex flex-col w-[90%] gap-2">
+    <div className="flex flex-col w-full gap-2">
       <form className="flex flex-col gap-4 w-full mx-auto" onSubmit={onSubmit}>
         <CustomInput
           required

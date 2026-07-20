@@ -32,11 +32,7 @@ export default function LoginForm() {
   });
 
   return (
-    <div className="flex flex-col w-[90%] gap-2">
-      <h1 className="text-start text-2xl mb-8 font-medium text-gray-800">
-        Login
-      </h1>
-
+    <div className="flex flex-col w-full gap-2">
       <form className="flex flex-col gap-4 w-full mx-auto" onSubmit={onSubmit}>
         <CustomInput
           label="Username"
