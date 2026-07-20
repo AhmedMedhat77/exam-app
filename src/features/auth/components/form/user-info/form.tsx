@@ -3,6 +3,7 @@ import {
   userInfoSchema,
   type IUserInfoFormValues,
 } from '@/features/auth/schemas/user-info.schema';
+import { useRegisterStore } from '@/features/auth/store/register.store';
 import { Button } from '@/shared/ui/button';
 import CustomInput from '@/shared/ui/custom-input';
 import { Field } from '@/shared/ui/field';
@@ -19,7 +20,9 @@ interface IUserInfoFormProps {
 
 export default function UserInfoForm({ email }: IUserInfoFormProps) {
   const navigate = useNavigate();
-
+  // To Avoid Re renders
+  const setFields = useRegisterStore((s) => s.setFields);
+  const storedData = useRegisterStore((s) => s);
   const {
     handleSubmit,
     control,
@@ -30,11 +33,15 @@ export default function UserInfoForm({ email }: IUserInfoFormProps) {
   });
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    setFields(data);
+    console.log(storedData);
   });
 
   useEffect(() => {
+    // To Return to create Account Screen , i don't validate on email on Form since it will auto redirect if it's not exists
     if (!email) navigate(ROUTES.CREATE_ACCOUNT);
+    // To Set the email From props in fields and lift state To Next screen
+    if (email) setFields({ email });
   }, [email, navigate]);
 
   return (
@@ -81,7 +88,9 @@ export default function UserInfoForm({ email }: IUserInfoFormProps) {
         />
       </Field>
 
-      <Button variant="primary-foreground">Next</Button>
+      <Button variant="primary-foreground" type="submit">
+        Next
+      </Button>
     </form>
   );
 }

@@ -18,12 +18,17 @@ export default function CustomPhoneInput({
   );
 }
 
-function InputComponent(
-  props: DefaultInputComponentProps & {
-    country?: string;
-    [key: string]: any;
-  }
-) {
+function InputComponent({
+  country,
+  countryName,
+  metadata,
+  ...props
+}: DefaultInputComponentProps & {
+  country?: string;
+  countryName?: string;
+  metadata?: any;
+  [key: string]: any;
+}) {
   return (
     <input
       className="h-10 border px-4 py-1 border-input hover:border-primary focus:border-primary invalid:border-danger"
@@ -32,13 +37,27 @@ function InputComponent(
   );
 }
 
-function Flag({ country, ...props }: { country?: string; [key: string]: any }) {
+function Flag({
+  country,
+  countryName,
+  flags,
+  flagUrl,
+  ...props
+}: {
+  country?: string;
+  countryName?: string;
+  flags?: any;
+  flagUrl?: string;
+  [key: string]: any;
+}) {
   return (
     <div className="" {...props}>
-      <img
-        src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${country}.svg`}
-        alt=""
-      />
+      {country && (
+        <img
+          src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${country}.svg`}
+          alt={countryName || ''}
+        />
+      )}
     </div>
   );
 }
