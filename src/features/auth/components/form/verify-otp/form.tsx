@@ -45,7 +45,9 @@ export default function VerifyOtpForm({ email }: IVerifyOTPForm) {
   const onSubmit = handleSubmit((data) => {
     verifyOtp(data, {
       onSuccess: () => {
-        navigate(ROUTES.LOGIN);
+        navigate(
+          `${ROUTES.USER_INFO}?email=${encodeURIComponent(email || '')}`
+        );
       },
     });
   });

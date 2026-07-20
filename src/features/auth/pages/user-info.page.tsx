@@ -1,5 +1,17 @@
+import StepCounter from '@/features/auth/components/shared/step-counter';
 import UserInfoForm from '@/features/auth/components/form/user-info/form';
+import { useSearchParams } from 'react-router';
 
 export default function UserInfoPage() {
-  return <UserInfoForm />;
+  const [searchParams] = useSearchParams();
+  const email = searchParams.get('email') || '';
+  return (
+    <div className="flex flex-col items-start gap-4 w-full">
+      <StepCounter currentStep={3} steps={4} />
+      <h1 className="text-start text-2xl font-medium text-gray-800">
+        Create Account
+      </h1>
+      <UserInfoForm email={email} />
+    </div>
+  );
 }

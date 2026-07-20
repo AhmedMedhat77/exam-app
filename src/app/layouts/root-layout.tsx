@@ -9,6 +9,7 @@ const AuthRoutes: string[] = [
   ROUTES.CREATE_ACCOUNT,
   ROUTES.VERIFY_OTP,
   ROUTES.FORGOT_PASSWORD,
+  ROUTES.USER_INFO,
 ];
 
 export default function RootLayout() {
