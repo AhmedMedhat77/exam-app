@@ -70,7 +70,7 @@ export default function LoginForm() {
         <span className="text-gray-500 text-center text-sm">
           Don't have an account?{' '}
           <span className="text-blue-500 cursor-pointer">
-            <Link to={ROUTES.CREATE_ACCOUNT}>Sign Up</Link>
+            <Link to={ROUTES.REGISTER}>Sign Up</Link>
           </span>
         </span>
       </form>

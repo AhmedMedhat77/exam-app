@@ -6,10 +6,10 @@ import { useEffect, useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import type { z } from 'zod';
-import Error from './error';
+import Error from './otp-error';
 import OtpInputs from './otp-inputs';
-import ResendTimer from './resend-timer';
-import SubmitButton from './submit-button';
+import ResendTimer from './otp-resend-timer';
+import SubmitButton from './otp-submit-button';
 
 const OTP_LENGTH = 6;
 const RESEND_COOLDOWN = 60;
@@ -58,7 +58,7 @@ export default function VerifyOtpForm({ email }: IVerifyOTPForm) {
   }, []);
 
   useEffect(() => {
-    if (!email) navigate(ROUTES.CREATE_ACCOUNT);
+    if (!email) navigate(ROUTES.REGISTER);
   }, [email, navigate]);
 
   return (

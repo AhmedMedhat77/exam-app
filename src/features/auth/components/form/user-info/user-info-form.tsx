@@ -49,7 +49,7 @@ export default function UserInfoForm({ email }: IUserInfoFormProps) {
   // ====================== EFFECTS  ======================
   useEffect(() => {
     // To Return to create Account Screen , i don't validate on email on Form since it will auto redirect if it's not exists
-    if (!email) navigate(ROUTES.CREATE_ACCOUNT);
+    if (!email) navigate(ROUTES.REGISTER);
     // To Set the email From props in fields and lift state To Next screen
     if (email) setFields({ email });
   }, [email, navigate]);

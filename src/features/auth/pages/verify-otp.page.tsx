@@ -1,7 +1,7 @@
 import { ROUTES } from '@/app/routes';
-import VerifyOtpForm from '@/features/auth/components/form/verify-otp/form';
+import VerifyOtpForm from '@/features/auth/components/form/verify-otp/verify-otp-form';
 import StepCounter from '@/features/auth/components/shared/step-counter';
-import { FORM_STEPS } from '@/features/auth/constants/form-stepts';
+import { FORM_STEPS } from '@/features/auth/constants/form-steps';
 import { Link, useSearchParams } from 'react-router';
 
 export default function VerifyOtpPage() {
@@ -20,7 +20,7 @@ export default function VerifyOtpPage() {
         <br />
         <span className="text-gray-800">{email}</span>.{' '}
         <Link
-          to={`${ROUTES.CREATE_ACCOUNT}?email=${email}`}
+          to={`${ROUTES.REGISTER}?email=${email}`}
           className="text-primary font-normal underline"
         >
           Edit

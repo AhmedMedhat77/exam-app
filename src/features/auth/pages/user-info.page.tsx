@@ -1,5 +1,5 @@
 import StepCounter from '@/features/auth/components/shared/step-counter';
-import UserInfoForm from '@/features/auth/components/form/user-info/form';
+import UserInfoForm from '@/features/auth/components/form/user-info/user-info-form';
 import { useSearchParams } from 'react-router';
 
 export default function UserInfoPage() {

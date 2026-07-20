@@ -1,6 +1,6 @@
-import SendEmailForm from '@/features/auth/components/form/send-email/form';
+import SendEmailForm from '@/features/auth/components/form/send-email/send-email-form';
 import StepCounter from '@/features/auth/components/shared/step-counter';
-import { FORM_STEPS } from '@/features/auth/constants/form-stepts';
+import { FORM_STEPS } from '@/features/auth/constants/form-steps';
 import { useSearchParams } from 'react-router';
 
 export default function CreateAccountPage() {

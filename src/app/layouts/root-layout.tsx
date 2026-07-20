@@ -6,7 +6,7 @@ import * as React from 'react';
 
 const AuthRoutes: string[] = [
   ROUTES.LOGIN,
-  ROUTES.CREATE_ACCOUNT,
+  ROUTES.REGISTER,
   ROUTES.VERIFY_OTP,
   ROUTES.FORGOT_PASSWORD,
   ROUTES.USER_INFO,

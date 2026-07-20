@@ -1,5 +1,5 @@
-import LoginPage from '@/features/auth/pages/login-page';
-import CreateAccountPage from '@/features/auth/pages/send-email.page';
+import LoginPage from '@/features/auth/pages/login.page';
+import RegisterPage from '@/features/auth/pages/register.page';
 import UserInfoPage from '@/features/auth/pages/user-info.page';
 import VerifyOtpPage from '@/features/auth/pages/verify-otp.page';
 import { BrowserRouter, Route, Routes } from 'react-router';
@@ -17,8 +17,8 @@ export function App() {
             <Route path={ROUTES.HOME} element={<DashboardHomePage />} />
             <Route path={ROUTES.LOGIN} element={<LoginPage />} />
             <Route
-              path={ROUTES.CREATE_ACCOUNT}
-              element={<CreateAccountPage />}
+              path={ROUTES.REGISTER}
+              element={<RegisterPage />}
             />
             <Route path={ROUTES.VERIFY_OTP} element={<VerifyOtpPage />} />
             <Route path={ROUTES.USER_INFO} element={<UserInfoPage />} />
