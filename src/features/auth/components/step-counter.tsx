@@ -31,13 +31,13 @@ export default function StepCounter({ currentStep, steps }: IStepCounterProps) {
               )}
 
               {isUpcoming && (
-                <div className="size-3 border-[1.5px] border-primary bg-background rotate-45 transition-all duration-300" />
+                <div className="size-3 border-[1.5px] border-primary bg-primary/10 rotate-45 transition-all duration-300" />
               )}
             </div>
 
             {/* Connecting Line */}
             {!isLast && (
-              <div className="flex-1 mx-2 flex items-center">
+              <div className="flex-1  flex items-center">
                 {stepNumber < currentStep ? (
                   <div className="w-full h-[1.5px] bg-primary transition-all duration-300" />
                 ) : (
