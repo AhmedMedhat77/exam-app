@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router';
 
 import { ROUTES } from '@/app/routes';
-import { useLogin } from '@/features/auth/hooks/use-login';
+import { useLogin } from '@/features/auth/hooks/login/use-login';
 import {
   loginSchema,
   type LoginInput,

@@ -1,4 +1,4 @@
-import LoginPage from '@/features/auth/pages/login.page';
+import LoginPage from '@/features/auth/pages/login/login.page';
 import EmailPage from '@/features/auth/pages/registration/email.page';
 import VerifyOtpPage from '@/features/auth/pages/registration/verify-otp.page';
 import UserInfoPage from '@/features/auth/pages/registration/user-info.page';
