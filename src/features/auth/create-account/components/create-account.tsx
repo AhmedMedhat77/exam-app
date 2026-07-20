@@ -2,7 +2,7 @@ import { Button } from '@/shared/ui/button';
 import CustomInput from '@/shared/ui/CustomInput';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Link } from '@tanstack/react-router';
+import { Link } from 'react-router';
 import { ChevronRight, Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { useCreateAccount } from '../hooks/create-account';

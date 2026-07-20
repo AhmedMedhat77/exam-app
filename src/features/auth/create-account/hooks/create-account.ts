@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { useNavigate } from '@tanstack/react-router';
+import { useNavigate } from 'react-router';
 import { CreateAccountService } from '../services/create-account.service';
 import type { CreateAccountInput } from '../validation/create-account.schema';
 
@@ -10,10 +10,7 @@ export function useCreateAccount() {
     mutationFn: (data: CreateAccountInput) =>
       CreateAccountService.createAccount(data),
     onSuccess: (_, variables) => {
-      navigate({
-        to: '/verify-otp',
-        search: { email: variables.email },
-      });
+      navigate(`/verify-otp?email=${encodeURIComponent(variables.email)}`);
     },
   });
 }

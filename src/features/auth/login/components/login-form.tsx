@@ -2,7 +2,7 @@ import { Button } from '@/shared/ui/button';
 import CustomInput from '@/shared/ui/CustomInput';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Link } from '@tanstack/react-router';
+import { Link } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { useLogin } from '../hooks/useLogin';
 import type { LoginInput } from '../types/login.types';

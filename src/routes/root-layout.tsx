@@ -1,16 +1,7 @@
 import DashboardLayout from '@/features/app/layout/dashboard-layout';
 import AuthLayout from '@/features/auth/layout/auth-layout';
-import {
-  Navigate,
-  Outlet,
-  createRootRoute,
-  useLocation,
-} from '@tanstack/react-router';
+import { Navigate, Outlet, useLocation } from 'react-router';
 import * as React from 'react';
-
-export const Route = createRootRoute({
-  component: RootComponent,
-});
 
 const AuthRoutes = [
   '/login',
@@ -19,7 +10,7 @@ const AuthRoutes = [
   '/forgot-password',
 ];
 
-function RootComponent() {
+export default function RootLayout() {
   const isAuth = false;
   const { pathname } = useLocation();
 

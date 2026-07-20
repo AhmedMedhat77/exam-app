@@ -1,6 +1,6 @@
 import { Button } from '@/shared/ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Link, useNavigate } from '@tanstack/react-router';
+import { Link, useNavigate } from 'react-router';
 import { Loader2 } from 'lucide-react';
 import {
   useCallback,
@@ -125,7 +125,7 @@ export default function VerifyOtpForm({ email }: VerifyOtpFormProps) {
   const onSubmit = handleSubmit((data) => {
     verifyOtp(data, {
       onSuccess: () => {
-        navigate({ to: '/login' });
+        navigate('/login');
       },
     });
   });
