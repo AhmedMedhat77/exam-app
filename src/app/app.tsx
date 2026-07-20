@@ -16,10 +16,7 @@ export function App() {
           <Route element={<RootLayout />}>
             <Route path={ROUTES.HOME} element={<DashboardHomePage />} />
             <Route path={ROUTES.LOGIN} element={<LoginPage />} />
-            <Route
-              path={ROUTES.REGISTER}
-              element={<RegisterPage />}
-            />
+            <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
             <Route path={ROUTES.VERIFY_OTP} element={<VerifyOtpPage />} />
             <Route path={ROUTES.USER_INFO} element={<UserInfoPage />} />
           </Route>
