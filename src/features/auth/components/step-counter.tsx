@@ -18,8 +18,11 @@ export default function StepCounter({ currentStep, steps }: IStepCounterProps) {
             {/* Step Node */}
             <div className="size-7 flex items-center justify-center shrink-0">
               {isActive && (
-                <div className="size-6 bg-primary/20 rotate-45 flex items-center justify-center transition-all duration-300">
-                  <div className="size-3 bg-primary transition-all duration-300" />
+                <div className="relative flex items-center justify-center">
+                  {/* Soft pulsing active node */}
+                  <div className="size-6 bg-primary/15 rotate-45 flex items-center justify-center animate-pulse-shadow transition-all duration-500">
+                    <div className="size-3 bg-primary transition-all duration-300" />
+                  </div>
                 </div>
               )}
 
