@@ -19,9 +19,14 @@ export default function VerifyOtpForm() {
   const [searchParams] = useSearchParams();
   const email = searchParams.get('email') ?? '';
 
+  // =============== MUTATION ===============
+  const { mutate: verifyOtp, isPending, error, isError } = useVerifyOtp();
+  // =============== ROUTE ===============
   const navigate = useNavigate();
+  // =============== REFs ===============
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
+  // ================== FORM STATE ==================
   const form = useForm<
     z.input<typeof verifyOtpSchema>,
     any,
@@ -40,14 +45,14 @@ export default function VerifyOtpForm() {
     formState: { errors },
   } = form;
 
+  // ================== CODE  ==================
+
   const code =
     useWatch({
       control,
       name: 'code',
       defaultValue: Array(OTP_LENGTH).fill(''),
     }) || [];
-
-  const { mutate: verifyOtp, isPending, error, isError } = useVerifyOtp();
 
   const isComplete =
     code.length === OTP_LENGTH &&
@@ -61,9 +66,10 @@ export default function VerifyOtpForm() {
     });
   });
 
-  const codeError = errors.code
-    ? errors.code.message || 'OTP must be 6 digits'
-    : undefined;
+  const codeError =
+    errors.code && form.formState.isSubmitted
+      ? errors.code.message || 'OTP must be 6 digits'
+      : undefined;
 
   // Focus first input on mount
   useEffect(() => {
