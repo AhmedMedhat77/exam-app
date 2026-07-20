@@ -2,14 +2,17 @@ import {
   passwordSchema,
   type PasswordFormValues,
 } from '@/features/auth/schemas/registration/password.schema';
+import { useRegister } from '@/features/auth/hooks/registration/use-register';
 import { useRegistrationStore } from '@/features/auth/store/registration.store';
 import { Button } from '@/shared/ui/button';
 import CustomInput from '@/shared/ui/custom-input';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 
 export default function PasswordForm() {
-  const setFields = useRegistrationStore((s) => s.setFields);
+  const store = useRegistrationStore();
+  const { mutate, isPending, error, isError } = useRegister();
   const {
     register,
     formState: { errors, isValid, isSubmitted, isSubmitting },
@@ -18,12 +21,18 @@ export default function PasswordForm() {
     resolver: zodResolver(passwordSchema),
   });
 
+  const isLoading = isSubmitting || isPending;
   const isDisabled = (isSubmitted && !isValid) || isSubmitting;
 
   const onSubmit = handleSubmit((data) => {
-    setFields({
+    mutate({
+      username: store.username,
+      email: store.email,
       password: data.password,
       confirmPassword: data.confirmPassword,
+      firstName: store.firstName,
+      lastName: store.lastName,
+      phone: store.phone,
     });
   });
 
@@ -51,10 +60,16 @@ export default function PasswordForm() {
           type="submit"
           variant="primary-foreground"
           className="min-h-12"
-          disabled={isDisabled}
+          disabled={isLoading || isDisabled}
         >
-          Save Password
+          {isLoading ? <Loader2 className="animate-spin" /> : 'Create Account'}
         </Button>
+
+        {isError && (
+          <div className="text-center bg-destructive/20 p-3 border-2 border-destructive">
+            <span className="text-destructive">{error?.message}</span>
+          </div>
+        )}
       </form>
     </div>
   );
