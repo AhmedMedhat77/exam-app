@@ -1,15 +1,16 @@
-import { ROUTES } from '@/app/routes';
 import {
   forgotPasswordSchema,
   type ForgotPasswordFormValues,
-} from '@/features/auth/schemas/forgot-passowrd/forgot-password.schema';
+} from '@/features/auth/schemas/forgot-password/forgot-password.schema';
+import { useForgotPassword } from '@/features/auth/hooks/forgot-password/use-forgot-password';
 import { Button } from '@/shared/ui/button';
 import CustomInput from '@/shared/ui/custom-input';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Loader2 } from 'lucide-react';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router';
+import { Link } from 'react-router';
+import { ROUTES } from '@/app/routes';
 
 interface ForgotPasswordFormProps {
   email?: string;
@@ -18,7 +19,7 @@ interface ForgotPasswordFormProps {
 export default function ForgotPasswordForm({
   email = '',
 }: ForgotPasswordFormProps) {
-  const navigate = useNavigate();
+  const { mutate, isPending, error, isError } = useForgotPassword();
   const {
     register,
     reset,
@@ -29,16 +30,14 @@ export default function ForgotPasswordForm({
     defaultValues: { email },
   });
 
+  const isLoading = isSubmitting || isPending;
+
   useEffect(() => {
     reset({ email });
   }, [email, reset]);
 
-  const onSubmit = handleSubmit(async (values) => {
-    // TODO: Call the request-password-reset service here. Navigate only after
-    // the API confirms that the reset email request was accepted.
-    navigate(
-      `${ROUTES.FORGOT_PASSWORD_SENT}?email=${encodeURIComponent(values.email)}`
-    );
+  const onSubmit = handleSubmit((values) => {
+    mutate(values);
   });
 
   return (
@@ -53,10 +52,16 @@ export default function ForgotPasswordForm({
         error={errors.email?.message}
       />
 
-      <Button type="submit" className="min-h-12" disabled={isSubmitting}>
-        {isSubmitting ? 'Sending...' : 'Next'}
+      <Button type="submit" className="min-h-12" disabled={isLoading}>
+        {isLoading ? <Loader2 className="animate-spin" /> : 'Next'}
         <ChevronRight className="size-4" />
       </Button>
+
+      {isError && (
+        <div className="text-center bg-destructive/20 p-3 border-2 border-destructive">
+          <span className="text-destructive">{error?.message}</span>
+        </div>
+      )}
 
       <p className="text-center text-sm text-gray-500">
         Don&apos;t have an account?{' '}

@@ -4,10 +4,9 @@ import { Navigate, useSearchParams } from 'react-router';
 
 export default function ResetPasswordPage() {
   const [searchParams] = useSearchParams();
-  const email = searchParams.get('email');
   const token = searchParams.get('token');
 
-  if (!email || !token) {
+  if (!token) {
     return <Navigate to={ROUTES.FORGOT_PASSWORD} replace />;
   }
 
@@ -22,7 +21,7 @@ export default function ResetPasswordPage() {
         </p>
       </div>
 
-      <ResetPasswordForm email={email} token={token} />
+      <ResetPasswordForm token={token} />
     </div>
   );
 }

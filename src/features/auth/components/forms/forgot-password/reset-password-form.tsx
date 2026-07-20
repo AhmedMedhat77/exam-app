@@ -1,25 +1,24 @@
-import { ROUTES } from '@/app/routes';
 import {
   resetPasswordSchema,
   type ResetPasswordFormValues,
-  type ResetPasswordPayload,
-} from '@/features/auth/schemas/forgot-passowrd/forgot-password.schema';
+} from '@/features/auth/schemas/forgot-password/reset-password.schema';
+import { useResetPassword } from '@/features/auth/hooks/forgot-password/use-reset-password';
 import { Button } from '@/shared/ui/button';
 import CustomInput from '@/shared/ui/custom-input';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router';
+import { Link } from 'react-router';
+import { ROUTES } from '@/app/routes';
 
 interface ResetPasswordFormProps {
-  email: string;
   token: string;
 }
 
 export default function ResetPasswordForm({
-  email,
   token,
 }: ResetPasswordFormProps) {
-  const navigate = useNavigate();
+  const { mutate, isPending, error, isError } = useResetPassword();
   const {
     register,
     handleSubmit,
@@ -28,13 +27,14 @@ export default function ResetPasswordForm({
     resolver: zodResolver(resetPasswordSchema),
   });
 
-  const onSubmit = handleSubmit(async (values) => {
-    const payload: ResetPasswordPayload = { email, token, ...values };
+  const isLoading = isSubmitting || isPending;
 
-    // TODO: Pass this payload to the reset-password service. Navigate only
-    // after the API confirms that the password was updated.
-    void payload;
-    navigate(ROUTES.LOGIN, { replace: true });
+  const onSubmit = handleSubmit((values) => {
+    mutate({
+      token,
+      newPassword: values.password,
+      confirmPassword: values.confirmPassword,
+    });
   });
 
   return (
@@ -58,9 +58,15 @@ export default function ResetPasswordForm({
         error={errors.confirmPassword?.message}
       />
 
-      <Button type="submit" className="min-h-12" disabled={isSubmitting}>
-        {isSubmitting ? 'Resetting...' : 'Reset Password'}
+      <Button type="submit" className="min-h-12" disabled={isLoading}>
+        {isLoading ? <Loader2 className="animate-spin" /> : 'Reset Password'}
       </Button>
+
+      {isError && (
+        <div className="text-center bg-destructive/20 p-3 border-2 border-destructive">
+          <span className="text-destructive">{error?.message}</span>
+        </div>
+      )}
 
       <p className="text-center text-sm text-gray-500">
         Don&apos;t have an account?{' '}

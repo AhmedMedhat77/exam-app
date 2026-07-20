@@ -1,10 +1,5 @@
 import { z } from 'zod';
 
-export const forgotPasswordSchema = z.object({
-  email: z.email('Enter a valid registered email address'),
-  redirectUrl: z.url('Enter a valid URL'),
-});
-
 export const resetPasswordSchema = z
   .object({
     password: z
@@ -25,15 +20,10 @@ export const resetPasswordSchema = z
     path: ['confirmPassword'],
   });
 
-export type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>;
 export type ResetPasswordFormValues = z.infer<typeof resetPasswordSchema>;
 
-export interface RequestPasswordResetPayload {
-  email: string;
-  redirectUrl: string;
-}
-
-export interface ResetPasswordPayload extends ResetPasswordFormValues {
-  email: string;
+export interface ResetPasswordPayload {
   token: string;
+  newPassword: string;
+  confirmPassword: string;
 }
