@@ -1,6 +1,10 @@
+import { memo } from 'react';
 import type { IStepCounterProps } from '../types/step-counter';
 
-export default function StepCounter({ currentStep, steps }: IStepCounterProps) {
+export default memo(function StepCounter({
+  currentStep,
+  steps,
+}: IStepCounterProps) {
   return (
     <div className="flex items-center justify-center w-full my-6 px-2">
       {Array.from({ length: steps }).map((_, index) => {
@@ -50,4 +54,4 @@ export default function StepCounter({ currentStep, steps }: IStepCounterProps) {
       })}
     </div>
   );
-}
+});

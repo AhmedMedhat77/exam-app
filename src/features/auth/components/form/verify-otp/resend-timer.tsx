@@ -1,5 +1,5 @@
 import { useResendOtp } from '@/features/auth/hooks/use-resend-otp';
-import { useCallback, useEffect, useState, type RefObject } from 'react';
+import { memo, useCallback, useEffect, useState, type RefObject } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 interface IResendOTPTimerProps {
@@ -9,7 +9,7 @@ interface IResendOTPTimerProps {
   otpLength?: number;
 }
 
-export default function ResendTimer({
+export default memo(function ResendTimer({
   email,
   inputRefs,
   resendCooldown = 60,
@@ -72,4 +72,4 @@ export default function ResendTimer({
       )}
     </p>
   );
-}
+});
