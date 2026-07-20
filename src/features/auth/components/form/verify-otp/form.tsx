@@ -1,12 +1,11 @@
 import { ROUTES } from '@/app/routes';
+import { useVerifyOtp } from '@/features/auth/hooks/use-verify-otp';
+import { verifyOtpSchema } from '@/features/auth/schemas/verify-otp.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { Link, useNavigate, useSearchParams } from 'react-router';
+import { useNavigate } from 'react-router';
 import type { z } from 'zod';
-import StepCounter from '@/features/auth/components/shared/step-counter';
-import { useVerifyOtp } from '@/features/auth/hooks/use-verify-otp';
-import { verifyOtpSchema } from '@/features/auth/schemas/verify-otp.schema';
 import Error from './error';
 import OtpInputs from './otp-inputs';
 import ResendTimer from './resend-timer';
@@ -15,10 +14,10 @@ import SubmitButton from './submit-button';
 const OTP_LENGTH = 6;
 const RESEND_COOLDOWN = 60;
 
-export default function VerifyOtpForm() {
-  const [searchParams] = useSearchParams();
-  const email = searchParams.get('email') ?? '';
-
+interface IVerifyOTPForm {
+  email?: string;
+}
+export default function VerifyOtpForm({ email }: IVerifyOTPForm) {
   // =============== MUTATION ===============
   const { mutate: verifyOtp, isPending, error, isError } = useVerifyOtp();
   // =============== ROUTE ===============
@@ -62,27 +61,6 @@ export default function VerifyOtpForm() {
 
   return (
     <div className="flex flex-col w-[90%] gap-2">
-      {/* Stepper */}
-      <StepCounter currentStep={2} steps={4} />
-
-      <h1 className="text-start text-2xl font-medium text-gray-800">
-        Create Account
-      </h1>
-
-      <h2 className="text-primary font-medium text-lg">Verify OTP</h2>
-
-      <p className="text-sm text-gray-500">
-        Please enter the 6-digit code we have sent to:
-        <br />
-        <span className="text-gray-800">{email}</span>.{' '}
-        <Link
-          to={`${ROUTES.CREATE_ACCOUNT}?email=${email}`}
-          className="text-primary font-normal underline"
-        >
-          Edit
-        </Link>
-      </p>
-
       <FormProvider {...form}>
         <form onSubmit={onSubmit} className="flex flex-col gap-6 mt-4">
           {/* OTP Inputs Component with useFieldArray */}

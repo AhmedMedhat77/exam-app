@@ -1,5 +1,4 @@
 import { ROUTES } from '@/app/routes';
-import StepCounter from '@/features/auth/components/shared/step-counter';
 import { useCreateAccount } from '@/features/auth/hooks/use-create-account';
 import {
   type CreateAccountInput,
@@ -11,12 +10,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ChevronRight, Loader2 } from 'lucide-react';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useSearchParams } from 'react-router';
+import { Link } from 'react-router';
 
-export default function SendEmailForm() {
-  const [searchParams] = useSearchParams();
-  const email = searchParams.get('email');
+interface ISendEmailFormProps {
+  email?: string;
+}
 
+export default function SendEmailForm({ email }: ISendEmailFormProps) {
   const { mutate, isPending, error, isError } = useCreateAccount();
 
   const {
@@ -43,11 +43,6 @@ export default function SendEmailForm() {
 
   return (
     <div className="flex flex-col w-[90%] gap-2">
-      <StepCounter currentStep={1} steps={4} />
-      <h1 className="text-start text-2xl mb-8 font-medium text-gray-800">
-        Create Account
-      </h1>
-
       <form className="flex flex-col gap-4 w-full mx-auto" onSubmit={onSubmit}>
         <CustomInput
           label="Email"

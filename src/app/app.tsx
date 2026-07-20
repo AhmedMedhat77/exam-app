@@ -1,7 +1,7 @@
 import LoginPage from '@/features/auth/pages/login-page';
-import CreateAccountPage from '@/features/auth/pages/send-email-page';
-import UserInfoPage from '@/features/auth/pages/user-info';
-import VerifyOtpPage from '@/features/auth/pages/verify-otp-page';
+import CreateAccountPage from '@/features/auth/pages/send-email.page';
+import UserInfoPage from '@/features/auth/pages/user-info.page';
+import VerifyOtpPage from '@/features/auth/pages/verify-otp.page';
 import { BrowserRouter, Route, Routes } from 'react-router';
 import RootLayout from '@/app/layouts/root-layout';
 import DashboardHomePage from '@/app/pages/dashboard-home-page';
