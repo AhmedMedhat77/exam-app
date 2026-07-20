@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 export const forgotPasswordSchema = z.object({
   email: z.email('Enter a valid registered email address'),
+  redirectUrl: z.url('Enter a valid URL'),
 });
 
 export const resetPasswordSchema = z
@@ -29,6 +30,7 @@ export type ResetPasswordFormValues = z.infer<typeof resetPasswordSchema>;
 
 export interface RequestPasswordResetPayload {
   email: string;
+  redirectUrl: string;
 }
 
 export interface ResetPasswordPayload extends ResetPasswordFormValues {
