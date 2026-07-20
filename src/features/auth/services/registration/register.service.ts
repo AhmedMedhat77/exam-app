@@ -7,14 +7,24 @@ const URL = '/api/auth/register';
 export const registerApiResponse = z.object({
   status: z.boolean(),
   code: z.number(),
-  message: z.string(),
+  payload: z.object({
+    user: z.object({
+      id: z.string(),
+      username: z.string(),
+      email: z.string(),
+      phone: z.string(),
+      firstName: z.string(),
+      lastName: z.string(),
+      emailVerified: z.boolean(),
+      phoneVerified: z.boolean(),
+      role: z.string(),
+      createdAt: z.string(),
+    }),
+    token: z.string(),
+  }),
 });
 
-interface IRegisterApiResponse {
-  status: boolean;
-  code: number;
-  message: string;
-}
+export type IRegisterApiResponse = z.infer<typeof registerApiResponse>;
 
 export interface RegisterPayload {
   username: string;
