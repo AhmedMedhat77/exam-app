@@ -1,9 +1,9 @@
 import { ROUTES } from '@/app/routes';
-import { useCreateAccount } from '@/features/auth/hooks/use-create-account';
+import { useSendVerificationEmail } from '@/features/auth/hooks/registration/use-send-verification-email';
 import {
-  type CreateAccountInput,
-  sendEmailSchema,
-} from '@/features/auth/schemas/send-email.schema';
+  type EmailFormValues,
+  emailSchema,
+} from '@/features/auth/schemas/registration/email.schema';
 import { Button } from '@/shared/ui/button';
 import CustomInput from '@/shared/ui/custom-input';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -12,20 +12,20 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router';
 
-interface ISendEmailFormProps {
+interface EmailFormProps {
   email?: string;
 }
 
-export default function SendEmailForm({ email }: ISendEmailFormProps) {
-  const { mutate, isPending, error, isError } = useCreateAccount();
+export default function EmailForm({ email }: EmailFormProps) {
+  const { mutate, isPending, error, isError } = useSendVerificationEmail();
 
   const {
     register,
     formState: { errors, isValid, isSubmitted, isSubmitting },
     reset,
     handleSubmit,
-  } = useForm<CreateAccountInput>({
-    resolver: zodResolver(sendEmailSchema),
+  } = useForm<EmailFormValues>({
+    resolver: zodResolver(emailSchema),
   });
 
   // Loading State

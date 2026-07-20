@@ -1,10 +1,14 @@
 import { memo } from 'react';
-import type { IStepCounterProps } from '@/features/auth/types/step-counter';
 
-export default memo(function StepCounter({
+interface RegistrationStepperProps {
+  currentStep: number;
+  steps: number;
+}
+
+export default memo(function RegistrationStepper({
   currentStep,
   steps,
-}: IStepCounterProps) {
+}: RegistrationStepperProps) {
   return (
     <div className="flex items-center justify-center w-full my-6 px-2">
       {Array.from({ length: steps }).map((_, index) => {

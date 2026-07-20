@@ -1,7 +1,8 @@
 import LoginPage from '@/features/auth/pages/login.page';
-import RegisterPage from '@/features/auth/pages/register.page';
-import UserInfoPage from '@/features/auth/pages/user-info.page';
-import VerifyOtpPage from '@/features/auth/pages/verify-otp.page';
+import EmailPage from '@/features/auth/pages/registration/email.page';
+import VerifyOtpPage from '@/features/auth/pages/registration/verify-otp.page';
+import UserInfoPage from '@/features/auth/pages/registration/user-info.page';
+import PasswordPage from '@/features/auth/pages/registration/password.page';
 import { BrowserRouter, Route, Routes } from 'react-router';
 import RootLayout from '@/app/layouts/root-layout';
 import DashboardHomePage from '@/app/pages/dashboard-home-page';
@@ -16,9 +17,10 @@ export function App() {
           <Route element={<RootLayout />}>
             <Route path={ROUTES.HOME} element={<DashboardHomePage />} />
             <Route path={ROUTES.LOGIN} element={<LoginPage />} />
-            <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
-            <Route path={ROUTES.VERIFY_OTP} element={<VerifyOtpPage />} />
-            <Route path={ROUTES.USER_INFO} element={<UserInfoPage />} />
+            <Route path={ROUTES.REGISTER} element={<EmailPage />} />
+            <Route path={ROUTES.REGISTER_VERIFY_OTP} element={<VerifyOtpPage />} />
+            <Route path={ROUTES.REGISTER_USER_INFO} element={<UserInfoPage />} />
+            <Route path={ROUTES.REGISTER_PASSWORD} element={<PasswordPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

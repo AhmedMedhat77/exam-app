@@ -1,6 +1,6 @@
 import { ROUTES } from '@/app/routes';
-import { useVerifyOtp } from '@/features/auth/hooks/use-verify-otp';
-import { verifyOtpSchema } from '@/features/auth/schemas/verify-otp.schema';
+import { useVerifyOtp } from '@/features/auth/hooks/registration/use-verify-otp';
+import { verifyOtpSchema } from '@/features/auth/schemas/registration/verify-otp.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -14,10 +14,10 @@ import SubmitButton from './otp-submit-button';
 const OTP_LENGTH = 6;
 const RESEND_COOLDOWN = 60;
 
-interface IVerifyOTPForm {
+interface VerifyOtpFormProps {
   email?: string;
 }
-export default function VerifyOtpForm({ email }: IVerifyOTPForm) {
+export default function VerifyOtpForm({ email }: VerifyOtpFormProps) {
   // =============== MUTATION ===============
   const { mutate: verifyOtp, isPending, error, isError } = useVerifyOtp();
   // =============== ROUTE ===============
@@ -46,7 +46,7 @@ export default function VerifyOtpForm({ email }: IVerifyOTPForm) {
     verifyOtp(data, {
       onSuccess: () => {
         navigate(
-          `${ROUTES.USER_INFO}?email=${encodeURIComponent(email || '')}`
+          `${ROUTES.REGISTER_USER_INFO}?email=${encodeURIComponent(email || '')}`
         );
       },
     });

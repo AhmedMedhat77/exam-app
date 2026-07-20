@@ -2,7 +2,8 @@ export const ROUTES = {
   HOME: '/',
   LOGIN: '/login',
   REGISTER: '/register',
-  VERIFY_OTP: '/verify-otp',
+  REGISTER_VERIFY_OTP: '/register/verify-otp',
+  REGISTER_USER_INFO: '/register/user-info',
+  REGISTER_PASSWORD: '/register/password',
   FORGOT_PASSWORD: '/forgot-password',
-  USER_INFO: '/user-info',
 } as const;

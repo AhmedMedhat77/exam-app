@@ -1,9 +1,9 @@
 import { ROUTES } from '@/app/routes';
 import {
   userInfoSchema,
-  type IUserInfoFormValues,
-} from '@/features/auth/schemas/user-info.schema';
-import { useRegisterStore } from '@/features/auth/store/register.store';
+  type UserInfoFormValues,
+} from '@/features/auth/schemas/registration/user-info.schema';
+import { useRegistrationStore } from '@/features/auth/store/registration.store';
 import {
   handleGetFromSessionStorage,
   handleSaveToSessionStorage,
@@ -19,21 +19,21 @@ import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 
-interface IUserInfoFormProps {
+interface UserInfoFormProps {
   email?: string;
 }
 
-export default function UserInfoForm({ email }: IUserInfoFormProps) {
+export default function UserInfoForm({ email }: UserInfoFormProps) {
   const navigate = useNavigate();
   // To Avoid Re renders
-  const setFields = useRegisterStore((s) => s.setFields);
+  const setFields = useRegistrationStore((s) => s.setFields);
   const {
     handleSubmit,
     control,
     register,
     reset,
     formState: { errors, isSubmitted },
-  } = useForm<IUserInfoFormValues>({
+  } = useForm<UserInfoFormValues>({
     resolver: zodResolver(userInfoSchema),
   });
 
@@ -44,6 +44,7 @@ export default function UserInfoForm({ email }: IUserInfoFormProps) {
   const onSubmit = handleSubmit((data) => {
     setFields(data);
     handleSaveToSessionStorage('userData', data);
+    navigate(`${ROUTES.REGISTER_PASSWORD}?email=${encodeURIComponent(email || '')}`);
   });
 
   // ====================== EFFECTS  ======================
@@ -57,8 +58,7 @@ export default function UserInfoForm({ email }: IUserInfoFormProps) {
   // Email is added From The Above Effect
   useEffect(() => {
     const userData =
-      handleGetFromSessionStorage<IUserInfoFormValues>('userData');
-    console.log({ userData });
+      handleGetFromSessionStorage<UserInfoFormValues>('userData');
 
     if (userData) {
       reset(userData);
@@ -87,8 +87,8 @@ export default function UserInfoForm({ email }: IUserInfoFormProps) {
         label="Username"
         placeholder="user123"
         required
-        {...register('userName')}
-        error={errors.userName?.message}
+        {...register('username')}
+        error={errors.username?.message}
       />
 
       <Field>

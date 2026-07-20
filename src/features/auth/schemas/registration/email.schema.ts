@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const sendEmailSchema = z.object({
+export const emailSchema = z.object({
   email: z.email('Invalid email address'),
 });
 
@@ -10,4 +10,4 @@ export const sendVerificationCodeApiResponse = z.object({
   message: z.string(),
 });
 
-export type CreateAccountInput = z.infer<typeof sendEmailSchema>;
+export type EmailFormValues = z.infer<typeof emailSchema>;

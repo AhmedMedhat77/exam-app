@@ -2,8 +2,8 @@ import { axiosInstance } from '@/shared/lib/axios';
 import axios from 'axios';
 import {
   sendVerificationCodeApiResponse,
-  type CreateAccountInput,
-} from '@/features/auth/schemas/send-email.schema';
+  type EmailFormValues,
+} from '@/features/auth/schemas/registration/email.schema';
 
 const URL = '/api/auth/send-email-verification';
 
@@ -13,9 +13,9 @@ interface ISendVerificationCodeApiResponse {
   message: string;
 }
 
-export class CreateAccountService {
-  static async createAccount(
-    payload: CreateAccountInput
+export class EmailVerificationService {
+  static async sendVerificationEmail(
+    payload: EmailFormValues
   ): Promise<ISendVerificationCodeApiResponse> {
     try {
       const response = await axiosInstance.post(URL, payload);

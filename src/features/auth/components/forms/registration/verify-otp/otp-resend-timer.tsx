@@ -1,8 +1,8 @@
-import { useResendOtp } from '@/features/auth/hooks/use-resend-otp';
+import { useResendOtp } from '@/features/auth/hooks/registration/use-resend-otp';
 import { memo, useCallback, useEffect, useState, type RefObject } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-interface IResendOTPTimerProps {
+interface ResendTimerProps {
   email?: string;
   inputRefs: RefObject<(HTMLInputElement | null)[]>;
   resendCooldown?: number;
@@ -14,7 +14,7 @@ export default memo(function ResendTimer({
   inputRefs,
   resendCooldown = 60,
   otpLength = 6,
-}: IResendOTPTimerProps) {
+}: ResendTimerProps) {
   // Start countdown at resendCooldown (60 seconds) by default
   const [countdown, setCountdown] = useState(resendCooldown);
   const { setValue } = useFormContext();

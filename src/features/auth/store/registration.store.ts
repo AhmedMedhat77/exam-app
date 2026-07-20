@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-interface ICreateAccountStore {
+interface RegistrationStore {
   username: string;
   email: string;
   password: string;
@@ -8,10 +8,10 @@ interface ICreateAccountStore {
   firstName: string;
   lastName: string;
   phone: string;
-  setFields: (fields: Partial<ICreateAccountStore>) => void;
+  setFields: (fields: Partial<RegistrationStore>) => void;
 }
 
-export const useRegisterStore = create<ICreateAccountStore>((set) => ({
+export const useRegistrationStore = create<RegistrationStore>((set) => ({
   confirmPassword: '',
   email: '',
   firstName: '',

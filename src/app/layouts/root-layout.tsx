@@ -7,9 +7,10 @@ import * as React from 'react';
 const AuthRoutes: string[] = [
   ROUTES.LOGIN,
   ROUTES.REGISTER,
-  ROUTES.VERIFY_OTP,
+  ROUTES.REGISTER_VERIFY_OTP,
+  ROUTES.REGISTER_USER_INFO,
+  ROUTES.REGISTER_PASSWORD,
   ROUTES.FORGOT_PASSWORD,
-  ROUTES.USER_INFO,
 ];
 
 export default function RootLayout() {

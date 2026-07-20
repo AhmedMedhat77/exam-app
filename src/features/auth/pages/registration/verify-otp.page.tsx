@@ -1,7 +1,7 @@
 import { ROUTES } from '@/app/routes';
-import VerifyOtpForm from '@/features/auth/components/form/verify-otp/verify-otp-form';
-import StepCounter from '@/features/auth/components/shared/step-counter';
-import { FORM_STEPS } from '@/features/auth/constants/form-steps';
+import VerifyOtpForm from '@/features/auth/components/forms/registration/verify-otp/verify-otp-form';
+import RegistrationStepper from '@/features/auth/components/shared/registration-stepper';
+import { REGISTRATION_STEP_COUNT } from '@/features/auth/constants/registration.constants';
 import { Link, useSearchParams } from 'react-router';
 
 export default function VerifyOtpPage() {
@@ -10,7 +10,7 @@ export default function VerifyOtpPage() {
   return (
     <div className="flex flex-col items-start gap-4 w-full">
       {/* Stepper */}
-      <StepCounter currentStep={2} steps={FORM_STEPS} />
+      <RegistrationStepper currentStep={2} steps={REGISTRATION_STEP_COUNT} />
       <h1 className="text-start text-2xl font-medium text-gray-800">
         Create Account
       </h1>

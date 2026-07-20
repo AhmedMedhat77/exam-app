@@ -14,4 +14,4 @@ export const verifyOtpApiResponse = z.object({
   message: z.string(),
 });
 
-export type VerifyOtpInput = z.infer<typeof verifyOtpSchema>;
+export type VerifyOtpFormValues = z.infer<typeof verifyOtpSchema>;
