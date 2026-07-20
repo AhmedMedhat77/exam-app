@@ -1,12 +1,15 @@
 import { Button } from '@/shared/ui/button';
 import CustomInput from '@/shared/ui/custom-input';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Link } from 'react-router';
 import { useForm } from 'react-hook-form';
-import { useLogin } from '../hooks/use-login';
-import type { LoginInput } from '../schemas/login.schema';
-import { loginSchema } from '../schemas/login.schema';
+import { Link } from 'react-router';
+
 import { ROUTES } from '@/app/routes';
+import { useLogin } from '@/features/auth/hooks/use-login';
+import {
+  loginSchema,
+  type LoginInput,
+} from '@/features/auth/schemas/login.schema';
 
 export default function LoginForm() {
   // API Hook

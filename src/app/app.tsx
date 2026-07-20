@@ -4,7 +4,7 @@ import { ROUTES } from './routes';
 import RootLayout from './layouts/root-layout';
 import DashboardHomePage from './pages/dashboard-home-page';
 import LoginPage from '@/features/auth/pages/login-page';
-import CreateAccountPage from '@/features/auth/pages/create-account-page';
+import CreateAccountPage from '@/features/auth/pages/send-email-page';
 import VerifyOtpPage from '@/features/auth/pages/verify-otp-page';
 
 export function App() {

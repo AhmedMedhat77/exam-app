@@ -1,20 +1,20 @@
+import { ROUTES } from '@/app/routes';
 import { Button } from '@/shared/ui/button';
 import CustomInput from '@/shared/ui/custom-input';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Link, useSearchParams } from 'react-router';
 import { ChevronRight, Loader2 } from 'lucide-react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useCreateAccount } from '../hooks/use-create-account';
+import { Link, useSearchParams } from 'react-router';
+import { useCreateAccount } from '../../../hooks/use-create-account';
 import {
   type CreateAccountInput,
-  createAccountSchema,
-} from '../schemas/create-account.schema';
-import { ROUTES } from '@/app/routes';
-import { useEffect } from 'react';
+  sendEmailSchema,
+} from '../../../schemas/send-email.schema';
 
-import StepCounter from './step-counter';
+import StepCounter from '../../step-counter';
 
-export default function CreateAccountForm() {
+export default function SendEmailForm() {
   const [searchParams] = useSearchParams();
   const email = searchParams.get('email');
 
@@ -26,7 +26,7 @@ export default function CreateAccountForm() {
     reset,
     handleSubmit,
   } = useForm<CreateAccountInput>({
-    resolver: zodResolver(createAccountSchema),
+    resolver: zodResolver(sendEmailSchema),
   });
 
   // Loading State

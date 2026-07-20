@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
-import { CreateAccountService } from '../services/create-account.service';
-import type { CreateAccountInput } from '../schemas/create-account.schema';
+import { CreateAccountService } from '../services/send-email.service';
+import type { CreateAccountInput } from '../schemas/send-email.schema';
 
 export function useResendOtp() {
   return useMutation({
