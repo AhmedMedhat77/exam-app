@@ -1,11 +1,12 @@
-import { BrowserRouter, Route, Routes } from 'react-router';
-import { AppProviders } from './providers';
-import { ROUTES } from './routes';
-import RootLayout from './layouts/root-layout';
-import DashboardHomePage from './pages/dashboard-home-page';
 import LoginPage from '@/features/auth/pages/login-page';
 import CreateAccountPage from '@/features/auth/pages/send-email-page';
+import UserInfoPage from '@/features/auth/pages/user-info';
 import VerifyOtpPage from '@/features/auth/pages/verify-otp-page';
+import { BrowserRouter, Route, Routes } from 'react-router';
+import RootLayout from './layouts/root-layout';
+import DashboardHomePage from './pages/dashboard-home-page';
+import { AppProviders } from './providers';
+import { ROUTES } from './routes';
 
 export function App() {
   return (
@@ -20,6 +21,7 @@ export function App() {
               element={<CreateAccountPage />}
             />
             <Route path={ROUTES.VERIFY_OTP} element={<VerifyOtpPage />} />
+            <Route path={ROUTES.USER_INFO} element={<UserInfoPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

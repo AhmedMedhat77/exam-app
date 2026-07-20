@@ -4,4 +4,5 @@ export const ROUTES = {
   CREATE_ACCOUNT: '/create-account',
   VERIFY_OTP: '/verify-otp',
   FORGOT_PASSWORD: '/forgot-password',
+  USER_INFO: '/user-info',
 } as const;
