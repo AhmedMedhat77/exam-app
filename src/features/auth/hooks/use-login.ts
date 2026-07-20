@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import type { LoginInput } from '@/features/auth/schemas/login.schema';
+import type { LoginInput } from '@/features/auth/schemas/login/login.schema';
 import { LoginService } from '@/features/auth/services/login.service';
 
 export function useLogin() {

@@ -1,6 +1,6 @@
 import { axiosInstance } from '@/shared/lib/axios';
 import axios from 'axios';
-import type { LoginInput } from '@/features/auth/schemas/login.schema';
+import type { LoginInput } from '@/features/auth/schemas/login/login.schema';
 
 const URL = '/api/auth';
 

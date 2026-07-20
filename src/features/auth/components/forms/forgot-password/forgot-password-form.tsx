@@ -2,7 +2,7 @@ import { ROUTES } from '@/app/routes';
 import {
   forgotPasswordSchema,
   type ForgotPasswordFormValues,
-} from '@/features/auth/schemas/forgot-password.schema';
+} from '@/features/auth/schemas/forgot-passowrd/forgot-password.schema';
 import { Button } from '@/shared/ui/button';
 import CustomInput from '@/shared/ui/custom-input';
 import { zodResolver } from '@hookform/resolvers/zod';

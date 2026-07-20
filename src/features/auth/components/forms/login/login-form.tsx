@@ -9,7 +9,7 @@ import { useLogin } from '@/features/auth/hooks/use-login';
 import {
   loginSchema,
   type LoginInput,
-} from '@/features/auth/schemas/login.schema';
+} from '@/features/auth/schemas/login/login.schema';
 
 export default function LoginForm() {
   // API Hook
