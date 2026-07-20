@@ -18,8 +18,14 @@ export function App() {
             <Route path={ROUTES.HOME} element={<DashboardHomePage />} />
             <Route path={ROUTES.LOGIN} element={<LoginPage />} />
             <Route path={ROUTES.REGISTER} element={<EmailPage />} />
-            <Route path={ROUTES.REGISTER_VERIFY_OTP} element={<VerifyOtpPage />} />
-            <Route path={ROUTES.REGISTER_USER_INFO} element={<UserInfoPage />} />
+            <Route
+              path={ROUTES.REGISTER_VERIFY_OTP}
+              element={<VerifyOtpPage />}
+            />
+            <Route
+              path={ROUTES.REGISTER_USER_INFO}
+              element={<UserInfoPage />}
+            />
             <Route path={ROUTES.REGISTER_PASSWORD} element={<PasswordPage />} />
           </Route>
         </Routes>

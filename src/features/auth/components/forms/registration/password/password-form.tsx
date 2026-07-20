@@ -21,7 +21,10 @@ export default function PasswordForm() {
   const isDisabled = (isSubmitted && !isValid) || isSubmitting;
 
   const onSubmit = handleSubmit((data) => {
-    setFields({ password: data.password, confirmPassword: data.confirmPassword });
+    setFields({
+      password: data.password,
+      confirmPassword: data.confirmPassword,
+    });
   });
 
   return (

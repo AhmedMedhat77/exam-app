@@ -44,7 +44,9 @@ export default function UserInfoForm({ email }: UserInfoFormProps) {
   const onSubmit = handleSubmit((data) => {
     setFields(data);
     handleSaveToSessionStorage('userData', data);
-    navigate(`${ROUTES.REGISTER_PASSWORD}?email=${encodeURIComponent(email || '')}`);
+    navigate(
+      `${ROUTES.REGISTER_PASSWORD}?email=${encodeURIComponent(email || '')}`
+    );
   });
 
   // ====================== EFFECTS  ======================
