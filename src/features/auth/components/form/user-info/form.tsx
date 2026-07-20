@@ -1,6 +1,7 @@
 import { ROUTES } from '@/app/routes';
 import { Button } from '@/shared/ui/button';
 import CustomInput from '@/shared/ui/custom-input';
+import CustomPhoneInput from '@/shared/ui/phone-input';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
@@ -22,6 +23,13 @@ export default function UserInfoForm({ email }: IUserInfoFormProps) {
         <CustomInput label="Last Name" placeholder="Last Name" required />
       </div>
       <CustomInput label="Username" placeholder="user123" required />
+      <CustomPhoneInput
+        international
+        country="EG"
+        defaultCountry="EG"
+        label='Phone'
+        onChange={(value?: string) => console.log(value)}
+      />
       <Button variant="primary-foreground">Next</Button>
     </form>
   );
