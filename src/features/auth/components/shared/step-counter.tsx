@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import type { IStepCounterProps } from '../types/step-counter';
+import type { IStepCounterProps } from '@/features/auth/types/step-counter';
 
 export default memo(function StepCounter({
   currentStep,

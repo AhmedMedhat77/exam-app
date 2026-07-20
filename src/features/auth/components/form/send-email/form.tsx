@@ -1,4 +1,10 @@
 import { ROUTES } from '@/app/routes';
+import StepCounter from '@/features/auth/components/shared/step-counter';
+import { useCreateAccount } from '@/features/auth/hooks/use-create-account';
+import {
+  type CreateAccountInput,
+  sendEmailSchema,
+} from '@/features/auth/schemas/send-email.schema';
 import { Button } from '@/shared/ui/button';
 import CustomInput from '@/shared/ui/custom-input';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -6,13 +12,6 @@ import { ChevronRight, Loader2 } from 'lucide-react';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useSearchParams } from 'react-router';
-import { useCreateAccount } from '../../../hooks/use-create-account';
-import {
-  type CreateAccountInput,
-  sendEmailSchema,
-} from '../../../schemas/send-email.schema';
-
-import StepCounter from '../../step-counter';
 
 export default function SendEmailForm() {
   const [searchParams] = useSearchParams();

@@ -3,7 +3,7 @@ import axios from 'axios';
 import {
   sendVerificationCodeApiResponse,
   type CreateAccountInput,
-} from '../schemas/send-email.schema';
+} from '@/features/auth/schemas/send-email.schema';
 
 const URL = '/api/auth/send-email-verification';
 

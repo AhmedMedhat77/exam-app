@@ -3,10 +3,10 @@ import CreateAccountPage from '@/features/auth/pages/send-email-page';
 import UserInfoPage from '@/features/auth/pages/user-info';
 import VerifyOtpPage from '@/features/auth/pages/verify-otp-page';
 import { BrowserRouter, Route, Routes } from 'react-router';
-import RootLayout from './layouts/root-layout';
-import DashboardHomePage from './pages/dashboard-home-page';
-import { AppProviders } from './providers';
-import { ROUTES } from './routes';
+import RootLayout from '@/app/layouts/root-layout';
+import DashboardHomePage from '@/app/pages/dashboard-home-page';
+import { AppProviders } from '@/app/providers';
+import { ROUTES } from '@/app/routes';
 
 export function App() {
   return (

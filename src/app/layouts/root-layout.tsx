@@ -1,6 +1,6 @@
-import AuthLayout from './auth-layout';
-import DashboardLayout from './dashboard-layout';
-import { ROUTES } from '../routes';
+import AuthLayout from '@/app/layouts/auth-layout';
+import DashboardLayout from '@/app/layouts/dashboard-layout';
+import { ROUTES } from '@/app/routes';
 import { Navigate, Outlet, useLocation } from 'react-router';
 import * as React from 'react';
 

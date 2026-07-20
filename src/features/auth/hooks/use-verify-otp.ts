@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
-import { VerifyOtpService } from '../services/verify-otp.service';
-import type { VerifyOtpInput } from '../schemas/verify-otp.schema';
+import type { VerifyOtpInput } from '@/features/auth/schemas/verify-otp.schema';
+import { VerifyOtpService } from '@/features/auth/services/verify-otp.service';
 
 export function useVerifyOtp() {
   return useMutation({

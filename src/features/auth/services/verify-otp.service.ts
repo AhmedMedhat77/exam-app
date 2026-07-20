@@ -1,7 +1,9 @@
 import { axiosInstance } from '@/shared/lib/axios';
 import axios from 'axios';
-import type { VerifyOtpInput } from '../schemas/verify-otp.schema';
-import { verifyOtpApiResponse } from '../schemas/verify-otp.schema';
+import {
+  verifyOtpApiResponse,
+  type VerifyOtpInput,
+} from '@/features/auth/schemas/verify-otp.schema';
 
 const VERIFY_URL = '/api/auth/confirm-email-verification';
 

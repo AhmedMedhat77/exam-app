@@ -1,8 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router';
 import { ROUTES } from '@/app/routes';
-import { CreateAccountService } from '../services/send-email.service';
-import type { CreateAccountInput } from '../schemas/send-email.schema';
+import type { CreateAccountInput } from '@/features/auth/schemas/send-email.schema';
+import { CreateAccountService } from '@/features/auth/services/send-email.service';
 
 export function useCreateAccount() {
   const navigate = useNavigate();
