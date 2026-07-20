@@ -1,7 +1,7 @@
 import { Button } from '@/shared/ui/button';
 import CustomInput from '@/shared/ui/custom-input';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Link } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 import { ChevronRight, Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { useCreateAccount } from '../hooks/use-create-account';
@@ -10,13 +10,18 @@ import {
   createAccountSchema,
 } from '../schemas/create-account.schema';
 import { ROUTES } from '@/app/routes';
+import { useEffect } from 'react';
 
 export default function CreateAccountForm() {
+  const [searchParams] = useSearchParams();
+  const email = searchParams.get('email');
+
   const { mutate, isPending, error, isError } = useCreateAccount();
 
   const {
     register,
     formState: { errors, isValid, isSubmitted, isSubmitting },
+    reset,
     handleSubmit,
   } = useForm<CreateAccountInput>({
     resolver: zodResolver(createAccountSchema),
@@ -30,6 +35,10 @@ export default function CreateAccountForm() {
   const onSubmit = handleSubmit((data) => {
     mutate(data);
   });
+
+  useEffect(() => {
+    if (email) reset({ email });
+  }, []);
 
   return (
     <div className="flex flex-col w-[90%] gap-2">

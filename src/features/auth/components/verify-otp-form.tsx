@@ -174,7 +174,7 @@ export default function VerifyOtpForm({ email }: VerifyOtpFormProps) {
         <br />
         <span className="text-gray-700">{email}</span>.{' '}
         <Link
-          to={ROUTES.CREATE_ACCOUNT}
+          to={`${ROUTES.CREATE_ACCOUNT}?email=${email}`}
           className="text-primary font-medium hover:underline"
         >
           Edit
