@@ -15,9 +15,7 @@ interface ResetPasswordFormProps {
   token: string;
 }
 
-export default function ResetPasswordForm({
-  token,
-}: ResetPasswordFormProps) {
+export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
   const { mutate, isPending, error, isError } = useResetPassword();
   const {
     register,
