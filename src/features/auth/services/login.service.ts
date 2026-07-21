@@ -1,11 +1,12 @@
 import { axiosInstance } from '@/shared/lib/axios';
 import axios from 'axios';
 import type { LoginInput } from '@/features/auth/schemas/login/login.schema';
+import type { LoginResponse } from '@/features/auth/types/login.types';
 
 const URL = '/api/auth';
 
 export class LoginService {
-  static async login(payload: LoginInput): Promise<void> {
+  static async login(payload: LoginInput): Promise<LoginResponse> {
     try {
       const response = await axiosInstance.post(`${URL}/login`, payload);
       return response.data;

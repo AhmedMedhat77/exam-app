@@ -1,6 +1,7 @@
 import AuthLayout from '@/app/layouts/auth-layout';
 import DashboardLayout from '@/app/layouts/dashboard-layout';
 import { ROUTES } from '@/app/routes';
+import { useUserStore } from '@/features/user/store/user.store';
 import { Navigate, Outlet, useLocation } from 'react-router';
 import * as React from 'react';
 
@@ -16,7 +17,8 @@ const AuthRoutes: string[] = [
 ];
 
 export default function RootLayout() {
-  const isAuth = false;
+  const token = useUserStore((state) => state.token);
+  const isAuth = !!token;
   const { pathname } = useLocation();
 
   if (isAuth && AuthRoutes.includes(pathname)) {

@@ -1,18 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-
-interface User {
-  id: string;
-  username: string;
-  email: string;
-  phone: string;
-  firstName: string;
-  lastName: string;
-  emailVerified: boolean;
-  phoneVerified: boolean;
-  role: string;
-  createdAt: string;
-}
+import type { User } from '@/features/user/types/user.types';
 
 interface UserStore {
   user: User | null;
