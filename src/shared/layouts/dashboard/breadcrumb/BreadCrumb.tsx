@@ -1,4 +1,3 @@
-import { ChevronRight } from 'lucide-react';
 import { Link, useLocation } from 'react-router';
 
 function formatSegmentTitle(segment: string): string {
