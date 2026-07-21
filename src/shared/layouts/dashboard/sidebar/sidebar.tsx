@@ -1,7 +1,8 @@
 import { ROUTES } from '@/app/routes';
+import SidebarLinkItem from '@/shared/layouts/dashboard/sidebar/components/link-item';
 import { Logo } from '@/shared/layouts/dashboard/sidebar/components/logo';
 import UserInfo from '@/shared/layouts/dashboard/sidebar/components/user-info';
-import { Link } from 'react-router';
+import { GraduationCap, Home, UserRound } from 'lucide-react';
 
 function Sidebar() {
   return (
@@ -9,15 +10,23 @@ function Sidebar() {
       <div className="flex flex-col gap-10">
         <Logo />
         {/* Routes  */}
-        <ul className="flex flex-col">
+        <ul className="flex flex-col gap-2.5">
           <li>
-            <Link to={ROUTES.HOME}>Home</Link>
+            <SidebarLinkItem path={ROUTES.HOME} title="Home" icon={<Home />} />
           </li>
           <li>
-            <Link to={ROUTES.HOME}>Home</Link>
+            <SidebarLinkItem
+              path={ROUTES.DIPLOMAS}
+              title="Diplomas"
+              icon={<GraduationCap />}
+            />
           </li>
           <li>
-            <Link to={ROUTES.HOME}>Home</Link>
+            <SidebarLinkItem
+              path={ROUTES.ACCOUNT_SETTINGS}
+              title="Account Settings"
+              icon={<UserRound />}
+            />
           </li>
         </ul>
       </div>
