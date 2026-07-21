@@ -1,25 +1,18 @@
 import { ROUTES } from '@/app/routes';
-import { useUserStore } from '@/features/user/store/user.store';
 import SidebarLinkItem from '@/shared/layouts/dashboard/sidebar/components/link-item';
 import { Logo } from '@/shared/layouts/dashboard/sidebar/components/logo';
 import UserInfo from '@/shared/layouts/dashboard/sidebar/components/user-info';
+import { useSidebarContainerStyles } from '@/shared/layouts/dashboard/sidebar/styles/sidebar.styles';
 import { cn } from '@/shared/lib/utils';
 import { GraduationCap, Home, UserRound } from 'lucide-react';
 
 function Sidebar() {
-  const haveAdminRules = useUserStore((state) => state.haveAdminRules);
+  const containerStyles = useSidebarContainerStyles();
 
   return (
-    <aside
-      className={cn(
-        'w-90.5 border-r flex flex-col justify-between p-10',
-        haveAdminRules
-          ? 'bg-gray-800 border-gray-800'
-          : 'bg-blue-50 border-blue-50'
-      )}
-    >
+    <aside className={cn(containerStyles)}>
       <div className="flex flex-col gap-10">
-        <Logo isAdmin={haveAdminRules} />
+        <Logo />
         {/* Routes  */}
         <ul className="flex flex-col gap-2.5">
           <li>
@@ -42,7 +35,7 @@ function Sidebar() {
         </ul>
       </div>
       {/* Footer */}
-      <UserInfo isAdmin={haveAdminRules} />
+      <UserInfo />
     </aside>
   );
 }
