@@ -33,7 +33,7 @@ export default function BreadCrumb() {
 
             return (
               <li key={crumb.href} className="flex items-center gap-2">
-                {index > 0 && <ChevronRight className="size-4 text-gray-400" />}
+                {index > 0 && <span className="text-gray-400">/</span>}
                 {isLast ? (
                   <span
                     className={'flex items-center gap-1 text-gray-400'}
