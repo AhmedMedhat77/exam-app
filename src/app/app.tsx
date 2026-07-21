@@ -1,5 +1,3 @@
-import RootLayout from '@/app/layouts/root-layout';
-import DashboardHomePage from '@/app/pages/dashboard-home-page';
 import { AppProviders } from '@/app/providers';
 import { ROUTES } from '@/app/routes';
 import ForgotPasswordPage from '@/features/auth/pages/forgot-password/forgot-password.page';
@@ -10,6 +8,8 @@ import EmailPage from '@/features/auth/pages/registration/email.page';
 import PasswordPage from '@/features/auth/pages/registration/password.page';
 import UserInfoPage from '@/features/auth/pages/registration/user-info.page';
 import VerifyOtpPage from '@/features/auth/pages/registration/verify-otp.page';
+import DashboardPage from '@/features/dashboard/pages/index.page';
+import RootLayout from '@/shared/layouts/root-layout';
 import { BrowserRouter, Route, Routes } from 'react-router';
 
 export function App() {
@@ -18,7 +18,7 @@ export function App() {
       <BrowserRouter>
         <Routes>
           <Route element={<RootLayout />}>
-            <Route path={ROUTES.HOME} element={<DashboardHomePage />} />
+            <Route path={ROUTES.HOME} element={<DashboardPage />} />
             <Route path={ROUTES.LOGIN} element={<LoginPage />} />
             <Route
               path={ROUTES.FORGOT_PASSWORD}
