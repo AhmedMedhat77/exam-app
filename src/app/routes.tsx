@@ -1,3 +1,5 @@
+import { GraduationCap, Logs, UserRound } from 'lucide-react';
+
 export const ROUTES = {
   LOGIN: '/login',
   REGISTER: '/register',
@@ -10,4 +12,37 @@ export const ROUTES = {
   DIPLOMAS: '/',
   ACCOUNT_SETTINGS: '/account-settings',
   ACCOUNT_DETAIL: '/account/:id',
+  LOGS: '/logs',
 } as const;
+
+export const USER_ROUTES = [
+  {
+    title: 'Diplomas',
+    path: ROUTES.DIPLOMAS,
+    icon: <GraduationCap />,
+  },
+  {
+    title: 'Account Settings',
+    path: ROUTES.ACCOUNT_SETTINGS,
+    icon: <UserRound />,
+  },
+];
+
+// Todo: Will be Separate components For Admin
+export const ADMIN_ROUTES = [
+  {
+    title: 'Diplomas',
+    path: ROUTES.DIPLOMAS,
+    icon: <GraduationCap />,
+  },
+  {
+    title: 'Account Settings',
+    path: ROUTES.ACCOUNT_SETTINGS,
+    icon: <UserRound />,
+  },
+  {
+    title: 'Audit Log',
+    path: ROUTES.LOGS,
+    icon: <Logs />,
+  },
+];
