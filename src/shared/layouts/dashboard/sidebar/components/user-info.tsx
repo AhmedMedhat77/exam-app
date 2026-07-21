@@ -1,6 +1,6 @@
-import { getFirstChar } from '@/app/layouts/sidebar/utils/getFirstChar';
 import { ROUTES } from '@/app/routes';
 import { useUserStore } from '@/features/user/store/user.store';
+import { getFirstChar } from '@/shared/layouts/dashboard/sidebar/utils/getFirstChar';
 import {
   DropdownMenu,
   DropdownMenuContent,

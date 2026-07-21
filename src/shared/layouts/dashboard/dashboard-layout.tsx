@@ -1,4 +1,4 @@
-import Sidebar from '@/app/layouts/sidebar/sidebar';
+import Sidebar from '@/shared/layouts/dashboard/sidebar/sidebar';
 import type { PropsWithChildren } from 'react';
 
 function DashboardLayout({ children }: PropsWithChildren) {

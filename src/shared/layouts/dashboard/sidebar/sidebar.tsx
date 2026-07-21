@@ -1,6 +1,6 @@
-import { Logo } from '@/app/layouts/sidebar/components/logo';
-import UserInfo from '@/app/layouts/sidebar/components/user-info';
 import { ROUTES } from '@/app/routes';
+import { Logo } from '@/shared/layouts/dashboard/sidebar/components/logo';
+import UserInfo from '@/shared/layouts/dashboard/sidebar/components/user-info';
 import { Link } from 'react-router';
 
 function Sidebar() {

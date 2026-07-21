@@ -1,9 +1,9 @@
-import AuthLayout from '@/app/layouts/auth/auth-layout';
-import DashboardLayout from '@/app/layouts/dashboard/dashboard-layout';
 import { ROUTES } from '@/app/routes';
 import { useUserStore } from '@/features/user/store/user.store';
-import { Navigate, Outlet, useLocation } from 'react-router';
+import AuthLayout from '@/shared/layouts/auth/auth-layout';
+import DashboardLayout from '@/shared/layouts/dashboard/dashboard-layout';
 import * as React from 'react';
+import { Navigate, Outlet, useLocation } from 'react-router';
 
 const AuthRoutes: string[] = [
   ROUTES.LOGIN,
