@@ -6,7 +6,7 @@ interface UserStore {
   user: User | null;
   token: string | null;
   setUser: (user: User, token: string) => void;
-  clearUser: () => void;
+  logout: () => void;
 }
 
 export const useUserStore = create<UserStore>()(
@@ -15,7 +15,7 @@ export const useUserStore = create<UserStore>()(
       user: null,
       token: null,
       setUser: (user, token) => set({ user, token }),
-      clearUser: () => set({ user: null, token: null }),
+      logout: () => set({ user: null, token: null }),
     }),
     { name: 'user-storage' }
   )

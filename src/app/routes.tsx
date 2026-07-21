@@ -8,4 +8,7 @@ export const ROUTES = {
   FORGOT_PASSWORD: '/forgot-password',
   FORGOT_PASSWORD_SENT: '/forgot-password/sent',
   RESET_PASSWORD: '/reset-password',
+  DIPLOMAS: '/diplomas',
+  ACCOUNT_SETTINGS: '/account-settings',
+  ACCOUNT_DETAIL: '/account/:id',
 } as const;
