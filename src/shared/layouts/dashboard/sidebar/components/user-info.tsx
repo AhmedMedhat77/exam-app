@@ -1,6 +1,7 @@
 import { ROUTES } from '@/app/routes';
 import { useUserStore } from '@/features/user/store/user.store';
 import { getFirstChar } from '@/shared/layouts/dashboard/sidebar/utils/getFirstChar';
+import { cn } from '@/shared/lib/utils';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,7 +13,7 @@ import { Link } from 'react-router';
 
 const userRolesWithDashboardAccess = ['admin', 'super-admin'];
 
-function UserInfo() {
+function UserInfo({ isAdmin }: { isAdmin: boolean }) {
   const user = useUserStore((state) => state.user);
   const logout = useUserStore((state) => state.logout);
 
@@ -21,14 +22,34 @@ function UserInfo() {
       <DropdownMenuTrigger className="cursor-pointer">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-2">
-            <div className="size-13.5 grid place-content-center bg-blue-200/80 shadow-sm uppercase  text-primary font-medium text-lg ">
+            <div
+              className={cn(
+                'size-13.5 grid place-content-center border aspect-square shadow-sm uppercase  font-medium text-lg',
+                isAdmin
+                  ? 'bg-gray-400 text-white'
+                  : 'border-primary text-primary'
+              )}
+            >
               {`${getFirstChar(user?.firstName)}${getFirstChar(user?.lastName)}`}
             </div>
             <div className="w-full text-start">
-              <h4 className="text-primary font-medium text-lg">
+              <h4
+                className={cn({
+                  'font-medium text-lg': true,
+                  'text-primary': !isAdmin,
+                  'text-white': isAdmin,
+                })}
+              >
                 {user?.firstName}
               </h4>
-              <p className="text-gray-600 font-normal text-sm">{user?.email}</p>
+              <p
+                className={cn({
+                  'text-gray-600 font-normal text-sm': true,
+                  'text-white': isAdmin,
+                })}
+              >
+                {user?.email}
+              </p>
             </div>
           </div>
           <EllipsisVertical className="text-gray-600 size-4.5 cursor-pointer" />
