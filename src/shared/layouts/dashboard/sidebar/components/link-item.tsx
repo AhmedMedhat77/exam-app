@@ -1,5 +1,5 @@
 import { ROUTES } from '@/app/routes';
-import { useSidebarLinkStyles } from '@/shared/layouts/dashboard/sidebar/styles/sidebar.styles';
+import { useSidebarStyles } from '@/shared/layouts/dashboard/sidebar/styles/sidebar.styles';
 import { cn } from '@/shared/lib/utils';
 import { Link, useLocation } from 'react-router';
 
@@ -12,10 +12,10 @@ interface Props {
 function SidebarLinkItem({ path, title, icon }: Props) {
   const { pathname } = useLocation();
   const isActive = pathname.startsWith(path);
-  const linkStyles = useSidebarLinkStyles(isActive);
+  const { link } = useSidebarStyles();
 
   return (
-    <Link to={path} className={cn(linkStyles)}>
+    <Link to={path} className={cn(link(isActive))}>
       {icon}
       <span>{title}</span>
     </Link>

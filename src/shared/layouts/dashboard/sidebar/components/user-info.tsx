@@ -2,9 +2,7 @@ import { ROUTES } from '@/app/routes';
 import { useUserStore } from '@/features/user/store/user.store';
 import { ADMIN_ROLES } from '@/shared/layouts/dashboard/sidebar/constants/admin-roles';
 import {
-  useSidebarAvatarStyles,
-  useSidebarEmailStyles,
-  useSidebarNameStyles,
+  useSidebarStyles
 } from '@/shared/layouts/dashboard/sidebar/styles/sidebar.styles';
 import { getFirstChar } from '@/shared/layouts/dashboard/sidebar/utils/getFirstChar';
 import { cn } from '@/shared/lib/utils';
@@ -20,22 +18,19 @@ import { Link } from 'react-router';
 function UserInfo() {
   const user = useUserStore((state) => state.user);
   const logout = useUserStore((state) => state.logout);
-
-  const avatarStyles = useSidebarAvatarStyles();
-  const nameStyles = useSidebarNameStyles();
-  const emailStyles = useSidebarEmailStyles();
+  const { avatar, email, name } = useSidebarStyles();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="cursor-pointer">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-2">
-            <div className={cn(avatarStyles)}>
+            <div className={cn(avatar)}>
               {`${getFirstChar(user?.firstName)}${getFirstChar(user?.lastName)}`}
             </div>
             <div className="w-full text-start">
-              <h4 className={cn(nameStyles)}>{user?.firstName}</h4>
-              <p className={cn(emailStyles)}>{user?.email}</p>
+              <h4 className={cn(name)}>{user?.firstName}</h4>
+              <p className={cn(email)}>{user?.email}</p>
             </div>
           </div>
           <EllipsisVertical className="text-gray-600 size-4.5 cursor-pointer" />

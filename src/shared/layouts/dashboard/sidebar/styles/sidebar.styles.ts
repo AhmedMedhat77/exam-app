@@ -2,6 +2,7 @@ import { useUserStore } from '@/features/user/store/user.store';
 import { ADMIN_ROLES } from '@/shared/layouts/dashboard/sidebar/constants/admin-roles';
 import { cva } from 'class-variance-authority';
 
+// START of styles
 const sidebarContainerCva = cva(
   'w-90.5 border-r flex flex-col justify-between p-10 transition-colors',
   {
@@ -113,49 +114,20 @@ const sidebarEmailCva = cva('font-normal text-sm', {
   },
 });
 
+// END of styles
+
+// Check is Admin
 export const isSidebarAdminRole = (role?: string | null): boolean => {
   return Boolean(role && ADMIN_ROLES.includes(role));
 };
 
+// Set Admin or User role
 export const useSidebarRole = (overrideRole?: string): 'admin' | 'user' => {
   const userRole = useUserStore((s) => s.user?.role);
   const isAdmin = isSidebarAdminRole(overrideRole ?? userRole);
   return isAdmin ? 'admin' : 'user';
 };
-
-export const useSidebarContainerStyles = (overrideRole?: string) => {
-  const role = useSidebarRole(overrideRole);
-  return sidebarContainerCva({ role });
-};
-
-export const useSidebarLinkStyles = (
-  isActive: boolean,
-  overrideRole?: string
-) => {
-  const role = useSidebarRole(overrideRole);
-  return sidebarLinkCva({ role, isActive });
-};
-
-export const useSidebarLogoTextStyles = (overrideRole?: string) => {
-  const role = useSidebarRole(overrideRole);
-  return sidebarLogoTextCva({ role });
-};
-
-export const useSidebarAvatarStyles = (overrideRole?: string) => {
-  const role = useSidebarRole(overrideRole);
-  return sidebarAvatarCva({ role });
-};
-
-export const useSidebarNameStyles = (overrideRole?: string) => {
-  const role = useSidebarRole(overrideRole);
-  return sidebarNameCva({ role });
-};
-
-export const useSidebarEmailStyles = (overrideRole?: string) => {
-  const role = useSidebarRole(overrideRole);
-  return sidebarEmailCva({ role });
-};
-
+// Use all styles
 export const useSidebarStyles = (overrideRole?: string) => {
   const role = useSidebarRole(overrideRole);
   return {
