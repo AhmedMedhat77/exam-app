@@ -18,7 +18,7 @@ export function App() {
       <BrowserRouter>
         <Routes>
           <Route element={<RootLayout />}>
-            <Route path={ROUTES.HOME} element={<DashboardPage />} />
+            <Route path={ROUTES.DIPLOMAS} element={<DashboardPage />} />
             <Route path={ROUTES.LOGIN} element={<LoginPage />} />
             <Route
               path={ROUTES.FORGOT_PASSWORD}

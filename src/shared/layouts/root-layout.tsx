@@ -22,7 +22,7 @@ export default function RootLayout() {
   const { pathname } = useLocation();
 
   if (isAuth && AuthRoutes.includes(pathname)) {
-    return <Navigate to={ROUTES.HOME} replace />;
+    return <Navigate to={ROUTES.DIPLOMAS} replace />;
   }
 
   if (!isAuth && !AuthRoutes.includes(pathname)) {
