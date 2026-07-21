@@ -81,7 +81,7 @@ const sidebarAvatarCva = cva(
     variants: {
       role: {
         user: 'border-primary text-primary bg-blue-200/80',
-        admin: 'bg-gray-400 text-white border-transparent',
+        admin: 'bg-gray-400 border-gray-300 text-white',
       },
     },
     defaultVariants: {
