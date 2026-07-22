@@ -21,7 +21,7 @@ export default function Error({ error, isError }: IErrorProps) {
 
   return (
     (isError || codeError) && (
-      <div className="text-center bg-destructive/20 p-3 border-2 border-destructive">
+      <div className="bg-destructive/20 border-destructive border-2 p-3 text-center">
         <span className="text-destructive">
           {codeError || error?.message || 'Something went wrong'}
         </span>

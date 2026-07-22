@@ -60,7 +60,7 @@ export default function ForgotPasswordForm({
       </Button>
 
       {isError && (
-        <div className="text-center bg-destructive/20 p-3 border-2 border-destructive">
+        <div className="bg-destructive/20 border-destructive border-2 p-3 text-center">
           <span className="text-destructive">{error?.message}</span>
         </div>
       )}

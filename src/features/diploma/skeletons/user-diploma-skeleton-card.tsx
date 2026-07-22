@@ -1,14 +1,14 @@
 export default function UserDiplomaSkeletonCard() {
   return (
-    <div className="relative h-95 rounded-none border border-primary/40 overflow-hidden flex flex-col justify-end bg-slate-200 dark:bg-slate-800 animate-pulse">
+    <div className="border-primary/40 relative flex h-95 animate-pulse flex-col justify-end overflow-hidden rounded-none border bg-slate-200 dark:bg-slate-800">
       {/* Top-Right Badge Skeleton */}
-      <div className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-slate-300 dark:bg-slate-700 border-2 border-white/50" />
+      <div className="absolute top-3 right-3 z-10 h-8 w-8 rounded-full border-2 border-white/50 bg-slate-300 dark:bg-slate-700" />
 
       {/* Blue Bottom Overlay Box Skeleton */}
-      <div className="relative z-10 w-full bg-primary/80 p-4 font-mono flex flex-col gap-2.5">
-        <div className="h-5 w-2/3 bg-white/40 rounded-sm" />
-        <div className="h-3 w-full bg-white/25 rounded-sm" />
-        <div className="h-3 w-4/5 bg-white/25 rounded-sm" />
+      <div className="bg-primary/80 relative z-10 flex w-full flex-col gap-2.5 p-4 font-mono">
+        <div className="h-5 w-2/3 rounded-sm bg-white/40" />
+        <div className="h-3 w-full rounded-sm bg-white/25" />
+        <div className="h-3 w-4/5 rounded-sm bg-white/25" />
       </div>
     </div>
   );

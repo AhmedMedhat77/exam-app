@@ -37,8 +37,8 @@ export default function PasswordForm() {
   });
 
   return (
-    <div className="flex flex-col w-full gap-2">
-      <form className="flex flex-col gap-4 w-full mx-auto" onSubmit={onSubmit}>
+    <div className="flex w-full flex-col gap-2">
+      <form className="mx-auto flex w-full flex-col gap-4" onSubmit={onSubmit}>
         <CustomInput
           required
           label="Password"
@@ -67,7 +67,7 @@ export default function PasswordForm() {
         </Button>
 
         {isError && (
-          <div className="text-center bg-destructive/20 p-3 border-2 border-destructive">
+          <div className="bg-destructive/20 border-destructive border-2 p-3 text-center">
             <span className="text-destructive">{error?.message}</span>
           </div>
         )}

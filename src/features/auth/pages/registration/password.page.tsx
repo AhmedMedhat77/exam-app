@@ -4,12 +4,12 @@ import { REGISTRATION_STEP_COUNT } from '@/features/auth/constants/registration.
 
 export default function PasswordPage() {
   return (
-    <div className="flex flex-col items-start gap-4 w-full">
+    <div className="flex w-full flex-col items-start gap-4">
       <RegistrationStepper currentStep={4} steps={REGISTRATION_STEP_COUNT} />
       <h1 className="text-start text-2xl font-medium text-gray-800">
         Create Account
       </h1>
-      <h2 className="font-bold text-primary text-lg">
+      <h2 className="text-primary text-lg font-bold">
         Create a strong password
       </h2>
       <PasswordForm />

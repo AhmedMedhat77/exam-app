@@ -69,7 +69,7 @@ const OtpDigitInput = memo(function OtpDigitInput({
       onChange={handleChange}
       onKeyDown={handleKeyDown}
       onPaste={index === 0 ? onPaste : undefined}
-      className="w-11 h-12  text-center text-lg font-medium border border-gray-300 rounded-md outline-none transition-all focus:border-primary focus:ring-1 focus:ring-primary/20 text-gray-800"
+      className="focus:border-primary focus:ring-primary/20 h-12 w-11 rounded-md border border-gray-300 text-center text-lg font-medium text-gray-800 transition-all outline-none focus:ring-1"
       aria-label={`Digit ${index + 1}`}
     />
   );

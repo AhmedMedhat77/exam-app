@@ -62,9 +62,9 @@ export default function VerifyOtpForm({ email }: VerifyOtpFormProps) {
   }, [email, navigate]);
 
   return (
-    <div className="flex flex-col w-[90%] gap-2">
+    <div className="flex w-[90%] flex-col gap-2">
       <FormProvider {...form}>
-        <form onSubmit={onSubmit} className="flex flex-col gap-6 mt-4">
+        <form onSubmit={onSubmit} className="mt-4 flex flex-col gap-6">
           {/* OTP Inputs Component with useFieldArray */}
           <OtpInputs
             inputRefs={inputRefs}

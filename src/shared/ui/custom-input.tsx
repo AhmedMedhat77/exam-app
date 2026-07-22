@@ -19,10 +19,10 @@ function CustomInput({ label, error, ...props }: CustomInputProps) {
   return (
     <Field className="flex flex-col gap-0.5">
       {label && (
-        <FieldLabel className="text-gray-800 text-md" htmlFor={_props.id}>
+        <FieldLabel className="text-md text-gray-800" htmlFor={_props.id}>
           {label}
           {props.required && (
-            <span className="text-xs text-danger ml-1">*</span>
+            <span className="text-danger ml-1 text-xs">*</span>
           )}
         </FieldLabel>
       )}

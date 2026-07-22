@@ -40,15 +40,15 @@ export default function DiplomaHeader({
           type="button"
           onClick={handleBack}
           aria-label="Go back"
-          className="flex h-19.25 w-12 shrink-0 items-center justify-center  border border-primary text-primary transition-colors hover:bg-primary/10 cursor-pointer bg-white"
+          className="border-primary text-primary hover:bg-primary/10 flex h-19.25 w-12 shrink-0 cursor-pointer items-center justify-center border bg-white transition-colors"
         >
           <ChevronLeft className="h-6 w-6" />
         </button>
       )}
-      <div className="flex h-19.25 flex-1 items-center gap-5 px-4 bg-primary ">
+      <div className="bg-primary flex h-19.25 flex-1 items-center gap-5 px-4">
         <div className="flex items-center gap-3">
           {icon}
-          <h4 className="text-white font-heading text-3xl font-semibold leading-8">
+          <h4 className="font-heading text-3xl leading-8 font-semibold text-white">
             {title}
           </h4>
         </div>

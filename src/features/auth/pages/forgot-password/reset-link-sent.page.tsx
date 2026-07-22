@@ -15,18 +15,18 @@ export default function ResetLinkSentPage() {
       <Link
         to={`${ROUTES.FORGOT_PASSWORD}?email=${encodeURIComponent(email)}`}
         aria-label="Back to forgot password"
-        className="flex size-9 items-center justify-center rounded-sm border border-gray-200 text-gray-700 transition-colors hover:border-primary hover:text-primary"
+        className="hover:border-primary hover:text-primary flex size-9 items-center justify-center rounded-sm border border-gray-200 text-gray-700 transition-colors"
       >
         <ArrowLeft className="size-4" />
       </Link>
 
       <div className="space-y-3">
-        <h1 className="text-2xl font-heading font-semibold text-gray-800">
+        <h1 className="font-heading text-2xl font-semibold text-gray-800">
           Password Reset Sent
         </h1>
         <p className="text-sm leading-6 text-gray-600">
           We have sent a password reset link to{' '}
-          <strong className="font-medium text-primary">{email}</strong>.
+          <strong className="text-primary font-medium">{email}</strong>.
         </p>
         <p className="text-sm leading-6 text-gray-600">
           Please check your inbox and follow the instructions to reset your

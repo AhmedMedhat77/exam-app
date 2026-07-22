@@ -12,7 +12,7 @@ export function Logo() {
   const isAdmin = useUserStore((state) => state.isAdmin);
   return (
     <Link to={ROUTES.DIPLOMAS} className="flex flex-col gap-2.5">
-      <img src={LogoImage} alt="Logo" className="w-48 h-9.25 object-contain" />
+      <img src={LogoImage} alt="Logo" className="h-9.25 w-48 object-contain" />
       {/* File Icon */}
       <p className={cn(logoText)}>
         <img
@@ -20,7 +20,7 @@ export function Logo() {
           alt={'folder-icon'}
           className={cn(isAdmin ? 'size-6.5' : 'size-7.5')}
         />
-        <span className="font-medium text-lg">Exam App</span>
+        <span className="text-lg font-medium">Exam App</span>
       </p>
     </Link>
   );

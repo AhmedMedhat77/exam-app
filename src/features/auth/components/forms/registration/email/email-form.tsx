@@ -42,8 +42,8 @@ export default function EmailForm({ email }: EmailFormProps) {
   }, [email]);
 
   return (
-    <div className="flex flex-col w-full gap-2">
-      <form className="flex flex-col gap-4 w-full mx-auto" onSubmit={onSubmit}>
+    <div className="flex w-full flex-col gap-2">
+      <form className="mx-auto flex w-full flex-col gap-4" onSubmit={onSubmit}>
         <CustomInput
           label="Email"
           type="email"
@@ -63,14 +63,14 @@ export default function EmailForm({ email }: EmailFormProps) {
         </Button>
 
         {isApiError && (
-          <div className="text-center bg-destructive/20 p-3 border-2 border-destructive">
+          <div className="bg-destructive/20 border-destructive border-2 p-3 text-center">
             <span className="text-destructive">{error?.message}</span>
           </div>
         )}
         {/* Sign Up Link */}
-        <span className="text-gray-500 text-center text-sm">
+        <span className="text-center text-sm text-gray-500">
           Already have an account?{' '}
-          <span className="text-blue-500 cursor-pointer">
+          <span className="cursor-pointer text-blue-500">
             <Link to={ROUTES.LOGIN}>Login</Link>
           </span>
         </span>

@@ -10,7 +10,7 @@ export default function CustomPhoneInput({
   return (
     <PhoneInput
       {...props}
-      className="h-10 border px-4 py-1 border-input hover:border-primary focus:border-primary invalid:border-danger"
+      className="border-input hover:border-primary focus:border-primary invalid:border-danger h-10 border px-4 py-1"
       flagComponent={Flag}
       onChange={onChange}
       inputComponent={InputComponent}
@@ -21,7 +21,7 @@ export default function CustomPhoneInput({
 function InputComponent(props: DefaultInputComponentProps) {
   return (
     <input
-      className="h-10 border px-4 py-1 border-input hover:border-primary focus:border-primary invalid:border-danger"
+      className="border-input hover:border-primary focus:border-primary invalid:border-danger h-10 border px-4 py-1"
       {...props}
     />
   );

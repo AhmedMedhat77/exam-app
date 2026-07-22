@@ -8,7 +8,7 @@ export default function ForgotPasswordPage() {
   return (
     <div className="flex w-full max-w-md flex-col gap-5">
       <div className="space-y-2">
-        <h1 className="text-2xl font-heading font-semibold text-gray-800">
+        <h1 className="font-heading text-2xl font-semibold text-gray-800">
           Forgot Password
         </h1>
         <p className="text-sm text-gray-500">

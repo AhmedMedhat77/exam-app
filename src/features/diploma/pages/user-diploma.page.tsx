@@ -4,7 +4,7 @@ import { GraduationCap } from 'lucide-react';
 
 export default function UserDiplomaPage() {
   return (
-    <div className="flex flex-col w-full gap-2">
+    <div className="flex w-full flex-col gap-2">
       <DiplomaHeader
         title="Diplomas"
         icon={<GraduationCap size={48} className="text-white" />}

@@ -14,9 +14,9 @@ export default function UserExamDetailPage() {
 
   if (isLoading) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 gap-3">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
-        <p className="text-sm  text-slate-500">Loading exam details...</p>
+      <div className="flex flex-col items-center justify-center gap-3 py-20">
+        <Loader2 className="text-primary h-8 w-8 animate-spin" />
+        <p className="text-sm text-slate-500">Loading exam details...</p>
       </div>
     );
   }
@@ -27,11 +27,11 @@ export default function UserExamDetailPage() {
         <Button
           variant="outline"
           onClick={() => navigate(-1)}
-          className="flex items-center gap-2  text-xs cursor-pointer"
+          className="flex cursor-pointer items-center gap-2 text-xs"
         >
-          <ArrowLeft className="w-4 h-4" /> Back
+          <ArrowLeft className="h-4 w-4" /> Back
         </Button>
-        <div className="p-6 rounded border border-red-200 bg-red-50 text-red-600 text-center  text-sm">
+        <div className="rounded border border-red-200 bg-red-50 p-6 text-center text-sm text-red-600">
           {error?.message || 'Exam not found.'}
         </div>
       </div>

@@ -68,8 +68,8 @@ export default function UserInfoForm({ email }: UserInfoFormProps) {
   }, []);
 
   return (
-    <form className="flex flex-col gap-4 " onSubmit={onSubmit}>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <form className="flex flex-col gap-4" onSubmit={onSubmit}>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <CustomInput
           label="First Name"
           placeholder="First Name"

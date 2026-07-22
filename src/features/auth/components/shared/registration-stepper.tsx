@@ -10,7 +10,7 @@ export default memo(function RegistrationStepper({
   steps,
 }: RegistrationStepperProps) {
   return (
-    <div className="flex items-center justify-center w-full my-6 px-2">
+    <div className="my-6 flex w-full items-center justify-center px-2">
       {Array.from({ length: steps }).map((_, index) => {
         const stepNumber = index + 1;
         const isCompleted = stepNumber < currentStep;
@@ -24,32 +24,32 @@ export default memo(function RegistrationStepper({
             className={`flex items-center ${isLast ? 'flex-none' : 'flex-1'}`}
           >
             {/* Step Node */}
-            <div className="size-7 flex items-center justify-center shrink-0">
+            <div className="flex size-7 shrink-0 items-center justify-center">
               {isActive && (
                 <div className="relative flex items-center justify-center">
                   {/* Soft pulsing active node */}
-                  <div className="size-6 bg-primary/15 rotate-45 flex items-center justify-center animate-pulse-shadow transition-all duration-500">
-                    <div className="size-3 bg-primary transition-all duration-300" />
+                  <div className="bg-primary/15 animate-pulse-shadow flex size-6 rotate-45 items-center justify-center transition-all duration-500">
+                    <div className="bg-primary size-3 transition-all duration-300" />
                   </div>
                 </div>
               )}
 
               {isCompleted && (
-                <div className="size-3 bg-primary rotate-45 transition-all duration-300" />
+                <div className="bg-primary size-3 rotate-45 transition-all duration-300" />
               )}
 
               {isUpcoming && (
-                <div className="size-3 border-[1.5px] border-primary bg-primary/10 rotate-45 transition-all duration-300" />
+                <div className="border-primary bg-primary/10 size-3 rotate-45 border-[1.5px] transition-all duration-300" />
               )}
             </div>
 
             {/* Connecting Line */}
             {!isLast && (
-              <div className="flex-1  flex items-center">
+              <div className="flex flex-1 items-center">
                 {stepNumber < currentStep ? (
-                  <div className="w-full h-[1.5px] bg-primary transition-all duration-300" />
+                  <div className="bg-primary h-[1.5px] w-full transition-all duration-300" />
                 ) : (
-                  <div className="w-full border-t-[1.5px] border-dashed border-primary transition-all duration-300" />
+                  <div className="border-primary w-full border-t-[1.5px] border-dashed transition-all duration-300" />
                 )}
               </div>
             )}

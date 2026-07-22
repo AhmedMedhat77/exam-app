@@ -8,13 +8,13 @@ export default function VerifyOtpPage() {
   const [searchParams] = useSearchParams();
   const email = searchParams.get('email') ?? '';
   return (
-    <div className="flex flex-col items-start gap-4 w-full">
+    <div className="flex w-full flex-col items-start gap-4">
       {/* Stepper */}
       <RegistrationStepper currentStep={2} steps={REGISTRATION_STEP_COUNT} />
       <h1 className="text-start text-2xl font-medium text-gray-800">
         Create Account
       </h1>
-      <h2 className="text-primary font-medium text-lg">Verify OTP</h2>
+      <h2 className="text-primary text-lg font-medium">Verify OTP</h2>
       <p className="text-sm text-gray-500">
         Please enter the 6-digit code we have sent to:
         <br />

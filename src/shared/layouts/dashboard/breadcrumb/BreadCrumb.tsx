@@ -24,7 +24,7 @@ export default function BreadCrumb() {
   ];
 
   return (
-    <header className="flex items-center justify-between bg-white py-6 border-b border-gray-100 mb-6 px-4">
+    <header className="mb-6 flex items-center justify-between border-b border-gray-100 bg-white px-4 py-6">
       <nav aria-label="Breadcrumb">
         <ol className="flex items-center gap-2 text-sm font-medium">
           {breadcrumbs.map((crumb, index) => {
@@ -44,7 +44,7 @@ export default function BreadCrumb() {
                   <Link
                     to={crumb.href}
                     className={
-                      'transition-colors hover:underline flex items-center gap-1 text-gray-500 hover:text-primary'
+                      'hover:text-primary flex items-center gap-1 text-gray-500 transition-colors hover:underline'
                     }
                   >
                     {crumb.title}

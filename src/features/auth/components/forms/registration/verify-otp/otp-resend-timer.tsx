@@ -65,7 +65,7 @@ export default memo(function ResendTimer({
           type="button"
           onClick={handleResend}
           disabled={isResending}
-          className="text-primary font-medium hover:underline cursor-pointer disabled:opacity-50"
+          className="text-primary cursor-pointer font-medium hover:underline disabled:opacity-50"
         >
           {isResending ? 'Sending...' : 'Resend Code'}
         </button>

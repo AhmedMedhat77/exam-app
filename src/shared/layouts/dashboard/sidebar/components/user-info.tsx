@@ -31,21 +31,21 @@ function UserInfo() {
               <p className={cn(email)}>{user?.email}</p>
             </div>
           </div>
-          <EllipsisVertical className="text-gray-600 size-4.5 cursor-pointer" />
+          <EllipsisVertical className="size-4.5 cursor-pointer text-gray-600" />
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="min-w-40 space-y-4 py-2 px-4">
-        <DropdownMenuItem className="border-b border-gray-100 pt-2 py-2 ">
+      <DropdownMenuContent className="min-w-40 space-y-4 px-4 py-2">
+        <DropdownMenuItem className="border-b border-gray-100 py-2 pt-2">
           <Link to={ROUTES.HOME} className="flex items-center gap-1">
-            <UserRound className="size-4.5 " />
+            <UserRound className="size-4.5" />
             <span>Account</span>
           </Link>
         </DropdownMenuItem>
         {/* For Admin OR Super user only */}
         {user?.role && ADMIN_ROLES.includes(user.role) && (
-          <DropdownMenuItem className="border-b border-gray-100 pt-2 py-2 ">
+          <DropdownMenuItem className="border-b border-gray-100 py-2 pt-2">
             <Link to={ROUTES.HOME} className="flex items-center gap-1">
-              <Bolt className="size-4.5 " />
+              <Bolt className="size-4.5" />
               <span>Dashboard</span>
             </Link>
           </DropdownMenuItem>
@@ -53,9 +53,9 @@ function UserInfo() {
 
         <DropdownMenuItem
           onClick={logout}
-          className="py-4 flex items-center gap-1 text-danger hover:bg-danger/10 cursor-pointer"
+          className="text-danger hover:bg-danger/10 flex cursor-pointer items-center gap-1 py-4"
         >
-          <LogOut className="size-4.5 text-danger" />
+          <LogOut className="text-danger size-4.5" />
           <span>Logout</span>
         </DropdownMenuItem>
       </DropdownMenuContent>

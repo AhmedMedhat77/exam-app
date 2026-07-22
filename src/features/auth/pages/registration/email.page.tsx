@@ -7,7 +7,7 @@ export default function EmailPage() {
   const [searchParams] = useSearchParams();
   const email = searchParams.get('email') || '';
   return (
-    <div className="flex flex-col items-start gap-4 w-full">
+    <div className="flex w-full flex-col items-start gap-4">
       <RegistrationStepper currentStep={1} steps={REGISTRATION_STEP_COUNT} />
       <h1 className="text-start text-2xl font-medium text-gray-800">
         Create Account
