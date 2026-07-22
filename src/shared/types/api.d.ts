@@ -13,8 +13,10 @@ export interface IErrorAiResponse {
 export type IApiResponse<T> = ISuccessApiResponse<T> | IErrorAiResponse;
 
 export type IPaginatedAPIResponse<T> = {
-  data: T;
-  metaData: IPaginatedMetaData;
+  payload: {
+    data: T;
+    metadata: IPaginatedMetaData;
+  };
   success?: boolean;
 };
 
