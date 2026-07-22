@@ -19,7 +19,8 @@ export default function UserDiplomaList() {
     limit: 3,
   });
 
-  const diplomas = data?.pages.flatMap((page) => page.payload?.data ?? []) ?? [];
+  const diplomas =
+    data?.pages.flatMap((page) => page.payload?.data ?? []) ?? [];
 
   if (isLoading) {
     return (

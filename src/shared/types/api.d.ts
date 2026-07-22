@@ -35,4 +35,3 @@ export interface IPaginatedParams {
   orderBy?: string;
   sortOrder?: 'asc' | 'desc';
 }
-

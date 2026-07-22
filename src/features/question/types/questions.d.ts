@@ -1,6 +1,9 @@
 import type { IPaginatedParams } from '@/shared/types/api';
 
-export interface IExamQuestionParams extends Omit<Partial<IPaginatedParams>, 'page' | 'limit'> {
+export interface IExamQuestionParams extends Omit<
+  Partial<IPaginatedParams>,
+  'page' | 'limit'
+> {
   examId?: string;
   immutable?: boolean;
 }
