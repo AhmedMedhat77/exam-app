@@ -6,7 +6,7 @@ export default function UserDiplomaPage() {
   return (
     <div className="flex flex-col w-full gap-2">
       <DiplomaHeader
-        title="My Diplomas"
+        title="Diplomas"
         icon={<GraduationCap size={48} className="text-white" />}
       />
 

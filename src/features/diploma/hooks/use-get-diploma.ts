@@ -13,8 +13,8 @@ export function useGetUserDiplomas(
       DiplomaService.getDiplomas({ ...params, page: Number(pageParam) }),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
-      const currentPage = lastPage?.metaData?.page ?? 1;
-      const totalPages = lastPage?.metaData?.totalPages ?? 1;
+      const currentPage = lastPage?.payload?.metadata?.page ?? 1;
+      const totalPages = lastPage?.payload?.metadata?.totalPages ?? 1;
       return currentPage < totalPages ? currentPage + 1 : undefined;
     },
   });
