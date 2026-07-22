@@ -19,6 +19,7 @@ export const ROUTES = {
   ACCOUNT_DETAIL: '/account/:id',
   // Exams
   EXAMS: '/exams',
+  EXAM_DETAIL: '/exams/:id',
   LOGS: '/logs',
 } as const;
 
@@ -49,6 +50,7 @@ export const USER_ROUTES: route[] = [
     element: ExamsPage,
     hidden: true,
   },
+  //Todo: Add Exam Details
 ];
 
 export const ADMIN_ROUTES: route[] = [
