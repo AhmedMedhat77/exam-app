@@ -31,7 +31,7 @@ export default function UserDiplomaList() {
 
   if (isError) {
     return (
-      <div className="p-4 rounded border border-red-200 bg-red-50 text-red-600 text-center font-mono text-sm">
+      <div className="p-4 rounded border border-red-200 bg-red-50 text-red-600 text-center text-sm">
         {error?.message || 'Failed to load diplomas.'}
       </div>
     );
@@ -46,7 +46,7 @@ export default function UserDiplomaList() {
         loader={
           <div className="py-6 flex flex-col items-center justify-center gap-2">
             <Loader className="w-6 h-6 animate-spin text-primary" />
-            <span className="text-xs font-mono text-slate-500">
+            <span className="text-xs text-slate-500">
               Loading more diplomas...
             </span>
           </div>
@@ -65,18 +65,18 @@ export default function UserDiplomaList() {
           type="button"
           onClick={() => fetchNextPage()}
           disabled={isFetchingNextPage}
-          className="w-full border border-blue-400/40 bg-slate-50/60 dark:bg-slate-900/40 py-3 flex flex-col items-center justify-center gap-1 cursor-pointer hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors rounded-none mt-2"
+          className="w-full border border-gray-400/40 bg-gray-50/60 dark:bg-gray-900/40 py-3 flex flex-col items-center justify-center gap-1 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors rounded-none mt-2"
         >
-          <span className="text-xs text-slate-600 dark:text-slate-400">
+          <span className="text-xs text-gray-600 dark:text-gray-400">
             Scroll to view more
           </span>
-          <ChevronDown className="w-4 h-4 text-slate-500 animate-bounce" />
+          <ChevronDown className="w-4 h-4 text-gray-600 animate-bounce" />
         </button>
       )}
 
       {!hasNextPage && (
         <div className="py-4">
-          <p className="text-center text-xs text-slate-600">End of list</p>
+          <p className="text-center text-xs text-gray-600">End of list</p>
         </div>
       )}
     </div>

@@ -11,7 +11,7 @@ export default function UserDiplomaCard(props: Partial<IDiploma>) {
       />
 
       {/* Blue Overlay Box Of Content */}
-      <div className="absolute left-1/2 -translate-x-1/2 bottom-2 w-[95%] mx-auto bg-[#155DFCBF]/75 p-4 text-white font-mono h-32 group-hover:h-[90%] group-hover:bottom-5 transition-all duration-300 overflow-y-auto">
+      <div className="absolute left-1/2 -translate-x-1/2 bottom-2 w-[95%] mx-auto bg-[#155DFCBF]/75 p-4 text-white font-mono h-32 group-hover:h-[90%] group-hover:bottom-5 transition-all duration-300">
         <h3 className="text-base md:text-lg font-bold text-white mb-1.5 font-mono line-clamp-1">
           {props.title}
         </h3>
