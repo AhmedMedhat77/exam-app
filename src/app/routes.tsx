@@ -1,7 +1,7 @@
 import AuditLogsPage from '@/features/audit/pages/audit.page';
 import AdminDiplomaPage from '@/features/diploma/pages/admin-diploma.page';
 import UserDiplomaPage from '@/features/diploma/pages/user-diploma.page';
-import ExamsPage from '@/features/exam/pages/exams.page';
+import ExamsPage from '@/features/exam/pages/user/user-exams.page';
 import UserSettingsPage from '@/features/user/pages/user-settings.page';
 import { GraduationCap, Logs, UserRound } from 'lucide-react';
 

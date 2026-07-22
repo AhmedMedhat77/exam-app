@@ -2,7 +2,7 @@ import type { IExam, IGetExamsParams } from '@/features/exam/types/exams.types';
 import { axiosInstance } from '@/shared/lib/axios';
 import type { IPaginatedAPIResponse } from '@/shared/types/api';
 
-const BASE_URL = '/api/v1/exams';
+const BASE_URL = '/api/exams';
 
 export class ExamsService {
   static async getAll(

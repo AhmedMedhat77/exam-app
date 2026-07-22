@@ -1,5 +1,5 @@
 import { useSearchParams } from 'react-router';
-import { useGetAllExams } from '../hooks/use-get-all-exams';
+import { useGetAllExams } from '../../hooks/use-get-all-exams';
 
 export default function ExamsPage() {
   const [searchParams] = useSearchParams();
