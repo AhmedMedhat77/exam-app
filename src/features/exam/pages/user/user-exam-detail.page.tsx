@@ -41,7 +41,7 @@ export default function UserExamDetailPage() {
   return (
     <div className="w-full space-y-6 py-4">
       <DiplomaHeader
-        icon={<CircleQuestionMark size={48} className="text-white" />}
+        icon={<CircleQuestionMark size={45} className="text-white" />}
         title={exam.exam.title || ''}
       />
     </div>
