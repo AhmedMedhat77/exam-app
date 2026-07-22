@@ -1,4 +1,5 @@
 import { ROUTES } from '@/app/routes';
+import Heading from '@/features/auth/shared/components/heading';
 import { ArrowLeft } from 'lucide-react';
 import { Link, Navigate, useSearchParams } from 'react-router';
 
@@ -21,9 +22,7 @@ export default function ResetLinkSentPage() {
       </Link>
 
       <div className="space-y-3">
-        <h1 className="font-heading text-2xl font-semibold text-gray-800">
-          Password Reset Sent
-        </h1>
+        <Heading>Password Reset Sent</Heading>
         <p className="text-sm leading-6 text-gray-600">
           We have sent a password reset link to{' '}
           <strong className="text-primary font-medium">{email}</strong>.

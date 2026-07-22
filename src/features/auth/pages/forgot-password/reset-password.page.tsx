@@ -1,5 +1,6 @@
 import { ROUTES } from '@/app/routes';
 import ResetPasswordForm from '@/features/auth/components/forms/forgot-password/reset-password-form';
+import Heading from '@/features/auth/shared/components/heading';
 import { Navigate, useSearchParams } from 'react-router';
 
 export default function ResetPasswordPage() {
@@ -13,9 +14,7 @@ export default function ResetPasswordPage() {
   return (
     <div className="flex w-full max-w-md flex-col gap-5">
       <div className="space-y-2">
-        <h1 className="font-heading text-2xl font-semibold text-gray-800">
-          Create a New Password
-        </h1>
+        <Heading>Create a New Password</Heading>
         <p className="text-sm text-gray-500">
           Create a new strong password for your account.
         </p>
