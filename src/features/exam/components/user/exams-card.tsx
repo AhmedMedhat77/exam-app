@@ -49,7 +49,7 @@ export default function UserExamsCard(props: Partial<IExam>) {
         </p>
       </div>
 
-      <Link to={`${ROUTES.EXAMS}/${props.id}`}>
+      <Link to={ROUTES.EXAM_DETAIL.replace(':id', props.id || '')}>
         <Button className="absolute -bottom-12 right-3 w-fit opacity-0 group-hover/card:bottom-3 group-hover/card:opacity-100 transition-all duration-300">
           START
           <MoveRight />

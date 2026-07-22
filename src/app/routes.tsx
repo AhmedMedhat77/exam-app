@@ -1,6 +1,7 @@
 import AuditLogsPage from '@/features/audit/pages/audit.page';
 import AdminDiplomaPage from '@/features/diploma/pages/admin-diploma.page';
 import UserDiplomaPage from '@/features/diploma/pages/user-diploma.page';
+import UserExamDetailPage from '@/features/exam/pages/user/user-exam-detail.page';
 import ExamsPage from '@/features/exam/pages/user/user-exams.page';
 import UserSettingsPage from '@/features/user/pages/user-settings.page';
 import { GraduationCap, Logs, UserRound } from 'lucide-react';
@@ -50,7 +51,12 @@ export const USER_ROUTES: route[] = [
     element: ExamsPage,
     hidden: true,
   },
-  //Todo: Add Exam Details
+  {
+    title: 'Exam Detail',
+    path: ROUTES.EXAM_DETAIL,
+    element: UserExamDetailPage,
+    hidden: true,
+  },
 ];
 
 export const ADMIN_ROUTES: route[] = [
