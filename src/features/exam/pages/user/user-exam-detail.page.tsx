@@ -1,5 +1,9 @@
 import DiplomaHeader from '@/features/diploma/components/shared/header';
+import DonutBar from '@/features/exam/components/user/donut-bar';
+import ProgressBar from '@/features/exam/components/user/progressbar';
+import QuestionStepCounter from '@/features/exam/components/user/question-step-counter';
 import { useGetExamById } from '@/features/exam/hooks/use-get-exam-by-id';
+import useGetExamQuestions from '@/features/question/hooks/use-get-exam-questions';
 import { Button } from '@/shared/ui/button';
 import { ArrowLeft, CircleQuestionMark, Loader2 } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router';
@@ -10,7 +14,15 @@ export default function UserExamDetailPage() {
 
   const { data, isLoading, isError, error } = useGetExamById(id);
 
-  const exam = data && 'payload' in data ? data.payload : null;
+  const examData = data?.payload;
+
+  // API fetching questions
+  const { data: questionsData } = useGetExamQuestions({
+    examId: examData?.exam.id,
+  });
+
+  const currentStep = 1;
+  const totalSteps = examData?.exam.questionsCount || 0;
 
   if (isLoading) {
     return (
@@ -21,7 +33,7 @@ export default function UserExamDetailPage() {
     );
   }
 
-  if (isError || !exam) {
+  if (isError || !examData) {
     return (
       <div className="w-full space-y-4 py-6">
         <Button
@@ -42,8 +54,25 @@ export default function UserExamDetailPage() {
     <div className="w-full space-y-6 py-4">
       <DiplomaHeader
         icon={<CircleQuestionMark size={45} className="text-white" />}
-        title={exam.exam.title || ''}
+        title={examData.exam.title || ''}
       />
+      <div className="flex items-center gap-4">
+        {/* Header + Progressbar */}
+        <div className="flex-1 space-y-2">
+          <div className="flex items-center justify-between">
+            <h4 className="text-gray-800">{examData.exam.title}</h4>
+            <QuestionStepCounter
+              currentStep={currentStep}
+              totalSteps={totalSteps}
+            />
+          </div>
+
+          <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
+        </div>
+        <div className="size-16 shrink-0">
+          <DonutBar time={examData.exam.duration * 60 || 0} />
+        </div>
+      </div>
     </div>
   );
 }

@@ -17,3 +17,26 @@ axiosInstance.interceptors.request.use((config) => {
   }
   return config;
 });
+
+// Auto Logout
+axios.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response.status === 401) {
+      useUserStore.getState().logout();
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
+
+// Catch errors With backend Errors
+axios.interceptors.response.use((response) => {
+  const error = response.data;
+
+  if (axios.isAxiosError(error) && error.response?.data) {
+    throw new Error(error.response.data.message);
+  }
+
+  return response;
+});

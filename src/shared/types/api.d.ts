@@ -1,33 +1,32 @@
 export interface ISuccessApiResponse<T> {
   status: true;
   code: number;
+  message?: string;
   payload: T;
 }
 
-export interface IErrorAiResponse {
+export interface IErrorApiResponse {
   status: false;
   code: number;
   message: string;
+  payload?: undefined;
 }
 
-export type IApiResponse<T> = ISuccessApiResponse<T> | IErrorAiResponse;
+export type IErrorAiResponse = IErrorApiResponse;
 
-export type IPaginatedAPIResponse<T> = {
-  payload: {
-    data: T;
-    metadata: IPaginatedMetaData;
-  };
-  success?: boolean;
-};
+export type IApiResponse<T> = ISuccessApiResponse<T> | IErrorApiResponse;
 
 export interface IPaginatedMetaData {
   page: number;
   limit: number;
   total: number;
   totalPages: number;
-  data: T;
-  success: boolean;
 }
+
+export type IPaginatedAPIResponse<T> = IApiResponse<{
+  data: T;
+  metadata: IPaginatedMetaData;
+}>;
 
 export interface IPaginatedParams {
   page?: number;
@@ -36,3 +35,4 @@ export interface IPaginatedParams {
   orderBy?: string;
   sortOrder?: 'asc' | 'desc';
 }
+
