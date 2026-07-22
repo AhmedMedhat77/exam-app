@@ -48,7 +48,7 @@ export default function DiplomaHeader({
       <div className="flex h-19.25 flex-1 items-center gap-5 px-4 bg-primary ">
         <div className="flex items-center gap-3">
           {icon}
-          <h4 className="text-white text-3xl font-semibold leading-8">
+          <h4 className="text-white font-heading text-3xl font-semibold leading-8">
             {title}
           </h4>
         </div>
