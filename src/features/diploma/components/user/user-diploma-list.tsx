@@ -1,8 +1,10 @@
+import { ROUTES } from '@/app/routes';
 import UserDiplomaCard from '@/features/diploma/components/user/user-diploma-card';
 import { useGetUserDiplomas } from '@/features/diploma/hooks/use-get-diploma';
 import UserDiplomaSkeletonCard from '@/features/diploma/skeletons/user-diploma-skeleton-card';
 import { ChevronDown, Loader } from 'lucide-react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { Link } from 'react-router';
 
 export default function UserDiplomaList() {
   const {
@@ -54,7 +56,12 @@ export default function UserDiplomaList() {
       >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
           {diplomas.map((diploma, index) => (
-            <UserDiplomaCard key={diploma.id || index} {...diploma} />
+            <Link
+              to={`${ROUTES.EXAMS}?diplomaId=${diploma.id}`}
+              key={diploma.id || index}
+            >
+              <UserDiplomaCard {...diploma} />
+            </Link>
           ))}
         </div>
       </InfiniteScroll>

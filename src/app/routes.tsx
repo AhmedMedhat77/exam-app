@@ -1,6 +1,7 @@
 import AuditLogsPage from '@/features/audit/pages/audit.page';
 import AdminDiplomaPage from '@/features/diploma/pages/admin-diploma.page';
 import UserDiplomaPage from '@/features/diploma/pages/user-diploma.page';
+import ExamsPage from '@/features/exam/pages/exams.page';
 import UserSettingsPage from '@/features/user/pages/user-settings.page';
 import { GraduationCap, Logs, UserRound } from 'lucide-react';
 
@@ -16,10 +17,20 @@ export const ROUTES = {
   DIPLOMAS: '/',
   ACCOUNT_SETTINGS: '/account-settings',
   ACCOUNT_DETAIL: '/account/:id',
+  // Exams
+  EXAMS: '/exams',
   LOGS: '/logs',
 } as const;
 
-export const USER_ROUTES = [
+type route = {
+  title: string;
+  path: (typeof ROUTES)[keyof typeof ROUTES];
+  icon?: React.ReactNode;
+  element: React.ComponentType;
+  hidden?: boolean;
+};
+
+export const USER_ROUTES: route[] = [
   {
     title: 'Diplomas',
     path: ROUTES.DIPLOMAS,
@@ -32,10 +43,15 @@ export const USER_ROUTES = [
     icon: <UserRound />,
     element: UserSettingsPage,
   },
+  {
+    title: 'Exams',
+    path: ROUTES.EXAMS,
+    element: ExamsPage,
+    hidden: true,
+  },
 ];
 
-// Todo: Will be Separate components For Admin
-export const ADMIN_ROUTES = [
+export const ADMIN_ROUTES: route[] = [
   {
     title: 'Diplomas',
     path: ROUTES.DIPLOMAS,

@@ -1,3 +1,5 @@
+import type { IPaginatedParams } from '@/shared/types/api';
+
 export interface IDiploma {
   id: string;
   title: string;
@@ -8,11 +10,6 @@ export interface IDiploma {
   updatedAt: string;
 }
 
-export interface IGetDiplomaParams {
-  page?: number;
-  limit?: number;
-  search?: string;
-  sortBy?: 'asc' | 'desc';
-  sortOrder?: 'asc' | 'desc';
+export interface IGetDiplomaParams extends IPaginatedParams {
   immutable?: boolean;
 }

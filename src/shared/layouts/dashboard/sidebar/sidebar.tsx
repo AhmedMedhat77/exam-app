@@ -1,11 +1,10 @@
-import { ADMIN_ROUTES, ROUTES, USER_ROUTES } from '@/app/routes';
+import { ADMIN_ROUTES, USER_ROUTES } from '@/app/routes';
 import { useUserStore } from '@/features/user/store/user.store';
 import SidebarLinkItem from '@/shared/layouts/dashboard/sidebar/components/link-item';
 import { Logo } from '@/shared/layouts/dashboard/sidebar/components/logo';
 import UserInfo from '@/shared/layouts/dashboard/sidebar/components/user-info';
 import { useSidebarStyles } from '@/shared/layouts/dashboard/sidebar/styles/sidebar.styles';
 import { cn } from '@/shared/lib/utils';
-import { GraduationCap, UserRound } from 'lucide-react';
 import { useMemo } from 'react';
 
 function Sidebar() {
@@ -25,15 +24,18 @@ function Sidebar() {
         <Logo />
         {/* Routes  */}
         <ul className="flex flex-col gap-2.5">
-          {routes.map((route) => (
-            <li key={route.title}>
-              <SidebarLinkItem
-                path={route.path}
-                title={route.title}
-                icon={route.icon}
-              />
-            </li>
-          ))}
+          {routes.map((route) => {
+            if (route.hidden) return null;
+            return (
+              <li key={route.title}>
+                <SidebarLinkItem
+                  path={route.path}
+                  title={route.title}
+                  icon={route.icon}
+                />
+              </li>
+            );
+          })}
         </ul>
       </div>
       {/* Footer */}

@@ -5,8 +5,8 @@ import { Link, useLocation } from 'react-router';
 
 interface Props {
   path: (typeof ROUTES)[keyof typeof ROUTES];
-  title: string;
-  icon: React.ReactNode;
+  title?: string;
+  icon?: React.ReactNode;
 }
 
 function SidebarLinkItem({ path, title, icon }: Props) {

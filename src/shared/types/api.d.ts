@@ -28,3 +28,11 @@ export interface IPaginatedMetaData {
   data: T;
   success: boolean;
 }
+
+export interface IPaginatedParams {
+  page?: number;
+  limit?: number;
+  search?: string;
+  orderBy?: string;
+  sortOrder?: 'asc' | 'desc';
+}
