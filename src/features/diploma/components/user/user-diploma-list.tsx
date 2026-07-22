@@ -14,7 +14,7 @@ export default function UserDiplomaList() {
     isError,
     error,
   } = useGetUserDiplomas({
-    limit: 6,
+    limit: 3,
   });
 
   const diplomas = data?.pages.flatMap((page) => page.payload.data) ?? [];
@@ -67,11 +67,17 @@ export default function UserDiplomaList() {
           disabled={isFetchingNextPage}
           className="w-full border border-blue-400/40 bg-slate-50/60 dark:bg-slate-900/40 py-3 flex flex-col items-center justify-center gap-1 cursor-pointer hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors rounded-none mt-2"
         >
-          <span className="text-xs font-mono text-slate-600 dark:text-slate-400">
+          <span className="text-xs text-slate-600 dark:text-slate-400">
             Scroll to view more
           </span>
           <ChevronDown className="w-4 h-4 text-slate-500 animate-bounce" />
         </button>
+      )}
+
+      {!hasNextPage && (
+        <div className="py-4">
+          <p className="text-center text-xs text-slate-600">End of list</p>
+        </div>
       )}
     </div>
   );
