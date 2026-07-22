@@ -6,7 +6,8 @@ import type { IGetExamsParams } from '../types/exams.types';
 export const useGetAllExams = (params?: IGetExamsParams) => {
   return useInfiniteQuery({
     queryKey: EXAMS_KEY.all(params),
-    queryFn: ({ pageParam = 1 }) => ExamsService.getAll({ ...params, page: pageParam }),
+    queryFn: ({ pageParam = 1 }) =>
+      ExamsService.getAll({ ...params, page: pageParam }),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
       const currentPage = lastPage?.payload?.metadata?.page ?? 1;
