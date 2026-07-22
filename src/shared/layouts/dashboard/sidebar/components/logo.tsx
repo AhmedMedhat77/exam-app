@@ -1,19 +1,25 @@
 import { ROUTES } from '@/app/routes';
+import FolderIconOutline from '@/assets/icons/folder-code-outline.svg';
+import FolderIcon from '@/assets/icons/folder-code.svg';
 import LogoImage from '@/assets/icons/logo.svg';
+import { useUserStore } from '@/features/user/store/user.store';
 import { useSidebarStyles } from '@/shared/layouts/dashboard/sidebar/styles/sidebar.styles';
 import { cn } from '@/shared/lib/utils';
-import { FolderCode } from 'lucide-react';
 import { Link } from 'react-router';
 
 export function Logo() {
   const { logoText } = useSidebarStyles();
-
+  const isAdmin = useUserStore((state) => state.isAdmin);
   return (
-    <Link to={ROUTES.HOME} className="flex flex-col gap-2.5">
+    <Link to={ROUTES.DIPLOMAS} className="flex flex-col gap-2.5">
       <img src={LogoImage} alt="Logo" className="w-48 h-9.25 object-contain" />
       {/* File Icon */}
       <p className={cn(logoText)}>
-        <FolderCode className="size-7.5" />
+        <img
+          src={isAdmin ? FolderIconOutline : FolderIcon}
+          alt={'folder-icon'}
+          className={cn(isAdmin ? 'size-6.5' : 'size-7.5')}
+        />
         <span className="font-medium text-lg">Exam App</span>
       </p>
     </Link>
