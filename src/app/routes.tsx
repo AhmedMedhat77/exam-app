@@ -1,4 +1,12 @@
 import AuditLogsPage from '@/features/audit/pages/audit.page';
+import ForgotPasswordPage from '@/features/auth/pages/forgot-password/forgot-password.page';
+import ResetLinkSentPage from '@/features/auth/pages/forgot-password/reset-link-sent.page';
+import ResetPasswordPage from '@/features/auth/pages/forgot-password/reset-password.page';
+import LoginPage from '@/features/auth/pages/login/login.page';
+import EmailPage from '@/features/auth/pages/registration/email.page';
+import PasswordPage from '@/features/auth/pages/registration/password.page';
+import UserInfoPage from '@/features/auth/pages/registration/user-info.page';
+import VerifyOtpPage from '@/features/auth/pages/registration/verify-otp.page';
 import AdminDiplomaPage from '@/features/diploma/pages/admin-diploma.page';
 import UserDiplomaPage from '@/features/diploma/pages/user-diploma.page';
 import UserExamDetailPage from '@/features/exam/pages/user/user-exam-detail.page';
@@ -77,5 +85,48 @@ export const ADMIN_ROUTES: route[] = [
     path: ROUTES.LOGS,
     icon: <Logs />,
     element: AuditLogsPage,
+  },
+];
+
+export const AUTH_ROUTES: route[] = [
+  {
+    title: 'Login',
+    path: ROUTES.LOGIN,
+    element: LoginPage,
+  },
+  {
+    title: 'Register',
+    path: ROUTES.REGISTER,
+    element: EmailPage,
+  },
+  {
+    title: 'Register Verify OTP',
+    path: ROUTES.REGISTER_VERIFY_OTP,
+    element: VerifyOtpPage,
+  },
+  {
+    title: 'Register User Info',
+    path: ROUTES.REGISTER_USER_INFO,
+    element: UserInfoPage,
+  },
+  {
+    title: 'Register Password',
+    path: ROUTES.REGISTER_PASSWORD,
+    element: PasswordPage,
+  },
+  {
+    title: 'Forgot Password',
+    path: ROUTES.FORGOT_PASSWORD,
+    element: ForgotPasswordPage,
+  },
+  {
+    title: 'Forgot Password Sent',
+    path: ROUTES.FORGOT_PASSWORD_SENT,
+    element: ResetLinkSentPage,
+  },
+  {
+    title: 'Reset Password',
+    path: ROUTES.RESET_PASSWORD,
+    element: ResetPasswordPage,
   },
 ];
