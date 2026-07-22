@@ -1,6 +1,6 @@
 import { DIPLOMA_QUERY_KEYS } from '@/features/diploma/constants/diploma-keys';
 import DiplomaService from '@/features/diploma/services/diploma.service';
-import type { IGetDiplomaParams } from '@/features/diploma/types/diploma.types';
+import type { IGetDiplomaParams } from '@/features/diploma/types/diploma.d';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
 

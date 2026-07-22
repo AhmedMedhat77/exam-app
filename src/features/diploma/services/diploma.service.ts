@@ -1,7 +1,7 @@
 import type {
   IDiploma,
   IGetDiplomaParams,
-} from '@/features/diploma/types/diploma.types';
+} from '@/features/diploma/types/diploma.d';
 import { axiosInstance } from '@/shared/lib/axios';
 import type { IPaginatedAPIResponse } from '@/shared/types/api';
 

@@ -1,4 +1,4 @@
-import type { IGetDiplomaParams } from '@/features/diploma/types/diploma.types';
+import type { IGetDiplomaParams } from '@/features/diploma/types/diploma.d';
 
 export const DIPLOMA_QUERY_KEYS = {
   diplomas: {

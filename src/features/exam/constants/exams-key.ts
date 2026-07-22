@@ -1,4 +1,4 @@
-import type { IGetExamsParams } from '@/features/exam/types/exams.types';
+import type { IGetExamsParams } from '@/features/exam/types/exams.d';
 
 const EXAMS_BASE = 'exams';
 

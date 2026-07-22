@@ -1,5 +1,5 @@
 import type { LoginInput } from '@/features/auth/schemas/login/login.schema';
-import type { LoginResponse } from '@/features/auth/types/login.types';
+import type { LoginResponse } from '@/features/auth/types/login.d';
 import { axiosInstance } from '@/shared/lib/axios';
 import axios from 'axios';
 

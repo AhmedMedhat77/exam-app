@@ -1,4 +1,4 @@
-import type { User } from '@/features/user/types/user.types';
+import type { User } from '@/features/user/types/user.d';
 import { ADMIN_ROLES } from '@/shared/layouts/dashboard/sidebar/constants/admin-roles';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';

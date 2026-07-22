@@ -1,6 +1,4 @@
-import type { User } from '@/features/user/types/user.types';
-
-export type { User };
+import type { User } from '@/features/user/types/user.d';
 
 export interface LoginPayload {
   user: User;

@@ -1,5 +1,5 @@
 import { ROUTES } from '@/app/routes';
-import type { IExam } from '@/features/exam/types/exams.types';
+import type { IExam } from '@/features/exam/types/exams.d';
 import { Button } from '@/shared/ui/button';
 import { Clock, HelpCircle, MoveRight } from 'lucide-react';
 import { Link } from 'react-router';

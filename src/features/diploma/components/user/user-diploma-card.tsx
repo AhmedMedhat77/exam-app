@@ -1,4 +1,4 @@
-import type { IDiploma } from '@/features/diploma/types/diploma.types';
+import type { IDiploma } from '@/features/diploma/types/diploma.d';
 
 export default function UserDiplomaCard(props: Partial<IDiploma>) {
   return (

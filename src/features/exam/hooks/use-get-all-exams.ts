@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { EXAMS_KEY } from '../constants/exams-key';
 import { ExamsService } from '../service/exams.service';
-import type { IGetExamsParams } from '../types/exams.types';
+import type { IGetExamsParams } from '../types/exams.d';
 
 export const useGetAllExams = (params?: IGetExamsParams) => {
   return useInfiniteQuery({

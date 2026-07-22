@@ -1,4 +1,4 @@
-import type { IExam, IGetExamsParams } from '@/features/exam/types/exams.types';
+import type { IExam, IGetExamsParams } from '@/features/exam/types/exams.d';
 import { axiosInstance } from '@/shared/lib/axios';
 import type { IApiResponse, IPaginatedAPIResponse } from '@/shared/types/api';
 
