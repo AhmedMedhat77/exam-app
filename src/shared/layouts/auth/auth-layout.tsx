@@ -23,7 +23,7 @@ export default function AuthLayout({
 
           {/* Center/Bottom: Content */}
           <div className="my-auto max-w-lg space-y-10 z-10">
-            <h1 className="text-3xl md:text-[34px] font-bold text-slate-900 leading-snug tracking-tight">
+            <h1 className="text-3xl md:text-[34px] font-inter font-bold text-slate-900 leading-snug tracking-tight">
               Empower your learning journey with our smart exam platform.
             </h1>
 

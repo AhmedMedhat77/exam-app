@@ -21,7 +21,7 @@ export default function ResetLinkSentPage() {
       </Link>
 
       <div className="space-y-3">
-        <h1 className="text-2xl font-semibold text-gray-800">
+        <h1 className="text-2xl font-inter font-semibold text-gray-800">
           Password Reset Sent
         </h1>
         <p className="text-sm leading-6 text-gray-600">
