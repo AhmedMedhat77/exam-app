@@ -48,17 +48,21 @@ export default function QuestionsList({
       {/* Navigation Buttons */}
       <div className="flex items-center gap-3">
         <Button
-          variant="outline"
+          variant="secondary"
           className="flex-1 cursor-pointer gap-1"
           disabled={isFirst}
+          size={'xl'}
           onClick={() => onStepChange(currentStep - 1)}
         >
           <ChevronLeft className="h-4 w-4" />
           Previous
         </Button>
+
         <Button
           className="flex-1 cursor-pointer gap-1"
           disabled={isLast}
+          size={'xl'}
+
           onClick={() => onStepChange(currentStep + 1)}
         >
           Next
