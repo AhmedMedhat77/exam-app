@@ -8,6 +8,8 @@ interface QuestionsListProps {
   questions: IQuestion[];
   currentStep: number;
   onStepChange: (step: number) => void;
+  answers?: Record<string, string>;
+  onAnswerSelect?: (questionId: string, answerId: string) => void;
   onSubmit?: (answers: Record<string, string>) => void;
   isSubmitting?: boolean;
 }
@@ -16,13 +18,22 @@ export default function QuestionsList({
   questions,
   currentStep,
   onStepChange,
+  answers: controlledAnswers,
+  onAnswerSelect,
   onSubmit,
   isSubmitting,
 }: QuestionsListProps) {
-  const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [internalAnswers, setInternalAnswers] = useState<
+    Record<string, string>
+  >({});
+  const answers = controlledAnswers ?? internalAnswers;
 
   const handleAnswerSelect = (questionId: string, answerId: string) => {
-    setAnswers((prev) => ({ ...prev, [questionId]: answerId }));
+    if (onAnswerSelect) {
+      onAnswerSelect(questionId, answerId);
+    } else {
+      setInternalAnswers((prev) => ({ ...prev, [questionId]: answerId }));
+    }
   };
 
   if (!questions.length) {

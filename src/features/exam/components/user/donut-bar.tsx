@@ -2,16 +2,22 @@ import { useEffect, useState } from 'react';
 
 interface IDonutBarProps {
   time: number; // total time in seconds
+  remainingTime?: number; // remaining time in seconds
   onTimeUp?: () => void;
 }
 
-export default function DonutBar({ time = 0, onTimeUp }: IDonutBarProps) {
-  const [countDown, setCountDown] = useState<number>(0);
+export default function DonutBar({
+  time = 0,
+  remainingTime,
+  onTimeUp,
+}: IDonutBarProps) {
+  const initialTime = remainingTime !== undefined ? remainingTime : time;
+  const [countDown, setCountDown] = useState<number>(initialTime);
 
-  // Sync state when time prop updates
+  // Sync state when time or remainingTime prop updates
   useEffect(() => {
-    setCountDown(time);
-  }, [time]);
+    setCountDown(remainingTime !== undefined ? remainingTime : time);
+  }, [time, remainingTime]);
 
   // Countdown timer effect
   useEffect(() => {
