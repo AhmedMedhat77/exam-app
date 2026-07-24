@@ -3,9 +3,11 @@ import DonutBar from '@/features/exam/components/user/donut-bar';
 import ProgressBar from '@/features/exam/components/user/progressbar';
 import QuestionStepCounter from '@/features/exam/components/user/question-step-counter';
 import { useGetExamById } from '@/features/exam/hooks/use-get-exam-by-id';
+import QuestionsList from '@/features/question/components/user/questions-list';
 import useGetExamQuestions from '@/features/question/hooks/use-get-exam-questions';
 import { Button } from '@/shared/ui/button';
 import { ArrowLeft, CircleQuestionMark, Loader2 } from 'lucide-react';
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 export default function UserExamDetailPage() {
@@ -21,7 +23,9 @@ export default function UserExamDetailPage() {
     examId: examData?.exam.id,
   });
 
-  const currentStep = 1;
+  const questions = questionsData?.payload?.questions ?? [];
+
+  const [currentStep, setCurrentStep] = useState(1);
   const totalSteps = examData?.exam.questionsCount || 0;
 
   if (isLoading) {
@@ -73,6 +77,13 @@ export default function UserExamDetailPage() {
           <DonutBar time={examData.exam.duration * 60 || 0} />
         </div>
       </div>
+
+      {/* Questions List */}
+      <QuestionsList
+        questions={questions}
+        currentStep={currentStep}
+        onStepChange={setCurrentStep}
+      />
     </div>
   );
 }

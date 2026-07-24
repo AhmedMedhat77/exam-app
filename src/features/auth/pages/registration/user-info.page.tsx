@@ -1,5 +1,5 @@
-import RegistrationStepper from '@/features/auth/components/shared/registration-stepper';
 import UserInfoForm from '@/features/auth/components/forms/registration/user-info/user-info-form';
+import RegistrationStepper from '@/features/auth/components/shared/registration-stepper';
 import { REGISTRATION_STEP_COUNT } from '@/features/auth/constants/registration.constants';
 import { useSearchParams } from 'react-router';
 
