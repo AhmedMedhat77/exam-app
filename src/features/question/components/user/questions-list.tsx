@@ -1,19 +1,23 @@
 import Question from '@/features/question/components/user/question';
 import type { IQuestion } from '@/features/question/types/questions';
 import { Button } from '@/shared/ui/button';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 import { useState } from 'react';
 
 interface QuestionsListProps {
   questions: IQuestion[];
   currentStep: number;
   onStepChange: (step: number) => void;
+  onSubmit?: (answers: Record<string, string>) => void;
+  isSubmitting?: boolean;
 }
 
 export default function QuestionsList({
   questions,
   currentStep,
   onStepChange,
+  onSubmit,
+  isSubmitting,
 }: QuestionsListProps) {
   const [answers, setAnswers] = useState<Record<string, string>>({});
 
@@ -50,7 +54,7 @@ export default function QuestionsList({
         <Button
           variant="secondary"
           className="flex-1 cursor-pointer gap-1"
-          disabled={isFirst}
+          disabled={isFirst || isSubmitting}
           size={'xl'}
           onClick={() => onStepChange(currentStep - 1)}
         >
@@ -58,16 +62,32 @@ export default function QuestionsList({
           Previous
         </Button>
 
-        <Button
-          className="flex-1 cursor-pointer gap-1"
-          disabled={isLast}
-          size={'xl'}
-
-          onClick={() => onStepChange(currentStep + 1)}
-        >
-          Next
-          <ChevronRight className="h-4 w-4" />
-        </Button>
+        {isLast ? (
+          <Button
+            className="flex-1 cursor-pointer gap-1"
+            size={'xl'}
+            disabled={isSubmitting}
+            onClick={() => onSubmit?.(answers)}
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Submitting...
+              </>
+            ) : (
+              'Submit'
+            )}
+          </Button>
+        ) : (
+          <Button
+            className="flex-1 cursor-pointer gap-1"
+            size={'xl'}
+            onClick={() => onStepChange(currentStep + 1)}
+          >
+            {currentStep === questions.length ? 'Submit' : 'Next'}
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+        )}
       </div>
     </div>
   );

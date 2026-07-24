@@ -1,8 +1,10 @@
+import { ROUTES } from '@/app/routes';
 import DiplomaHeader from '@/features/diploma/components/shared/header';
 import DonutBar from '@/features/exam/components/user/donut-bar';
 import ProgressBar from '@/features/exam/components/user/progressbar';
 import QuestionStepCounter from '@/features/exam/components/user/question-step-counter';
 import { useGetExamById } from '@/features/exam/hooks/use-get-exam-by-id';
+import useSubmitExam from '@/features/exam/hooks/use-submit-exam';
 import QuestionsList from '@/features/question/components/user/questions-list';
 import useGetExamQuestions from '@/features/question/hooks/use-get-exam-questions';
 import { Button } from '@/shared/ui/button';
@@ -14,6 +16,7 @@ export default function UserExamDetailPage() {
   const { id = '' } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
+  const [startedAt] = useState(() => new Date().toISOString());
   const { data, isLoading, isError, error } = useGetExamById(id);
 
   const examData = data?.payload;
@@ -23,10 +26,36 @@ export default function UserExamDetailPage() {
     examId: examData?.exam.id,
   });
 
+  const submitExamMutation = useSubmitExam();
+
   const questions = questionsData?.payload?.questions ?? [];
 
   const [currentStep, setCurrentStep] = useState(1);
   const totalSteps = examData?.exam.questionsCount || 0;
+
+  const handleSubmitExam = (selectedAnswers: Record<string, string>) => {
+    if (!examData?.exam.id) return;
+
+    const answersPayload = Object.entries(selectedAnswers).map(
+      ([questionId, answerId]) => ({
+        questionId,
+        answerId,
+      })
+    );
+
+    submitExamMutation.mutate(
+      {
+        examId: examData.exam.id,
+        answers: answersPayload,
+        startedAt,
+      },
+      {
+        onSuccess: () => {
+          navigate(ROUTES.EXAMS);
+        },
+      }
+    );
+  };
 
   if (isLoading) {
     return (
@@ -83,6 +112,8 @@ export default function UserExamDetailPage() {
         questions={questions}
         currentStep={currentStep}
         onStepChange={setCurrentStep}
+        onSubmit={handleSubmitExam}
+        isSubmitting={submitExamMutation.isPending}
       />
     </div>
   );
