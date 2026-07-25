@@ -30,17 +30,25 @@ function InputComponent(props: DefaultInputComponentProps) {
 function Flag({
   country,
   countryName,
+  flagUrl,
+  flags,
   ...props
 }: {
   country?: string;
   countryName?: string;
+  flagUrl?: string;
+  flags?: any;
   [key: string]: any;
 }) {
   return (
     <div className="" {...props}>
       {country && (
         <img
-          src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${country}.svg`}
+          src={
+            flagUrl
+              ? flagUrl.replace('{XX}', country)
+              : `https://purecatamphetamine.github.io/country-flag-icons/3x2/${country}.svg`
+          }
           alt={countryName || ''}
         />
       )}

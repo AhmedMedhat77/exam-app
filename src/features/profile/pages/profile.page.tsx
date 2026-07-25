@@ -63,7 +63,11 @@ export default function UserProfilePage() {
           const apiError = err?.response?.data;
           if (apiError?.errors && Array.isArray(apiError.errors)) {
             apiError.errors.forEach(
-              (item: { path: string; message?: string; messages?: string[] }) => {
+              (item: {
+                path: string;
+                message?: string;
+                messages?: string[];
+              }) => {
                 const msg = item.message || item.messages?.[0];
                 if (item.path && msg) {
                   setError(item.path as any, {
