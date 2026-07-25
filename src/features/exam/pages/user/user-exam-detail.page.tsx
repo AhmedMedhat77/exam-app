@@ -36,10 +36,9 @@ export default function UserExamDetailPage() {
   });
 
   // API fetching submissions if exam is submitted
-  const { data: submissionsData, isLoading: isSubmissionsLoading } =
-    useGetExamSubmissions({
-      examId: id,
-    });
+  const { data: submissionsData } = useGetExamSubmissions({
+    examId: id,
+  });
 
   const submitExamMutation = useSubmitExam();
   const questions = questionsData?.payload?.questions ?? [];
@@ -170,26 +169,6 @@ export default function UserExamDetailPage() {
   const handleExitExam = () => {
     localStorage.removeItem(storageKey);
     navigate(ROUTES.EXAMS);
-  };
-
-  const handleRestartExam = () => {
-    localStorage.removeItem(storageKey);
-    hasSubmittedRef.current = false;
-    setIsSubmitted(false);
-    setAnswers({});
-    setCurrentStep(1);
-    const newStart = new Date().toISOString();
-    setStartedAt(newStart);
-    localStorage.setItem(
-      storageKey,
-      JSON.stringify({
-        examId: id,
-        startedAt: newStart,
-        answers: {},
-        currentStep: 1,
-        isSubmitted: false,
-      })
-    );
   };
 
   // 3. Time calculations
