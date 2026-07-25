@@ -1,9 +1,12 @@
 import { ROUTES } from '@/app/routes';
 import DiplomaHeader from '@/features/diploma/components/shared/header';
 import DonutBar from '@/features/exam/components/user/donut-bar';
+import ExamResult from '@/features/exam/components/user/exam-result';
 import ProgressBar from '@/features/exam/components/user/progressbar';
 import QuestionStepCounter from '@/features/exam/components/user/question-step-counter';
 import { useGetExamById } from '@/features/exam/hooks/use-get-exam-by-id';
+import useGetExamSubmissions from '@/features/exam/hooks/use-get-exam-submissions';
+import useGetSubmissionById from '@/features/exam/hooks/use-get-submission-by-id';
 import useSubmitExam from '@/features/exam/hooks/use-submit-exam';
 import QuestionsList from '@/features/question/components/user/questions-list';
 import useGetExamQuestions from '@/features/question/hooks/use-get-exam-questions';
@@ -21,6 +24,7 @@ export default function UserExamDetailPage() {
   const [startedAt, setStartedAt] = useState<string>('');
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [currentStep, setCurrentStep] = useState<number>(1);
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
   const hasSubmittedRef = useRef<boolean>(false);
@@ -33,8 +37,21 @@ export default function UserExamDetailPage() {
     examId: examData?.exam.id,
   });
 
+  // API fetching submissions if exam is submitted
+  const { data: submissionsData, isLoading: isSubmissionsLoading } =
+    useGetExamSubmissions({
+      examId: id,
+    });
+
   const submitExamMutation = useSubmitExam();
   const questions = questionsData?.payload?.questions ?? [];
+  const latestSubmission = submissionsData?.payload?.data?.[0];
+
+  // API fetching detailed submission by ID (includes analytics)
+  const { data: submissionDetailData, isLoading: isSubmissionDetailLoading } =
+    useGetSubmissionById(latestSubmission?.id);
+
+  const submissionDetails = submissionDetailData?.payload;
 
   // 1. Initialize or restore session from localStorage
   useEffect(() => {
@@ -45,9 +62,8 @@ export default function UserExamDetailPage() {
       try {
         const parsed = JSON.parse(saved);
         if (parsed.isSubmitted) {
-          // Exam already completed -> prevent re-entry
-          navigate(ROUTES.EXAMS, { replace: true });
-          return;
+          setIsSubmitted(true);
+          hasSubmittedRef.current = true;
         }
         if (parsed.startedAt) setStartedAt(parsed.startedAt);
         if (parsed.answers) setAnswers(parsed.answers);
@@ -71,35 +87,31 @@ export default function UserExamDetailPage() {
       );
     }
     setIsInitialized(true);
-  }, [id, navigate, storageKey]);
+  }, [id, storageKey]);
 
   // 2. Persist progress to localStorage whenever answers or step changes
   useEffect(() => {
-    if (!id || !startedAt || !isInitialized) return;
+    if (!id || !startedAt || !isInitialized || isSubmitted) return;
 
-    const saved = localStorage.getItem(storageKey);
-    let isSubmitted = false;
-    if (saved) {
-      try {
-        isSubmitted = JSON.parse(saved).isSubmitted || false;
-      } catch {
-        // ignore
-      }
-    }
-
-    if (!isSubmitted) {
-      localStorage.setItem(
-        storageKey,
-        JSON.stringify({
-          examId: id,
-          startedAt,
-          answers,
-          currentStep,
-          isSubmitted: false,
-        })
-      );
-    }
-  }, [id, startedAt, answers, currentStep, isInitialized, storageKey]);
+    localStorage.setItem(
+      storageKey,
+      JSON.stringify({
+        examId: id,
+        startedAt,
+        answers,
+        currentStep,
+        isSubmitted,
+      })
+    );
+  }, [
+    id,
+    startedAt,
+    answers,
+    currentStep,
+    isSubmitted,
+    isInitialized,
+    storageKey,
+  ]);
 
   const handleAnswerSelect = (questionId: string, answerId: string) => {
     setAnswers((prev) => ({ ...prev, [questionId]: answerId }));
@@ -110,18 +122,6 @@ export default function UserExamDetailPage() {
       const targetAnswers = selectedAnswers ?? answers;
       if (!examData?.exam.id || hasSubmittedRef.current) return;
       hasSubmittedRef.current = true;
-
-      // Mark exam as submitted in localStorage to block future access on refresh
-      localStorage.setItem(
-        storageKey,
-        JSON.stringify({
-          examId: examData.exam.id,
-          startedAt,
-          answers: targetAnswers,
-          currentStep,
-          isSubmitted: true,
-        })
-      );
 
       const answersPayload = Object.entries(targetAnswers).map(
         ([questionId, answerId]) => ({
@@ -138,24 +138,43 @@ export default function UserExamDetailPage() {
         },
         {
           onSuccess: () => {
-            navigate(ROUTES.EXAMS, { replace: true });
+            localStorage.removeItem(storageKey);
+            setIsSubmitted(true);
           },
           onError: () => {
             hasSubmittedRef.current = false;
+            setIsSubmitted(false);
           },
         }
       );
     },
-    [
-      answers,
-      examData?.exam.id,
-      startedAt,
-      currentStep,
-      storageKey,
-      submitExamMutation,
-      navigate,
-    ]
+    [answers, examData?.exam.id, startedAt, storageKey, submitExamMutation]
   );
+
+  const handleExitExam = () => {
+    localStorage.removeItem(storageKey);
+    navigate(ROUTES.EXAMS);
+  };
+
+  const handleRestartExam = () => {
+    localStorage.removeItem(storageKey);
+    hasSubmittedRef.current = false;
+    setIsSubmitted(false);
+    setAnswers({});
+    setCurrentStep(1);
+    const newStart = new Date().toISOString();
+    setStartedAt(newStart);
+    localStorage.setItem(
+      storageKey,
+      JSON.stringify({
+        examId: id,
+        startedAt: newStart,
+        answers: {},
+        currentStep: 1,
+        isSubmitted: false,
+      })
+    );
+  };
 
   // 3. Time calculations
   const totalDurationSeconds = (examData?.exam.duration || 0) * 60;
@@ -168,6 +187,7 @@ export default function UserExamDetailPage() {
   useEffect(() => {
     if (
       isInitialized &&
+      !isSubmitted &&
       examData &&
       totalDurationSeconds > 0 &&
       remainingSeconds <= 0 &&
@@ -177,6 +197,7 @@ export default function UserExamDetailPage() {
     }
   }, [
     isInitialized,
+    isSubmitted,
     examData,
     totalDurationSeconds,
     remainingSeconds,
@@ -212,8 +233,44 @@ export default function UserExamDetailPage() {
     );
   }
 
+  // If exam is submitted, render ExamResult
+  if (isSubmitted) {
+    if (
+      isSubmissionsLoading ||
+      (latestSubmission?.id && isSubmissionDetailLoading) ||
+      !latestSubmission
+    ) {
+      return (
+        <div className="flex flex-col items-center justify-center gap-3 py-20">
+          <Loader2 className="text-primary h-8 w-8 animate-spin" />
+          <p className="text-sm text-slate-500">Loading exam results...</p>
+        </div>
+      );
+    }
+
+    const currentSubmission = submissionDetails?.submission || latestSubmission;
+    const analytics = submissionDetails?.analytics;
+
+    return (
+      <ExamResult
+        submission={currentSubmission}
+        questions={questions}
+        userAnswers={answers}
+        analytics={analytics}
+        onRestart={handleRestartExam}
+      />
+    );
+  }
+
   return (
     <div className="w-full space-y-6 py-4">
+      <Button
+        variant="outline"
+        onClick={handleExitExam}
+        className="flex cursor-pointer items-center gap-2 text-xs"
+      >
+        <ArrowLeft className="h-4 w-4" /> Exit exam
+      </Button>
       <DiplomaHeader
         icon={<CircleQuestionMark size={45} className="text-white" />}
         title={examData.exam.title || ''}

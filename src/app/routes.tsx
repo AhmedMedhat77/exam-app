@@ -11,8 +11,10 @@ import AdminDiplomaPage from '@/features/diploma/pages/admin-diploma.page';
 import UserDiplomaPage from '@/features/diploma/pages/user-diploma.page';
 import UserExamDetailPage from '@/features/exam/pages/user/user-exam-detail.page';
 import ExamsPage from '@/features/exam/pages/user/user-exams.page';
+import PaymentDetailsPage from '@/features/payment/pages/payment-details.page';
+import PaymentsPage from '@/features/payment/pages/payments.page';
 import UserSettingsPage from '@/features/user/pages/user-settings.page';
-import { GraduationCap, Logs, UserRound } from 'lucide-react';
+import { CreditCard, GraduationCap, Logs, UserRound } from 'lucide-react';
 
 export const ROUTES = {
   LOGIN: '/login',
@@ -23,6 +25,7 @@ export const ROUTES = {
   FORGOT_PASSWORD: '/forgot-password',
   FORGOT_PASSWORD_SENT: '/forgot-password/sent',
   RESET_PASSWORD: '/reset-password',
+  HOME: '/',
   DIPLOMAS: '/',
   ACCOUNT_SETTINGS: '/account-settings',
   ACCOUNT_DETAIL: '/account/:id',
@@ -30,6 +33,8 @@ export const ROUTES = {
   EXAMS: '/exams',
   EXAM_DETAIL: '/exams/:id',
   LOGS: '/logs',
+  PAYMENTS: '/payments',
+  PAYMENT_DETAIL: '/payments/:paymentId',
 } as const;
 
 type route = {
@@ -85,6 +90,18 @@ export const ADMIN_ROUTES: route[] = [
     path: ROUTES.LOGS,
     icon: <Logs />,
     element: AuditLogsPage,
+  },
+  {
+    title: 'Payments',
+    path: ROUTES.PAYMENTS,
+    icon: <CreditCard />,
+    element: PaymentsPage,
+  },
+  {
+    title: 'Payment Detail',
+    path: ROUTES.PAYMENT_DETAIL,
+    element: PaymentDetailsPage,
+    hidden: true,
   },
 ];
 

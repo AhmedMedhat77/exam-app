@@ -24,17 +24,17 @@ export default function DonutBar({
     if (countDown <= 0) return;
 
     const interval = setInterval(() => {
-      setCountDown((prev) => {
-        if (prev <= 1) {
-          clearInterval(interval);
-          onTimeUp?.();
-          return 0;
-        }
-        return prev - 1;
-      });
+      setCountDown((prev) => Math.max(0, prev - 1));
     }, 1000);
 
     return () => clearInterval(interval);
+  }, [countDown]);
+
+  // Trigger onTimeUp when countdown reaches 0
+  useEffect(() => {
+    if (countDown === 0) {
+      onTimeUp?.();
+    }
   }, [countDown, onTimeUp]);
 
   const radius = 38;
