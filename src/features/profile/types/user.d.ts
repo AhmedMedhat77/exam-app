@@ -1,3 +1,6 @@
+import type { updateprofileSchema } from '@/features/profile/schema/update-profile.schema';
+import type z from 'zod';
+
 export interface IUser {
   id: string;
   username: string;
@@ -17,3 +20,5 @@ export const ROLE_ENUM = {
   ADMIN: 'ADMIN',
   USER: 'USER',
 } as const;
+
+export type IUpdateForm = z.infer<typeof updateprofileSchema>;

@@ -22,7 +22,7 @@ function Input({ className, type, rightIcon, leftIcon, ...props }: InputProps) {
         }
         data-slot="input"
         className={cn(
-          'border-input file:text-foreground placeholder:text-muted-foreground focus-visible:border-ring hover:border-ring disabled:bg-input/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:bg-input/30 dark:disabled:bg-input/80 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 read-only:ring-none h-10.5 min-h-12 w-full min-w-0 rounded-xs border bg-transparent px-2.5 py-1 text-base transition-colors outline-none file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium read-only:cursor-not-allowed read-only:bg-gray-200 focus-visible:ring-0 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-1 md:text-sm',
+          'border-input file:text-foreground placeholder:text-muted-foreground focus-visible:border-ring hover:border-ring disabled:bg-input/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:bg-input/30 dark:disabled:bg-input/80 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 read-only:ring-none h-10.5 min-h-12 w-full min-w-0 rounded-xs border bg-transparent px-2.5 py-1 text-base transition-colors outline-none file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium read-only:bg-input/50 read-only:pointer-events-none read-only:cursor-not-allowed read-only:opacity-50 dark:read-only:bg-input/80 focus-visible:ring-0 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-1 md:text-sm',
           className
         )}
         {...props}
@@ -40,7 +40,7 @@ function Input({ className, type, rightIcon, leftIcon, ...props }: InputProps) {
       {type === 'password' && (
         <button
           onClick={handlePasswordVisibility}
-          disabled={props.disabled}
+          disabled={props.disabled || props.readOnly}
           className="absolute top-1/2 right-2 -translate-y-1/2 cursor-pointer rounded-full bg-transparent text-gray-400 transition-colors duration-200 hover:text-gray-600 disabled:pointer-events-none disabled:opacity-50"
           type="button"
           aria-label={passwordVisible ? 'Hide password' : 'Show password'}
