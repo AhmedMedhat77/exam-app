@@ -6,7 +6,7 @@ import ResultQuestionsList from '@/features/exam/components/user/result-question
 import ResultSummaryCard from '@/features/exam/components/user/result-summary-card';
 import useGetSubmissionById from '@/features/exam/hooks/use-get-submission-by-id';
 import ExamResultSkeleton from '@/features/exam/skeletons/user/exam-result-skeleton';
-import type { IQuestion } from '@/features/question/types/questions';
+import mapAnalyticsToQuestions from '@/features/exam/utils/map-analytics-to-questions';
 import { Button } from '@/shared/ui/button';
 import {
   AlertCircle,
@@ -71,46 +71,14 @@ export default function UserExamResultPage() {
     submission.correctAnswers + submission.wrongAnswers ||
     analytics.length;
 
-  const displayQuestions: IQuestion[] = analytics.map((a) => ({
-    id: a.questionId,
-    text: a.questionText,
-    examId: submission.examId,
-    immutable: true,
-    createdAt: '',
-    updatedAt: '',
-    answers: [
-      ...(typeof a.selectedAnswer === 'object' &&
-      a.selectedAnswer &&
-      a.selectedAnswer.text
-        ? [
-            {
-              id:
-                (a.selectedAnswer.id as string) ||
-                (a.selectedAnswer.key as string) ||
-                'selected',
-              text: a.selectedAnswer.text,
-              isCorrect: a.isCorrect,
-            },
-          ]
-        : []),
-      ...(typeof a.correctAnswer === 'object' &&
-      a.correctAnswer &&
-      a.correctAnswer.text &&
-      !a.isCorrect
-        ? [
-            {
-              id:
-                (a.correctAnswer.id as string) ||
-                (a.correctAnswer.key as string) ||
-                'correct',
-              text: a.correctAnswer.text,
-              isCorrect: true,
-            },
-          ]
-        : []),
-    ],
-    exam: { id: submission.examId, title: submission.examTitle },
-  }));
+  const displayQuestions = mapAnalyticsToQuestions(analytics, submission);
+
+  const handleRestart = () => {
+    if (submission?.examId) {
+      localStorage.removeItem(`exam_session_${submission.examId}`);
+      navigate(`/exams/${submission.examId}`);
+    }
+  };
 
   return (
     <div className="w-full space-y-6 py-4">
@@ -136,7 +104,7 @@ export default function UserExamResultPage() {
       </div>
 
       {/* Action Buttons */}
-      <ResultActions />
+      <ResultActions onRestart={handleRestart} />
     </div>
   );
 }
