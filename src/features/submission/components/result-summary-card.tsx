@@ -1,4 +1,4 @@
-import ResultDonutChart from '@/features/exam/components/user/result-donnut-chart';
+import ResultDonutChart from '@/features/submission/components/result-donut-chart';
 
 interface ResultSummaryCardProps {
   correctAnswers: number;

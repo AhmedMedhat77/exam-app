@@ -1,7 +1,7 @@
 import type {
   ISubmission,
   ISubmissionAnalytic,
-} from '@/features/exam/types/submissions';
+} from '@/features/submission/types/submission';
 import type { IQuestion } from '@/features/question/types/questions';
 
 /**

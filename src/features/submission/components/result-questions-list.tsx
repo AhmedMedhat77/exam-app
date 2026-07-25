@@ -1,5 +1,5 @@
-import AnswerCard from '@/features/exam/components/user/answer-card';
-import type { ISubmissionAnalytic } from '@/features/exam/types/submissions';
+import AnswerCard from '@/features/submission/components/answer-card';
+import type { ISubmissionAnalytic } from '@/features/submission/types/submission';
 import type { IQuestion } from '@/features/question/types/questions';
 
 interface ResultQuestionsListProps {

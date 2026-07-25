@@ -1,5 +1,5 @@
-import type { ISubmissionAnalytic } from '@/features/exam/types/submissions';
-import { isMatchingAnswer } from '@/features/exam/utils/is-matching-answer';
+import type { ISubmissionAnalytic } from '@/features/submission/types/submission';
+import { isMatchingAnswer } from '@/features/submission/utils/is-matching-answer';
 import type { IAnswer } from '@/features/question/types/questions';
 import { Check, X } from 'lucide-react';
 

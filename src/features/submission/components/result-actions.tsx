@@ -27,7 +27,7 @@ export default function ResultActions({ onRestart }: ResultActionsProps) {
         variant="default"
         size="xl"
         className="flex-1 cursor-pointer gap-2"
-        onClick={() => navigate(ROUTES.EXAMS)}
+        onClick={() => navigate(ROUTES.DIPLOMAS)}
       >
         <FolderSearch className="h-4 w-4" />
         Explore

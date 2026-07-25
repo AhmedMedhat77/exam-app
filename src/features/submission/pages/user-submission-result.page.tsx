@@ -1,12 +1,12 @@
 import { ROUTES } from '@/app/routes';
 import DiplomaHeader from '@/features/diploma/components/shared/header';
-import ResultActions from '@/features/exam/components/user/result-actions';
-import ResultHeaderProgress from '@/features/exam/components/user/result-header-progress';
-import ResultQuestionsList from '@/features/exam/components/user/result-questions-list';
-import ResultSummaryCard from '@/features/exam/components/user/result-summary-card';
-import useGetSubmissionById from '@/features/exam/hooks/use-get-submission-by-id';
-import ExamResultSkeleton from '@/features/exam/skeletons/user/exam-result-skeleton';
-import mapAnalyticsToQuestions from '@/features/exam/utils/map-analytics-to-questions';
+import ResultActions from '@/features/submission/components/result-actions';
+import ResultHeaderProgress from '@/features/submission/components/result-header-progress';
+import ResultQuestionsList from '@/features/submission/components/result-questions-list';
+import ResultSummaryCard from '@/features/submission/components/result-summary-card';
+import useGetSubmissionById from '@/features/submission/hooks/use-get-submission-by-id';
+import SubmissionResultSkeleton from '@/features/submission/skeletons/submission-result-skeleton';
+import mapAnalyticsToQuestions from '@/features/submission/utils/map-analytics-to-questions';
 import { Button } from '@/shared/ui/button';
 import {
   AlertCircle,
@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router';
 
-export default function UserExamResultPage() {
+export default function UserSubmissionResultPage() {
   const navigate = useNavigate();
   const { id = '' } = useParams<{ id: string }>();
 
@@ -24,7 +24,7 @@ export default function UserExamResultPage() {
   const payload = data?.payload;
 
   if (isLoading) {
-    return <ExamResultSkeleton />;
+    return <SubmissionResultSkeleton />;
   }
 
   if (isError || !payload) {

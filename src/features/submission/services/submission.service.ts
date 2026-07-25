@@ -3,13 +3,13 @@ import type {
   IGetSubmissionsParams,
   ISubmission,
   ISubmitExamPayload,
-} from '@/features/exam/types/submissions';
+} from '@/features/submission/types/submission';
 import { axiosInstance } from '@/shared/lib/axios';
 import type { IApiResponse, IPaginatedAPIResponse } from '@/shared/types/api';
 
 const BASE_URL = '/api/submissions';
 
-export class SubmissionsService {
+export class SubmissionService {
   static submitExam = async (
     payload: ISubmitExamPayload
   ): Promise<IApiResponse<unknown>> => {
@@ -32,4 +32,4 @@ export class SubmissionsService {
   };
 }
 
-export default SubmissionsService;
+export default SubmissionService;

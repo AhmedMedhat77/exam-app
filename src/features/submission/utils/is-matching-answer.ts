@@ -1,4 +1,4 @@
-import type { ISubmissionAnalyticAnswer } from '@/features/exam/types/submissions';
+import type { ISubmissionAnalyticAnswer } from '@/features/submission/types/submission';
 import type { IAnswer } from '@/features/question/types/questions';
 
 export function isMatchingAnswer(
@@ -18,3 +18,5 @@ export function isMatchingAnswer(
   }
   return false;
 }
+
+export default isMatchingAnswer;

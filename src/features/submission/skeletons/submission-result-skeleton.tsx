@@ -1,4 +1,4 @@
-export default function ExamResultSkeleton() {
+export default function SubmissionResultSkeleton() {
   return (
     <div className="w-full animate-pulse space-y-6 py-4">
       {/* Header Skeleton */}
