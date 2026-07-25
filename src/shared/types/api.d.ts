@@ -5,11 +5,18 @@ export interface ISuccessApiResponse<T> {
   payload: T;
 }
 
+export interface IErrorItem {
+  path: string;
+  message?: string;
+  messages?: string[];
+}
+
 export interface IErrorApiResponse {
   status: false;
   code: number;
   message: string;
   payload?: undefined;
+  errors?: IErrorItem[];
 }
 
 export type IErrorAiResponse = IErrorApiResponse;
