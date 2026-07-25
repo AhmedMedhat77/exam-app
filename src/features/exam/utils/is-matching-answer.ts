@@ -3,7 +3,7 @@ import type { IAnswer } from '@/features/question/types/questions';
 
 export function isMatchingAnswer(
   answer: IAnswer,
-  target?: ISubmissionAnalyticAnswer
+  target?: ISubmissionAnalyticAnswer | string | Record<string, unknown>
 ): boolean {
   if (!target) return false;
   if (typeof target === 'string') {

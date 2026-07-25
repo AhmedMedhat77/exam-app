@@ -43,9 +43,9 @@ export interface ISubmissionAnalyticAnswer {
 export interface ISubmissionAnalytic {
   questionId: string;
   questionText: string;
-  selectedAnswer: ISubmissionAnalyticAnswer | Record<string, unknown>;
+  selectedAnswer: ISubmissionAnalyticAnswer | string;
   isCorrect: boolean;
-  correctAnswer: ISubmissionAnalyticAnswer | Record<string, unknown>;
+  correctAnswer: ISubmissionAnalyticAnswer | string;
 }
 
 export interface IGetSubmissionByIdPayload {

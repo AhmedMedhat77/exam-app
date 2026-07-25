@@ -1,12 +1,10 @@
 import { ROUTES } from '@/app/routes';
 import DiplomaHeader from '@/features/diploma/components/shared/header';
 import DonutBar from '@/features/exam/components/user/donut-bar';
-import ExamResult from '@/features/exam/components/user/exam-result';
 import ProgressBar from '@/features/exam/components/user/progressbar';
 import QuestionStepCounter from '@/features/exam/components/user/question-step-counter';
 import { useGetExamById } from '@/features/exam/hooks/use-get-exam-by-id';
 import useGetExamSubmissions from '@/features/exam/hooks/use-get-exam-submissions';
-import useGetSubmissionById from '@/features/exam/hooks/use-get-submission-by-id';
 import useSubmitExam from '@/features/exam/hooks/use-submit-exam';
 import QuestionsList from '@/features/question/components/user/questions-list';
 import useGetExamQuestions from '@/features/question/hooks/use-get-exam-questions';
@@ -46,12 +44,6 @@ export default function UserExamDetailPage() {
   const submitExamMutation = useSubmitExam();
   const questions = questionsData?.payload?.questions ?? [];
   const latestSubmission = submissionsData?.payload?.data?.[0];
-
-  // API fetching detailed submission by ID (includes analytics)
-  const { data: submissionDetailData, isLoading: isSubmissionDetailLoading } =
-    useGetSubmissionById(latestSubmission?.id);
-
-  const submissionDetails = submissionDetailData?.payload;
 
   // 1. Initialize or restore session from localStorage
   useEffect(() => {
@@ -137,9 +129,18 @@ export default function UserExamDetailPage() {
           startedAt: startedAt || new Date().toISOString(),
         },
         {
-          onSuccess: () => {
+          onSuccess: (res) => {
             localStorage.removeItem(storageKey);
             setIsSubmitted(true);
+            const resPayload = res?.payload as
+              { id?: string; submission?: { id?: string } } | undefined;
+            const subId =
+              resPayload?.id ||
+              resPayload?.submission?.id ||
+              latestSubmission?.id;
+            if (subId) {
+              navigate(`/submissions/${subId}`);
+            }
           },
           onError: () => {
             hasSubmittedRef.current = false;
@@ -148,8 +149,23 @@ export default function UserExamDetailPage() {
         }
       );
     },
-    [answers, examData?.exam.id, startedAt, storageKey, submitExamMutation]
+    [
+      answers,
+      examData?.exam.id,
+      latestSubmission?.id,
+      navigate,
+      startedAt,
+      storageKey,
+      submitExamMutation,
+    ]
   );
+
+  // Redirect to submission result page if exam session was already submitted
+  useEffect(() => {
+    if (isInitialized && isSubmitted && latestSubmission?.id) {
+      navigate(`/submissions/${latestSubmission.id}`, { replace: true });
+    }
+  }, [isInitialized, isSubmitted, latestSubmission?.id, navigate]);
 
   const handleExitExam = () => {
     localStorage.removeItem(storageKey);
@@ -230,35 +246,6 @@ export default function UserExamDetailPage() {
           {error?.message || 'Exam not found.'}
         </div>
       </div>
-    );
-  }
-
-  // If exam is submitted, render ExamResult
-  if (isSubmitted) {
-    if (
-      isSubmissionsLoading ||
-      (latestSubmission?.id && isSubmissionDetailLoading) ||
-      !latestSubmission
-    ) {
-      return (
-        <div className="flex flex-col items-center justify-center gap-3 py-20">
-          <Loader2 className="text-primary h-8 w-8 animate-spin" />
-          <p className="text-sm text-slate-500">Loading exam results...</p>
-        </div>
-      );
-    }
-
-    const currentSubmission = submissionDetails?.submission || latestSubmission;
-    const analytics = submissionDetails?.analytics;
-
-    return (
-      <ExamResult
-        submission={currentSubmission}
-        questions={questions}
-        userAnswers={answers}
-        analytics={analytics}
-        onRestart={handleRestartExam}
-      />
     );
   }
 

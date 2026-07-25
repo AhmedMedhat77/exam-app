@@ -10,6 +10,7 @@ import VerifyOtpPage from '@/features/auth/pages/registration/verify-otp.page';
 import AdminDiplomaPage from '@/features/diploma/pages/admin-diploma.page';
 import UserDiplomaPage from '@/features/diploma/pages/user-diploma.page';
 import UserExamDetailPage from '@/features/exam/pages/user/user-exam-detail.page';
+import UserExamResultPage from '@/features/exam/pages/user/user-exam-result.page';
 import ExamsPage from '@/features/exam/pages/user/user-exams.page';
 import PaymentDetailsPage from '@/features/payment/pages/payment-details.page';
 import PaymentsPage from '@/features/payment/pages/payments.page';
@@ -32,6 +33,7 @@ export const ROUTES = {
   // Exams
   EXAMS: '/exams',
   EXAM_DETAIL: '/exams/:id',
+  EXAM_RESULT: '/submissions/:id',
   LOGS: '/logs',
   PAYMENTS: '/payments',
   PAYMENT_DETAIL: '/payments/:paymentId',
@@ -68,6 +70,12 @@ export const USER_ROUTES: route[] = [
     title: 'Exam Detail',
     path: ROUTES.EXAM_DETAIL,
     element: UserExamDetailPage,
+    hidden: true,
+  },
+  {
+    title: 'Exam Result',
+    path: ROUTES.EXAM_RESULT,
+    element: UserExamResultPage,
     hidden: true,
   },
 ];

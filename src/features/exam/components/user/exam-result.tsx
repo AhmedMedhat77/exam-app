@@ -13,24 +13,70 @@ import { useNavigate } from 'react-router';
 
 interface ExamResultProps {
   submission: ISubmission;
-  questions: IQuestion[];
+  questions?: IQuestion[];
   userAnswers?: Record<string, string>;
   analytics?: ISubmissionAnalytic[];
-  onRestart: () => void;
+  onRestart?: () => void;
 }
 
 export default function ExamResult({
   submission,
-  questions,
+  questions: propQuestions,
   userAnswers = {},
   analytics = [],
   onRestart,
 }: ExamResultProps) {
   const navigate = useNavigate();
+
   const totalQuestions =
     submission.totalQuestions ||
     submission.correctAnswers + submission.wrongAnswers ||
-    questions.length;
+    propQuestions?.length ||
+    analytics.length;
+
+  const displayQuestions: IQuestion[] =
+    propQuestions && propQuestions.length > 0
+      ? propQuestions
+      : analytics.map((a) => ({
+          id: a.questionId,
+          text: a.questionText,
+          examId: submission.examId,
+          immutable: true,
+          createdAt: '',
+          updatedAt: '',
+          answers: [
+            ...(typeof a.selectedAnswer === 'object' &&
+            a.selectedAnswer &&
+            a.selectedAnswer.text
+              ? [
+                  {
+                    id:
+                      (a.selectedAnswer.id as string) ||
+                      (a.selectedAnswer.key as string) ||
+                      'selected',
+                    text: a.selectedAnswer.text,
+                    isCorrect: a.isCorrect,
+                  },
+                ]
+              : []),
+            ...(typeof a.correctAnswer === 'object' &&
+            a.correctAnswer &&
+            a.correctAnswer.text &&
+            !a.isCorrect
+              ? [
+                  {
+                    id:
+                      (a.correctAnswer.id as string) ||
+                      (a.correctAnswer.key as string) ||
+                      'correct',
+                    text: a.correctAnswer.text,
+                    isCorrect: true,
+                  },
+                ]
+              : []),
+          ],
+          exam: { id: submission.examId, title: submission.examTitle },
+        }));
 
   return (
     <div className="w-full space-y-6 py-4">
@@ -62,8 +108,8 @@ export default function ExamResult({
         {/* Left Column: Donut Chart & Legend */}
         <div className="flex flex-col items-center justify-between gap-6 rounded-lg border border-blue-100/60 bg-blue-50/40 p-6 md:w-80">
           <ResultDonutChart
-            correct={submission.correctAnswers}
-            incorrect={submission.wrongAnswers}
+            correct={submission.correctAnswers || 0}
+            incorrect={submission.wrongAnswers || 0}
           />
 
           <div className="w-full space-y-2 font-mono text-sm">
@@ -80,7 +126,7 @@ export default function ExamResult({
 
         {/* Right Column: Questions & Answers List */}
         <div className="max-h-125 flex-1 space-y-6 overflow-y-auto pr-2">
-          {questions.map((question, index) => {
+          {displayQuestions.map((question, index) => {
             const analytic = analytics.find(
               (a) =>
                 a.questionId === question.id || a.questionText === question.text
@@ -95,9 +141,10 @@ export default function ExamResult({
                 <div className="space-y-2">
                   {question.answers.map((answer) => (
                     <AnswerCard
+                      key={answer.id}
                       answer={answer}
                       analytic={analytic}
-                      key={answer.id}
+                      userAnswerId={userAnswers[question.id]}
                     />
                   ))}
                 </div>
@@ -109,15 +156,17 @@ export default function ExamResult({
 
       {/* Action Buttons */}
       <div className="flex items-center gap-3">
-        <Button
-          variant="secondary"
-          size="xl"
-          className="flex-1 cursor-pointer gap-2"
-          onClick={onRestart}
-        >
-          <RotateCcw className="h-4 w-4" />
-          Restart
-        </Button>
+        {onRestart && (
+          <Button
+            variant="secondary"
+            size="xl"
+            className="flex-1 cursor-pointer gap-2"
+            onClick={onRestart}
+          >
+            <RotateCcw className="h-4 w-4" />
+            Restart
+          </Button>
+        )}
         <Button
           variant="default"
           size="xl"
