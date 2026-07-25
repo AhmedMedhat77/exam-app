@@ -34,8 +34,7 @@ export default function EditEmailModal({
     setStep(2);
   };
 
-  const handleVerifyOtp = (code: string) => {
-    // Handle OTP submission logic
+  const handleVerifyOtp = () => {
     if (onOpenChange) {
       onOpenChange(false);
     }

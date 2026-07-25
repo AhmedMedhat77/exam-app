@@ -1,3 +1,4 @@
+import { useRequestEmailChange } from '@/features/profile/hooks/use-request-email-change';
 import { Button } from '@/shared/ui/button';
 import { Field, FieldError } from '@/shared/ui/field';
 import { Input } from '@/shared/ui/input';
@@ -19,6 +20,12 @@ export function EditEmailStep1({
   onNext,
 }: EditEmailStep1Props) {
   const {
+    mutate: requestEmailChange,
+    isPending,
+    error,
+  } = useRequestEmailChange();
+
+  const {
     register,
     handleSubmit,
     formState: { errors },
@@ -29,11 +36,25 @@ export function EditEmailStep1({
   });
 
   const onSubmit = handleSubmit((data) => {
-    onNext(data.email);
+    requestEmailChange(
+      { newEmail: data.email },
+      {
+        onSuccess: () => {
+          onNext(data.email);
+        },
+      }
+    );
   });
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">
+      {error && (
+        <p className="font-mono text-xs text-red-500">
+          {(error as any)?.response?.data?.message ||
+            'Failed to send verification code'}
+        </p>
+      )}
+
       <Field>
         <Label htmlFor="modal-email" className="font-mono text-sm">
           Email
@@ -58,9 +79,10 @@ export function EditEmailStep1({
       <Button
         type="submit"
         size="xl"
-        className="w-full justify-center gap-1 text-sm font-medium"
+        disabled={isPending}
+        className="w-full justify-center gap-1 text-sm font-medium disabled:opacity-50"
       >
-        Next <ChevronRight className="size-4" />
+        {isPending ? 'Sending...' : 'Next'} <ChevronRight className="size-4" />
       </Button>
     </form>
   );

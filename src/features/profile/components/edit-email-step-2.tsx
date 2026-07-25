@@ -1,3 +1,5 @@
+import { useConfirmEmailChange } from '@/features/profile/hooks/use-confirm-email-change';
+import { useRequestEmailChange } from '@/features/profile/hooks/use-request-email-change';
 import { Button } from '@/shared/ui/button';
 import { OtpInput } from '@/shared/ui/otp-input';
 import { useEffect, useState } from 'react';
@@ -10,7 +12,7 @@ interface VerifyOtpFormValues {
 interface EditEmailStep2Props {
   email: string;
   onEditEmail: () => void;
-  onVerify: (otpCode: string) => void;
+  onVerify: () => void;
   otpLength?: number;
 }
 
@@ -21,6 +23,12 @@ export function EditEmailStep2({
   otpLength = 6,
 }: EditEmailStep2Props) {
   const [timer, setTimer] = useState(50);
+  const {
+    mutate: confirmEmailChange,
+    isPending,
+    error: confirmError,
+  } = useConfirmEmailChange();
+  const { mutate: requestEmailChange } = useRequestEmailChange();
 
   const {
     control,
@@ -45,6 +53,7 @@ export function EditEmailStep2({
   }, [timer]);
 
   const handleResendCode = () => {
+    requestEmailChange({ newEmail: email });
     setTimer(50);
     setValue('otp', Array(otpLength).fill(''));
     clearErrors('otp');
@@ -59,7 +68,14 @@ export function EditEmailStep2({
       });
       return;
     }
-    onVerify(code);
+    confirmEmailChange(
+      { code },
+      {
+        onSuccess: () => {
+          onVerify();
+        },
+      }
+    );
   });
 
   return (
@@ -83,6 +99,13 @@ export function EditEmailStep2({
           </button>
         </p>
       </div>
+
+      {confirmError && (
+        <p className="text-center font-mono text-xs text-red-500">
+          {(confirmError as any)?.response?.data?.message ||
+            'Verification failed. Please try again.'}
+        </p>
+      )}
 
       <div className="pt-2">
         <Controller
@@ -122,9 +145,10 @@ export function EditEmailStep2({
       <Button
         type="submit"
         size="xl"
-        className="w-full justify-center text-sm font-medium"
+        disabled={isPending}
+        className="w-full justify-center text-sm font-medium disabled:opacity-50"
       >
-        Verify Code
+        {isPending ? 'Verifying...' : 'Verify Code'}
       </Button>
     </form>
   );

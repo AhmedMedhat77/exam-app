@@ -1,5 +1,7 @@
 import EditEmailModal from '@/features/profile/components/edit-email-modal';
+import { useDeleteAccount } from '@/features/profile/hooks/use-delete-account';
 import { useGetProfile } from '@/features/profile/hooks/use-get-profile';
+import { useUpdateProfile } from '@/features/profile/hooks/use-update-profile';
 import type { IUpdateForm } from '@/features/profile/types/user';
 import { Button } from '@/shared/ui/button';
 import { Field } from '@/shared/ui/field';
@@ -11,7 +13,9 @@ import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 export default function UserProfilePage() {
-  const { data, isLoading } = useGetProfile();
+  const { data } = useGetProfile();
+  const { mutate: updateProfile, isPending: isUpdating } = useUpdateProfile();
+  const { mutate: deleteAccount, isPending: isDeleting } = useDeleteAccount();
   const [isEditEmailModalOpen, setIsEditEmailModalOpen] = useState(false);
 
   const user = data?.payload?.user;
@@ -28,7 +32,23 @@ export default function UserProfilePage() {
       : undefined,
   });
 
-  const onSubmit = form.handleSubmit((data) => {});
+  const onSubmit = form.handleSubmit((formData) => {
+    updateProfile({
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      phone: formData.phone,
+    });
+  });
+
+  const handleDeleteAccount = () => {
+    if (
+      confirm(
+        'Are you sure you want to delete your account? This action cannot be undone.'
+      )
+    ) {
+      deleteAccount();
+    }
+  };
 
   return (
     <>
@@ -36,7 +56,7 @@ export default function UserProfilePage() {
         open={isEditEmailModalOpen}
         onOpenChange={setIsEditEmailModalOpen}
       />
-      <form className="space-y-4 px-9 py-8">
+      <form onSubmit={onSubmit} className="space-y-4 px-9 py-8">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <Field>
             <Label htmlFor="first-name">First Name</Label>
@@ -102,13 +122,21 @@ export default function UserProfilePage() {
 
         <div className="grid gap-4 pt-2 md:grid-cols-2">
           <Button
+            type="button"
             size="xl"
-            className="rounded-lg border-0 bg-red-50 px-6 py-2.5 font-medium text-red-600 hover:bg-red-100"
+            onClick={handleDeleteAccount}
+            disabled={isDeleting}
+            className="rounded-lg border-0 bg-red-50 px-6 py-2.5 font-medium text-red-600 hover:bg-red-100 disabled:opacity-50"
           >
-            Delete My Account
+            {isDeleting ? 'Deleting...' : 'Delete My Account'}
           </Button>
-          <Button size="xl" className="rounded-lg px-6 py-2.5 font-medium">
-            Save Changes
+          <Button
+            type="submit"
+            size="xl"
+            disabled={isUpdating}
+            className="rounded-lg px-6 py-2.5 font-medium disabled:opacity-50"
+          >
+            {isUpdating ? 'Saving...' : 'Save Changes'}
           </Button>
         </div>
       </form>

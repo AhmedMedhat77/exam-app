@@ -1,20 +1,36 @@
-import { useState } from 'react';
+import { useChangePassword } from '@/features/profile/hooks/use-change-password';
+import type { IChangePasswordInput } from '@/features/profile/types/user';
 import { Button } from '@/shared/ui/button';
+import { FieldError } from '@/shared/ui/field';
 import { Input } from '@/shared/ui/input';
+import { useForm } from 'react-hook-form';
 
 export default function UserChangePasswordPage() {
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const {
+    mutate: changePassword,
+    isPending,
+    error,
+    isSuccess,
+  } = useChangePassword();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle password change logic
-  };
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<IChangePasswordInput>();
+
+  const onSubmit = handleSubmit((data) => {
+    changePassword(data, {
+      onSuccess: () => {
+        reset();
+      },
+    });
+  });
 
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={onSubmit}
       className="flex h-full flex-col justify-between space-y-6"
     >
       <div className="max-w-lg space-y-5">
@@ -26,6 +42,19 @@ export default function UserChangePasswordPage() {
             Ensure your account is using a strong password.
           </p>
         </div>
+
+        {isSuccess && (
+          <p className="rounded-md bg-green-50 p-3 text-sm font-medium text-green-600">
+            Password changed successfully!
+          </p>
+        )}
+
+        {error && (
+          <p className="rounded-md bg-red-50 p-3 text-sm font-medium text-red-600">
+            {(error as any)?.response?.data?.message ||
+              'Failed to change password'}
+          </p>
+        )}
 
         {/* Current Password */}
         <div className="space-y-1.5">
@@ -39,10 +68,14 @@ export default function UserChangePasswordPage() {
             id="currentPassword"
             type="password"
             placeholder="Enter current password"
-            value={currentPassword}
-            onChange={(e) => setCurrentPassword(e.target.value)}
+            {...register('currentPassword', {
+              required: 'Current password is required',
+            })}
             className="bg-white"
           />
+          {errors.currentPassword?.message && (
+            <FieldError>{errors.currentPassword.message}</FieldError>
+          )}
         </div>
 
         {/* New Password */}
@@ -57,10 +90,18 @@ export default function UserChangePasswordPage() {
             id="newPassword"
             type="password"
             placeholder="Enter new password"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
+            {...register('newPassword', {
+              required: 'New password is required',
+              minLength: {
+                value: 6,
+                message: 'Password must be at least 6 characters',
+              },
+            })}
             className="bg-white"
           />
+          {errors.newPassword?.message && (
+            <FieldError>{errors.newPassword.message}</FieldError>
+          )}
         </div>
 
         {/* Confirm Password */}
@@ -75,10 +116,14 @@ export default function UserChangePasswordPage() {
             id="confirmPassword"
             type="password"
             placeholder="Confirm new password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            {...register('confirmPassword', {
+              required: 'Please confirm your new password',
+            })}
             className="bg-white"
           />
+          {errors.confirmPassword?.message && (
+            <FieldError>{errors.confirmPassword.message}</FieldError>
+          )}
         </div>
       </div>
 
@@ -86,9 +131,10 @@ export default function UserChangePasswordPage() {
       <div className="flex items-center justify-end border-t border-gray-100 pt-6">
         <Button
           type="submit"
-          className="w-auto rounded-lg border-0 bg-[#1768FF] px-8 py-2.5 font-medium text-white hover:bg-blue-700"
+          disabled={isPending}
+          className="w-auto rounded-lg border-0 bg-[#1768FF] px-8 py-2.5 font-medium text-white hover:bg-blue-700 disabled:opacity-50"
         >
-          Save Password
+          {isPending ? 'Saving...' : 'Save Password'}
         </Button>
       </div>
     </form>
