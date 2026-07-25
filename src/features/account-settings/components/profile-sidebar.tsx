@@ -9,7 +9,7 @@ export default function ProfileSidebar() {
   const location = useLocation();
   const { logout } = useUserStore();
   return (
-    <aside className="flex w-64 flex-col justify-between border-r border-gray-100 pr-6">
+    <aside className="flex w-70.5 p-6 flex-col justify-between bg-white border-r border-gray-100 pr-6">
       <nav className="space-y-1.5">
         {Object.values(PROFILE_ROUTES).map((route) => {
           const isActive = location.pathname.includes(route.path);

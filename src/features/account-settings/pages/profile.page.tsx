@@ -21,7 +21,7 @@ export default function UserProfilePage() {
       onSubmit={handleSubmit}
       className="flex h-full flex-col justify-between space-y-6"
     >
-      <div className="space-y-5">
+      <div className="space-y-5 px-4 py-5">
         {/* First & Last Name */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="space-y-1.5">
