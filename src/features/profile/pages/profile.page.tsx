@@ -7,32 +7,28 @@ import { Input } from '@/shared/ui/input';
 import { Label } from '@/shared/ui/label';
 import CustomPhoneInput from '@/shared/ui/phone-input';
 import { PencilLine } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 export default function UserProfilePage() {
   const { data, isLoading } = useGetProfile();
   const [isEditEmailModalOpen, setIsEditEmailModalOpen] = useState(false);
 
+  const user = data?.payload?.user;
+
   const form = useForm<IUpdateForm>({
-    defaultValues: {
-      email: '',
-      firstName: '',
-      lastName: '',
-      phone: '',
-      username: '',
-    },
+    values: user
+      ? {
+          firstName: user.firstName ?? '',
+          lastName: user.lastName ?? '',
+          username: user.username ?? '',
+          email: user.email ?? '',
+          phone: user.phone ?? '',
+        }
+      : undefined,
   });
 
   const onSubmit = form.handleSubmit((data) => {});
-
-  useEffect(() => {
-    if (data?.payload?.user && !isLoading) {
-      form.reset({
-        ...data.payload.user,
-      });
-    }
-  }, [data, isLoading]);
 
   return (
     <>
