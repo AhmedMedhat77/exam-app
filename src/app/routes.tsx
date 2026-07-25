@@ -10,11 +10,12 @@ import VerifyOtpPage from '@/features/auth/pages/registration/verify-otp.page';
 import AdminDiplomaPage from '@/features/diploma/pages/admin-diploma.page';
 import UserDiplomaPage from '@/features/diploma/pages/user-diploma.page';
 import UserExamDetailPage from '@/features/exam/pages/user/user-exam-detail.page';
-import UserSubmissionResultPage from '@/features/submission/pages/user-submission-result.page';
 import ExamsPage from '@/features/exam/pages/user/user-exams.page';
 import PaymentDetailsPage from '@/features/payment/pages/payment-details.page';
 import PaymentsPage from '@/features/payment/pages/payments.page';
-import UserProfileLayout from '@/features/account-settings/layout/profile-layout';
+import UserSubmissionResultPage from '@/features/submission/pages/user-submission-result.page';
+
+import UserProfileLayout from '@/features/profile/layout/profile-layout';
 import { CreditCard, GraduationCap, Logs, UserRound } from 'lucide-react';
 
 export const ROUTES = {

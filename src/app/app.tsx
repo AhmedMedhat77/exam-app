@@ -1,8 +1,8 @@
 import { AppProviders } from '@/app/providers';
 import { ADMIN_ROUTES, AUTH_ROUTES, ROUTES, USER_ROUTES } from '@/app/routes';
-import UserProfileLayout from '@/features/account-settings/layout/profile-layout';
-import UserChangePasswordPage from '@/features/account-settings/pages/change-password.page';
-import UserProfilePage from '@/features/account-settings/pages/profile.page';
+import UserProfileLayout from '@/features/profile/layout/profile-layout';
+import UserChangePasswordPage from '@/features/profile/pages/change-password.page';
+import UserProfilePage from '@/features/profile/pages/profile.page';
 import { useUserStore } from '@/features/user/store/user.store';
 import RootLayout from '@/shared/layouts/root-layout';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router';

@@ -1,6 +1,6 @@
-import ProfileSidebarItem from '@/features/account-settings/components/profile-sidebar-item';
-import { PROFILE_ROUTES } from '@/features/account-settings/constants/routes';
-import { renderSidebarIcon } from '@/features/account-settings/utils/render-sidebar-icon';
+import ProfileSidebarItem from '@/features/profile/components/profile-sidebar-item';
+import { PROFILE_ROUTES } from '@/features/profile/constants/routes';
+import { renderSidebarIcon } from '@/features/profile/utils/render-sidebar-icon';
 import { useUserStore } from '@/features/user/store/user.store';
 import { LogOut } from 'lucide-react';
 import { useLocation } from 'react-router';
