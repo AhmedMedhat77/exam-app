@@ -1,15 +1,13 @@
 import {
   Dialog,
   DialogContent,
-  DialogFooter,
   DialogHeader,
-  DialogTitle,
+  DialogTitle
 } from '@/shared/ui/dialog';
 import FormStepper from '@/shared/ui/form-stepper';
 import { useEffect, useState } from 'react';
 import { EditEmailStep1 } from './edit-email-step-1';
 import { EditEmailStep2 } from './edit-email-step-2';
-import { Button } from '@/shared/ui/button';
 
 interface EditEmailModalProps {
   open?: boolean;
@@ -85,14 +83,6 @@ export default function EditEmailModal({
           />
         )}
       </DialogContent>
-      <DialogFooter>
-        <Button
-          type="submit"
-          className="w-full justify-center text-sm font-medium"
-        >
-          Verify Code
-        </Button>
-      </DialogFooter>
     </Dialog>
   );
 }
