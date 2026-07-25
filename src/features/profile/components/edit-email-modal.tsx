@@ -2,7 +2,7 @@ import {
   Dialog,
   DialogContent,
   DialogHeader,
-  DialogTitle
+  DialogTitle,
 } from '@/shared/ui/dialog';
 import FormStepper from '@/shared/ui/form-stepper';
 import { useEffect, useState } from 'react';
