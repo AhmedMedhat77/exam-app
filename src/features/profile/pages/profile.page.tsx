@@ -23,7 +23,7 @@ export default function UserProfilePage() {
   }, [data]);
 
   return (
-    <form className="space-y-4">
+    <form className="space-y-4 px-9 py-8">
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <Field>
           <Label htmlFor="first-name">First Name</Label>
