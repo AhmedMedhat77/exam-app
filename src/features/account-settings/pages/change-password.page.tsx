@@ -13,16 +13,26 @@ export default function UserChangePasswordPage() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex h-full flex-col justify-between space-y-6">
-      <div className="space-y-5 max-w-lg">
+    <form
+      onSubmit={handleSubmit}
+      className="flex h-full flex-col justify-between space-y-6"
+    >
+      <div className="max-w-lg space-y-5">
         <div>
-          <h2 className="text-lg font-semibold text-gray-900">Change Password</h2>
-          <p className="text-sm text-gray-500">Ensure your account is using a strong password.</p>
+          <h2 className="text-lg font-semibold text-gray-900">
+            Change Password
+          </h2>
+          <p className="text-sm text-gray-500">
+            Ensure your account is using a strong password.
+          </p>
         </div>
 
         {/* Current Password */}
         <div className="space-y-1.5">
-          <label htmlFor="currentPassword" className="text-xs font-semibold uppercase tracking-wider text-gray-700">
+          <label
+            htmlFor="currentPassword"
+            className="text-xs font-semibold tracking-wider text-gray-700 uppercase"
+          >
             Current Password
           </label>
           <Input
@@ -37,7 +47,10 @@ export default function UserChangePasswordPage() {
 
         {/* New Password */}
         <div className="space-y-1.5">
-          <label htmlFor="newPassword" className="text-xs font-semibold uppercase tracking-wider text-gray-700">
+          <label
+            htmlFor="newPassword"
+            className="text-xs font-semibold tracking-wider text-gray-700 uppercase"
+          >
             New Password
           </label>
           <Input
@@ -52,7 +65,10 @@ export default function UserChangePasswordPage() {
 
         {/* Confirm Password */}
         <div className="space-y-1.5">
-          <label htmlFor="confirmPassword" className="text-xs font-semibold uppercase tracking-wider text-gray-700">
+          <label
+            htmlFor="confirmPassword"
+            className="text-xs font-semibold tracking-wider text-gray-700 uppercase"
+          >
             Confirm Password
           </label>
           <Input
@@ -67,10 +83,10 @@ export default function UserChangePasswordPage() {
       </div>
 
       {/* Action Buttons */}
-      <div className="flex items-center justify-end pt-6 border-t border-gray-100">
+      <div className="flex items-center justify-end border-t border-gray-100 pt-6">
         <Button
           type="submit"
-          className="w-auto bg-[#1768FF] text-white hover:bg-blue-700 font-medium px-8 py-2.5 rounded-lg border-0"
+          className="w-auto rounded-lg border-0 bg-[#1768FF] px-8 py-2.5 font-medium text-white hover:bg-blue-700"
         >
           Save Password
         </Button>

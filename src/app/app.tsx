@@ -17,10 +17,16 @@ export function App() {
         <Routes>
           <Route element={<RootLayout />}>
             {/* ACCOUNT SETTINGS NESTED ROUTES */}
-            <Route path={ROUTES.ACCOUNT_SETTINGS} element={<UserProfileLayout />}>
+            <Route
+              path={ROUTES.ACCOUNT_SETTINGS}
+              element={<UserProfileLayout />}
+            >
               <Route index element={<Navigate to="profile" replace />} />
               <Route path="profile" element={<UserProfilePage />} />
-              <Route path="change-password" element={<UserChangePasswordPage />} />
+              <Route
+                path="change-password"
+                element={<UserChangePasswordPage />}
+              />
             </Route>
 
             {/* OTHER MAIN ROUTES */}
