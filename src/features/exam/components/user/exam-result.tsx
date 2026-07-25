@@ -1,11 +1,12 @@
 import { ROUTES } from '@/app/routes';
 import DiplomaHeader from '@/features/diploma/components/shared/header';
+import ResultDonutChart from '@/features/exam/components/user/result-donnut-chart';
 import type {
   ISubmission,
   ISubmissionAnalytic,
-  ISubmissionAnalyticAnswer,
 } from '@/features/exam/types/submissions';
-import type { IAnswer, IQuestion } from '@/features/question/types/questions';
+import { isMatchingAnswer } from '@/features/exam/utils/is-matching-answer';
+import type { IQuestion } from '@/features/question/types/questions';
 import { Button } from '@/shared/ui/button';
 import { Check, CircleQuestionMark, Compass, RotateCcw, X } from 'lucide-react';
 import { useNavigate } from 'react-router';
@@ -16,84 +17,6 @@ interface ExamResultProps {
   userAnswers?: Record<string, string>;
   analytics?: ISubmissionAnalytic[];
   onRestart: () => void;
-}
-
-function isMatchingAnswer(
-  answer: IAnswer,
-  target?: ISubmissionAnalyticAnswer | Record<string, unknown> | string
-): boolean {
-  if (!target) return false;
-  if (typeof target === 'string') {
-    return target === answer.id || target === answer.text;
-  }
-  if (typeof target === 'object' && target !== null) {
-    const t = target as Record<string, unknown>;
-    if (t.id && (t.id === answer.id || t.id === answer.text)) return true;
-    if (t._id && (t._id === answer.id || t._id === answer.text)) return true;
-    if (t.key && (t.key === answer.id || t.key === answer.text)) return true;
-    if (t.text && t.text === answer.text) return true;
-  }
-  return false;
-}
-
-function ResultDonutChart({
-  correct,
-  incorrect,
-}: {
-  correct: number;
-  incorrect: number;
-}) {
-  const total = Math.max(1, correct + incorrect);
-  const correctRatio = correct / total;
-  const incorrectRatio = incorrect / total;
-
-  const radius = 60;
-  const circumference = 2 * Math.PI * radius;
-
-  const correctStroke = circumference * correctRatio;
-  const incorrectStroke = circumference * incorrectRatio;
-
-  return (
-    <div className="relative flex size-48 items-center justify-center">
-      <svg viewBox="0 0 160 160" className="size-full -rotate-90 transform">
-        {/* Background base track */}
-        <circle
-          cx="80"
-          cy="80"
-          r={radius}
-          fill="none"
-          stroke="#f1f5f9"
-          strokeWidth="18"
-        />
-        {/* Correct Segment (Emerald/Green) */}
-        {correct > 0 && (
-          <circle
-            cx="80"
-            cy="80"
-            r={radius}
-            fill="none"
-            stroke="#10b981"
-            strokeWidth="18"
-            strokeDasharray={`${correctStroke} ${circumference - correctStroke}`}
-            strokeDashoffset={0}
-          />
-        )}
-        {/* Incorrect Segment (Red) */}
-        {incorrect > 0 && (
-          <circle
-            cx="80"
-            cy="80"
-            r={radius}
-            fill="none"
-            stroke="#ef4444"
-            strokeWidth="18"
-            strokeDasharray={`${incorrectStroke} ${circumference - incorrectStroke}`}
-            strokeDashoffset={-correctStroke}
-          />
-        )}
-      </svg>
-    </div>
-  );
 }
 
 export default function ExamResult({
@@ -188,7 +111,8 @@ export default function ExamResult({
                       bgClass =
                         'bg-emerald-50/70 border-emerald-300 text-gray-800';
                       if (isSelected) {
-                        dotClass = 'border-emerald-500 bg-emerald-500 text-white';
+                        dotClass =
+                          'border-emerald-500 bg-emerald-500 text-white';
                         showCheck = true;
                       } else {
                         dotClass = 'border-emerald-500 bg-emerald-100';
@@ -207,8 +131,8 @@ export default function ExamResult({
                         <div
                           className={`flex size-4 items-center justify-center rounded-full border ${dotClass}`}
                         >
-                          {showCheck && <Check className="size-3 stroke-[3]" />}
-                          {showX && <X className="size-3 stroke-[3]" />}
+                          {showCheck && <Check className="size-3 stroke-3" />}
+                          {showX && <X className="size-3 stroke-3" />}
                         </div>
                         <span className="text-sm">{answer.text}</span>
                       </div>
