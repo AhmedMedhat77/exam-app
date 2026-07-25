@@ -1,14 +1,14 @@
 import { ROUTES } from '@/app/routes';
 import DiplomaHeader from '@/features/diploma/components/shared/header';
+import AnswerCard from '@/features/exam/components/user/answer-card';
 import ResultDonutChart from '@/features/exam/components/user/result-donnut-chart';
 import type {
   ISubmission,
   ISubmissionAnalytic,
 } from '@/features/exam/types/submissions';
-import { isMatchingAnswer } from '@/features/exam/utils/is-matching-answer';
 import type { IQuestion } from '@/features/question/types/questions';
 import { Button } from '@/shared/ui/button';
-import { Check, CircleQuestionMark, Compass, RotateCcw, X } from 'lucide-react';
+import { CircleQuestionMark, Compass, RotateCcw } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
 interface ExamResultProps {
@@ -94,50 +94,13 @@ export default function ExamResult({
                 </h4>
 
                 <div className="space-y-2">
-                  {question.answers.map((answer) => {
-                    const isSelected =
-                      selectedAnswerId === answer.id ||
-                      isMatchingAnswer(answer, analytic?.selectedAnswer);
-                    const isCorrect =
-                      Boolean(answer.isCorrect) ||
-                      isMatchingAnswer(answer, analytic?.correctAnswer);
-
-                    let bgClass = 'bg-gray-50 border-gray-200 text-gray-800';
-                    let dotClass = 'border-gray-300';
-                    let showCheck = false;
-                    let showX = false;
-
-                    if (isCorrect) {
-                      bgClass =
-                        'bg-emerald-50/70 border-emerald-300 text-gray-800';
-                      if (isSelected) {
-                        dotClass =
-                          'border-emerald-500 bg-emerald-500 text-white';
-                        showCheck = true;
-                      } else {
-                        dotClass = 'border-emerald-500 bg-emerald-100';
-                      }
-                    } else if (isSelected) {
-                      bgClass = 'bg-red-50/70 border-red-200 text-gray-800';
-                      dotClass = 'border-red-500 bg-red-500 text-white';
-                      showX = true;
-                    }
-
-                    return (
-                      <div
-                        key={answer.id}
-                        className={`flex min-h-12.5 items-center gap-3 border px-4 py-3 font-mono transition-colors select-none ${bgClass}`}
-                      >
-                        <div
-                          className={`flex size-4 items-center justify-center rounded-full border ${dotClass}`}
-                        >
-                          {showCheck && <Check className="size-3 stroke-3" />}
-                          {showX && <X className="size-3 stroke-3" />}
-                        </div>
-                        <span className="text-sm">{answer.text}</span>
-                      </div>
-                    );
-                  })}
+                  {question.answers.map((answer) => (
+                    <AnswerCard
+                      answer={answer}
+                      analytic={analytic}
+                      key={answer.id}
+                    />
+                  ))}
                 </div>
               </div>
             );
