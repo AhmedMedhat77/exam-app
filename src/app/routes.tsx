@@ -14,7 +14,7 @@ import UserSubmissionResultPage from '@/features/submission/pages/user-submissio
 import ExamsPage from '@/features/exam/pages/user/user-exams.page';
 import PaymentDetailsPage from '@/features/payment/pages/payment-details.page';
 import PaymentsPage from '@/features/payment/pages/payments.page';
-import UserSettingsPage from '@/features/user/pages/user-settings.page';
+import UserProfileLayout from '@/features/account-settings/layout/profile-layout';
 import { CreditCard, GraduationCap, Logs, UserRound } from 'lucide-react';
 
 export const ROUTES = {
@@ -58,7 +58,7 @@ export const USER_ROUTES: route[] = [
     title: 'Account Settings',
     path: ROUTES.ACCOUNT_SETTINGS,
     icon: <UserRound />,
-    element: UserSettingsPage,
+    element: UserProfileLayout,
   },
   {
     title: 'Exams',
@@ -91,7 +91,7 @@ export const ADMIN_ROUTES: route[] = [
     title: 'Account Settings',
     path: ROUTES.ACCOUNT_SETTINGS,
     icon: <UserRound />,
-    element: UserSettingsPage,
+    element: UserProfileLayout,
   },
   {
     title: 'Audit Log',
