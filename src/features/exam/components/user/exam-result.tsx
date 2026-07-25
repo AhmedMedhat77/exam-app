@@ -79,7 +79,7 @@ export default function ExamResult({
         </div>
 
         {/* Right Column: Questions & Answers List */}
-        <div className="max-h-[500px] flex-1 space-y-6 overflow-y-auto pr-2">
+        <div className="max-h-125 flex-1 space-y-6 overflow-y-auto pr-2">
           {questions.map((question, index) => {
             const selectedAnswerId = userAnswers[question.id];
             const analytic = analytics.find(
