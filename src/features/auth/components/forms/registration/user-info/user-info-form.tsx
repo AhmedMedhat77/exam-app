@@ -27,13 +27,15 @@ export default function UserInfoForm({ email }: UserInfoFormProps) {
   const navigate = useNavigate();
   // To Avoid Re renders
   const setFields = useRegistrationStore((s) => s.setFields);
+  const userData = handleGetFromSessionStorage<UserInfoFormValues>('userData');
+
   const {
     handleSubmit,
     control,
     register,
-    reset,
     formState: { errors, isSubmitted },
   } = useForm<UserInfoFormValues>({
+    values: userData ?? undefined,
     resolver: zodResolver(userInfoSchema),
   });
 
@@ -55,17 +57,7 @@ export default function UserInfoForm({ email }: UserInfoFormProps) {
     if (!email) navigate(ROUTES.REGISTER);
     // To Set the email From props in fields and lift state To Next screen
     if (email) setFields({ email });
-  }, [email, navigate]);
-
-  // Email is added From The Above Effect
-  useEffect(() => {
-    const userData =
-      handleGetFromSessionStorage<UserInfoFormValues>('userData');
-
-    if (userData) {
-      reset(userData);
-    }
-  }, []);
+  }, [email, navigate, setFields]);
 
   return (
     <form className="flex flex-col gap-4" onSubmit={onSubmit}>
