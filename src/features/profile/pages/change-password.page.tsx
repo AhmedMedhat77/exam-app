@@ -31,11 +31,7 @@ export default function UserChangePasswordPage() {
         const serverError = err?.response?.data;
         if (serverError?.errors && Array.isArray(serverError.errors)) {
           serverError.errors.forEach(
-            (item: {
-              path: string;
-              message?: string;
-              messages?: string[];
-            }) => {
+            (item: { path: string; message?: string; messages?: string[] }) => {
               const msg = item.message || item.messages?.[0];
               if (item.path && msg) {
                 setError(item.path as any, {
