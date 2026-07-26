@@ -10,7 +10,7 @@ export function useLogin() {
   const setUser = useUserStore((state) => state.setUser);
 
   return useMutation({
-    mutationFn: (data: LoginInput) => LoginService.login(data),
+    mutationFn: (data: LoginInput) => LoginService.loginApi(data),
     onSuccess: (data) => {
       if (data?.payload) {
         setUser(data.payload.user, data.payload.token);

@@ -8,7 +8,7 @@ import type { IPaginatedAPIResponse } from '@/shared/types/api';
 const BASE_URL = '/api/diplomas';
 
 export default class DiplomaService {
-  static getDiplomas = async (
+  static getDiplomasApi = async (
     params?: IGetDiplomaParams
   ): Promise<IPaginatedAPIResponse<IDiploma[]>> => {
     const response = await axiosInstance.get(BASE_URL, { params });

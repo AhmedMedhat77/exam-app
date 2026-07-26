@@ -6,7 +6,7 @@ export function useDeleteAccount() {
   const logout = useUserStore((state) => state.logout);
 
   return useMutation({
-    mutationFn: () => ProfileService.deleteAccount(),
+    mutationFn: () => ProfileService.deleteAccountApi(),
     onSuccess: () => {
       logout();
     },

@@ -9,7 +9,7 @@ export function useSendVerificationEmail() {
 
   return useMutation({
     mutationFn: (data: EmailFormValues) =>
-      EmailVerificationService.sendVerificationEmail(data),
+      EmailVerificationService.sendVerificationEmailApi(data),
     onSuccess: (_, variables) => {
       navigate(
         `${ROUTES.REGISTER_VERIFY_OTP}?email=${encodeURIComponent(variables.email)}`

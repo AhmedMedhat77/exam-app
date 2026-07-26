@@ -6,7 +6,7 @@ import type { IQuestion } from '../types/questions';
 const BASE_RUL = '/api/questions';
 
 export default class QuestionService {
-  static getExamQuestions = async (
+  static getExamQuestionsApi = async (
     params: IExamQuestionParams
   ): Promise<IApiResponse<{ questions: IQuestion[] }>> => {
     const { examId, ...rest } = params;

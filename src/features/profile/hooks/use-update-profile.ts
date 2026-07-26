@@ -8,7 +8,7 @@ export function useUpdateProfile() {
 
   return useMutation({
     mutationFn: (payload: IUpdateProfilePayload) =>
-      ProfileService.updateProfile(payload),
+      ProfileService.updateProfileApi(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: PROFILE_QUERY_KEYS.getProfile,

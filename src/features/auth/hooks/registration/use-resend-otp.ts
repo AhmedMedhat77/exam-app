@@ -5,6 +5,6 @@ import { EmailVerificationService } from '@/features/auth/services/registration/
 export function useResendOtp() {
   return useMutation({
     mutationFn: (data: EmailFormValues) =>
-      EmailVerificationService.sendVerificationEmail(data),
+      EmailVerificationService.sendVerificationEmailApi(data),
   });
 }

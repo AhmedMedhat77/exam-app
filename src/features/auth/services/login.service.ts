@@ -5,7 +5,7 @@ import { axiosInstance } from '@/shared/lib/axios';
 const URL = '/api/auth';
 
 export class LoginService {
-  static async login(payload: LoginInput): Promise<LoginResponse> {
+  static async loginApi(payload: LoginInput): Promise<LoginResponse> {
     const response = await axiosInstance.post(`${URL}/login`, payload);
     return response.data;
   }

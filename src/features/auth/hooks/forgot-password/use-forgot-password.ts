@@ -9,7 +9,7 @@ export function useForgotPassword() {
 
   return useMutation({
     mutationFn: (data: ForgotPasswordFormValues) =>
-      ForgotPasswordService.forgotPassword({
+      ForgotPasswordService.forgotPasswordApi({
         email: data.email,
         redirectUrl: `${window.location.origin}/reset-password`,
       }),

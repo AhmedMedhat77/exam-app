@@ -8,7 +8,7 @@ export function useConfirmEmailChange() {
 
   return useMutation({
     mutationFn: (payload: IConfirmEmailChangeInput) =>
-      ProfileService.confirmEmailChange(payload),
+      ProfileService.confirmEmailChangeApi(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: PROFILE_QUERY_KEYS.getProfile,

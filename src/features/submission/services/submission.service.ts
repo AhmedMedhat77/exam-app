@@ -10,21 +10,21 @@ import type { IApiResponse, IPaginatedAPIResponse } from '@/shared/types/api';
 const BASE_URL = '/api/submissions';
 
 export class SubmissionService {
-  static submitExam = async (
+  static submitExamApi = async (
     payload: ISubmitExamPayload
   ): Promise<IApiResponse<unknown>> => {
     const { data } = await axiosInstance.post(BASE_URL, payload);
     return data;
   };
 
-  static getSubmissions = async (
+  static getSubmissionsApi = async (
     params?: IGetSubmissionsParams
   ): Promise<IPaginatedAPIResponse<ISubmission[]>> => {
     const { data } = await axiosInstance.get(BASE_URL, { params });
     return data;
   };
 
-  static getSubmissionById = async (
+  static getSubmissionByIdApi = async (
     id: string
   ): Promise<IApiResponse<IGetSubmissionByIdPayload>> => {
     const { data } = await axiosInstance.get(`${BASE_URL}/${id}`);

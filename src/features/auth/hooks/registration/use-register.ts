@@ -12,7 +12,7 @@ export function useRegister() {
   const setUser = useUserStore((s) => s.setUser);
 
   return useMutation({
-    mutationFn: (data: RegisterPayload) => RegisterService.register(data),
+    mutationFn: (data: RegisterPayload) => RegisterService.registerApi(data),
     onSuccess: (response) => {
       setUser(response.payload.user, response.payload.token);
       navigate(ROUTES.LOGIN);

@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 export function useGetExamSubmissions(params?: IGetSubmissionsParams) {
   return useQuery({
     queryKey: SUBMISSIONS_KEY.all(params),
-    queryFn: () => SubmissionService.getSubmissions(params),
+    queryFn: () => SubmissionService.getSubmissionsApi(params),
     enabled: !!params?.examId,
   });
 }

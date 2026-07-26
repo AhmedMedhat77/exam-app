@@ -14,7 +14,7 @@ interface IVerifyOtpApiResponse {
 }
 
 export class VerifyOtpService {
-  static async verifyOtp(
+  static async verifyOtpApi(
     payload: VerifyOtpFormValues
   ): Promise<IVerifyOtpApiResponse> {
     try {

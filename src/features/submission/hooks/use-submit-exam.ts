@@ -5,7 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 export function useSubmitExam() {
   return useMutation({
     mutationFn: (data: ISubmitExamPayload) =>
-      SubmissionService.submitExam(data),
+      SubmissionService.submitExamApi(data),
   });
 }
 

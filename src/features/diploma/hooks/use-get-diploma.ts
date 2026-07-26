@@ -10,7 +10,7 @@ export function useGetUserDiplomas(
   return useInfiniteQuery({
     queryKey: DIPLOMA_QUERY_KEYS.diplomas.getAll(params),
     queryFn: ({ pageParam = 1 }) =>
-      DiplomaService.getDiplomas({ ...params, page: Number(pageParam) }),
+      DiplomaService.getDiplomasApi({ ...params, page: Number(pageParam) }),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
       const currentPage = lastPage?.payload?.metadata?.page ?? 1;

@@ -14,7 +14,7 @@ interface ISendVerificationCodeApiResponse {
 }
 
 export class EmailVerificationService {
-  static async sendVerificationEmail(
+  static async sendVerificationEmailApi(
     payload: EmailFormValues
   ): Promise<ISendVerificationCodeApiResponse> {
     try {

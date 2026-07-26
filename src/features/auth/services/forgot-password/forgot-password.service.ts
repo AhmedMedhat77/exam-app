@@ -11,7 +11,7 @@ interface IForgotPasswordApiResponse {
 }
 
 export class ForgotPasswordService {
-  static async forgotPassword(
+  static async forgotPasswordApi(
     payload: RequestPasswordResetPayload
   ): Promise<IForgotPasswordApiResponse> {
     try {

@@ -5,6 +5,6 @@ import { useQuery } from '@tanstack/react-query';
 export function useGetProfile() {
   return useQuery({
     queryKey: PROFILE_QUERY_KEYS.getProfile,
-    queryFn: ProfileService.fetchProfile,
+    queryFn: ProfileService.fetchProfileApi,
   });
 }

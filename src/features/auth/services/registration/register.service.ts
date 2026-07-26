@@ -37,7 +37,7 @@ export interface RegisterPayload {
 }
 
 export class RegisterService {
-  static async register(
+  static async registerApi(
     payload: RegisterPayload
   ): Promise<IRegisterApiResponse> {
     try {

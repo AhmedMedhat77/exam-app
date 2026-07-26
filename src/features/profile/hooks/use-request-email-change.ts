@@ -5,6 +5,6 @@ import { useMutation } from '@tanstack/react-query';
 export function useRequestEmailChange() {
   return useMutation({
     mutationFn: (payload: IRequestEmailChangeInput) =>
-      ProfileService.requestEmailChange(payload),
+      ProfileService.requestEmailChangeApi(payload),
   });
 }

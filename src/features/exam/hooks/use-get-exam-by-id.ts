@@ -5,7 +5,7 @@ import { ExamsService } from '../service/exams.service';
 export const useGetExamById = (id: string) => {
   return useQuery({
     queryKey: EXAMS_KEY.detail(id),
-    queryFn: () => ExamsService.getById(id),
+    queryFn: () => ExamsService.getByIdApi(id),
     enabled: !!id,
   });
 };

@@ -11,7 +11,7 @@ interface IResetPasswordApiResponse {
 }
 
 export class ResetPasswordService {
-  static async resetPassword(
+  static async resetPasswordApi(
     payload: ResetPasswordPayload
   ): Promise<IResetPasswordApiResponse> {
     try {

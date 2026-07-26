@@ -12,13 +12,13 @@ const BASE_URL = '/api/users';
 
 export class ProfileService {
   /** GET /api/users/profile */
-  static fetchProfile = async (): Promise<IApiResponse<{ user: IUser }>> => {
+  static fetchProfileApi = async (): Promise<IApiResponse<{ user: IUser }>> => {
     const { data } = await axiosInstance.get(`${BASE_URL}/profile`);
     return data;
   };
 
   /** PATCH /api/users/profile */
-  static updateProfile = async (
+  static updateProfileApi = async (
     payload: IUpdateProfilePayload
   ): Promise<IApiResponse<{ user: IUser }>> => {
     const { data } = await axiosInstance.patch(`${BASE_URL}/profile`, payload);
@@ -26,7 +26,7 @@ export class ProfileService {
   };
 
   /** POST /api/users/change-password */
-  static changePassword = async (
+  static changePasswordApi = async (
     payload: IChangePasswordInput
   ): Promise<IApiResponse<{ message: string }>> => {
     const { data } = await axiosInstance.post(
@@ -37,7 +37,7 @@ export class ProfileService {
   };
 
   /** POST /api/users/email/request */
-  static requestEmailChange = async (
+  static requestEmailChangeApi = async (
     payload: IRequestEmailChangeInput
   ): Promise<IApiResponse<{ message: string; code?: string }>> => {
     const { data } = await axiosInstance.post(
@@ -48,7 +48,7 @@ export class ProfileService {
   };
 
   /** POST /api/users/email/confirm */
-  static confirmEmailChange = async (
+  static confirmEmailChangeApi = async (
     payload: IConfirmEmailChangeInput
   ): Promise<IApiResponse<{ message: string; user: IUser }>> => {
     const { data } = await axiosInstance.post(
@@ -59,7 +59,7 @@ export class ProfileService {
   };
 
   /** DELETE /api/users/account */
-  static deleteAccount = async (): Promise<
+  static deleteAccountApi = async (): Promise<
     IApiResponse<{ message: string }>
   > => {
     const { data } = await axiosInstance.delete(`${BASE_URL}/account`);

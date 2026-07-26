@@ -4,6 +4,7 @@ import { VerifyOtpService } from '@/features/auth/services/registration/verify-o
 
 export function useVerifyOtp() {
   return useMutation({
-    mutationFn: (data: VerifyOtpFormValues) => VerifyOtpService.verifyOtp(data),
+    mutationFn: (data: VerifyOtpFormValues) =>
+      VerifyOtpService.verifyOtpApi(data),
   });
 }

@@ -5,6 +5,6 @@ import { useMutation } from '@tanstack/react-query';
 export function useChangePassword() {
   return useMutation({
     mutationFn: (payload: IChangePasswordInput) =>
-      ProfileService.changePassword(payload),
+      ProfileService.changePasswordApi(payload),
   });
 }

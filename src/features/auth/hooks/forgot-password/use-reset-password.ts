@@ -9,7 +9,7 @@ export function useResetPassword() {
 
   return useMutation({
     mutationFn: (data: ResetPasswordPayload) =>
-      ResetPasswordService.resetPassword(data),
+      ResetPasswordService.resetPasswordApi(data),
     onSuccess: () => {
       navigate(ROUTES.LOGIN, { replace: true });
     },
