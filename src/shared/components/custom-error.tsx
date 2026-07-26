@@ -30,12 +30,12 @@ export function CustomError({
     <div
       role="alert"
       className={cn(
-        'relative flex w-full flex-col items-center justify-center gap-1  border border-red-300 bg-red-50/80 px-4 py-2.5 text-center text-sm font-medium text-red-600 dark:border-red-900/50 dark:bg-red-950/30 dark:text-red-400',
+        'relative flex w-full flex-col items-center justify-center gap-1 border border-red-300 bg-red-50/80 px-4 py-2.5 text-center text-sm font-medium text-red-600 dark:border-red-900/50 dark:bg-red-950/30 dark:text-red-400',
         className
       )}
       {...props}
     >
-      <CircleX className="size-5 shrink-0 text-red-500 absolute -top-2.5 left-1/2 translate-x-1/2 z-10 bg-white " />
+      <CircleX className="absolute -top-2.5 left-1/2 z-10 size-5 shrink-0 translate-x-1/2 bg-white text-red-500" />
       <span>{errorMessage}</span>
     </div>
   );
