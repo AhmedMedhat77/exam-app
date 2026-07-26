@@ -31,7 +31,7 @@ function Flag({
   country,
   countryName,
   flagUrl,
-  flags,
+  flags: _flags,
   ...props
 }: {
   country?: string;
