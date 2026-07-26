@@ -9,13 +9,17 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
 export default function UserChangePasswordPage() {
-  const { mutate: changePassword, isPending } = useChangePassword();
+  const {
+    mutate: changePassword,
+    isPending,
+    error,
+    isError,
+  } = useChangePassword();
 
   const {
     register,
     handleSubmit,
     reset,
-    setError,
     formState: { errors },
   } = useForm<IChangePasswordInput>({
     resolver: zodResolver(changePasswordSchema),
@@ -26,25 +30,6 @@ export default function UserChangePasswordPage() {
       onSuccess: () => {
         toast.success('Password changed successfully');
         reset();
-      },
-      onError: (err: any) => {
-        const serverError = err?.response?.data;
-        if (serverError?.errors && Array.isArray(serverError.errors)) {
-          serverError.errors.forEach(
-            (item: { path: string; message?: string; messages?: string[] }) => {
-              const msg = item.message || item.messages?.[0];
-              if (item.path && msg) {
-                setError(item.path as any, {
-                  type: 'server',
-                  message: msg,
-                });
-              }
-            }
-          );
-        }
-        toast.error(
-          serverError?.message || 'Failed to change password. Please try again.'
-        );
       },
     });
   });
@@ -84,6 +69,13 @@ export default function UserChangePasswordPage() {
           }
         />
       </Field>
+
+      {isError && (
+        <div className="bg-destructive/20 border-destructive border-2 p-3 text-center">
+          <span className="text-destructive">{error?.message}</span>
+        </div>
+      )}
+
       <Button disabled={isPending} size={'xl'} type="submit">
         {isPending ? 'Updating...' : 'Update Password'}
       </Button>
