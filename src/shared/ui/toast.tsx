@@ -12,7 +12,18 @@ import {
   Loader2Icon,
 } from 'lucide-react';
 
-const toast = ToastPrimitive.createToastManager();
+const baseToast = ToastPrimitive.createToastManager();
+
+const toast = Object.assign(baseToast, {
+  success: (title: string, description?: string) =>
+    baseToast.add({ title, description, type: 'success' }),
+  error: (title: string, description?: string) =>
+    baseToast.add({ title, description, type: 'error' }),
+  info: (title: string, description?: string) =>
+    baseToast.add({ title, description, type: 'info' }),
+  warning: (title: string, description?: string) =>
+    baseToast.add({ title, description, type: 'warning' }),
+});
 
 function ToastProvider({ ...props }: ToastPrimitive.Provider.Props) {
   return <ToastPrimitive.Provider {...props} />;
@@ -35,7 +46,7 @@ function ToastViewport({ className, ...props }: ToastPrimitive.Viewport.Props) {
   );
 }
 
-function Toast({ className, ...props }: ToastPrimitive.Root.Props) {
+function ToastComponent({ className, ...props }: ToastPrimitive.Root.Props) {
   return (
     <ToastPrimitive.Root
       data-slot="toast"
@@ -61,6 +72,13 @@ function Toast({ className, ...props }: ToastPrimitive.Root.Props) {
     />
   );
 }
+
+const Toast = Object.assign(ToastComponent, {
+  success: toast.success,
+  error: toast.error,
+  info: toast.info,
+  warning: toast.warning,
+});
 
 function ToastContent({ className, ...props }: ToastPrimitive.Content.Props) {
   return (

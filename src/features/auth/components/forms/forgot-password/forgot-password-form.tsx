@@ -8,7 +8,6 @@ import { Button } from '@/shared/ui/button';
 import CustomInput from '@/shared/ui/custom-input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ChevronRight, Loader2 } from 'lucide-react';
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router';
 
@@ -22,21 +21,15 @@ export default function ForgotPasswordForm({
   const { mutate, isPending, error, isError } = useForgotPassword();
   const {
     register,
-    reset,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<ForgotPasswordFormValues>({
+    values: { email: email || '' },
     resolver: zodResolver(forgotPasswordSchema),
     defaultValues: { email },
   });
 
   const isLoading = isSubmitting || isPending;
-
-  useEffect(() => {
-    if (email) {
-      reset({ email });
-    }
-  }, [email]);
 
   const onSubmit = handleSubmit((values) => {
     mutate(values);

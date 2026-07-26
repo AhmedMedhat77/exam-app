@@ -8,7 +8,6 @@ import { Button } from '@/shared/ui/button';
 import CustomInput from '@/shared/ui/custom-input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ChevronRight, Loader2 } from 'lucide-react';
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router';
 
@@ -22,9 +21,10 @@ export default function EmailForm({ email }: EmailFormProps) {
   const {
     register,
     formState: { errors, isValid, isSubmitted, isSubmitting },
-    reset,
+
     handleSubmit,
   } = useForm<EmailFormValues>({
+    values: { email: email || '' },
     resolver: zodResolver(emailSchema),
   });
 
@@ -36,10 +36,6 @@ export default function EmailForm({ email }: EmailFormProps) {
   const onSubmit = handleSubmit((data) => {
     mutate(data);
   });
-
-  useEffect(() => {
-    if (email) reset({ email });
-  }, [email]);
 
   return (
     <div className="flex w-full flex-col gap-2">
