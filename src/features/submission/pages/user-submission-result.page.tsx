@@ -1,5 +1,5 @@
 import { ROUTES } from '@/app/routes';
-import DiplomaHeader from '@/features/diploma/components/shared/header';
+import UserDashboardHeader from '@/shared/components/user-dashboard-header';
 import ResultActions from '@/features/submission/components/result-actions';
 import ResultHeaderProgress from '@/features/submission/components/result-header-progress';
 import ResultQuestionsList from '@/features/submission/components/result-questions-list';
@@ -30,7 +30,7 @@ export default function UserSubmissionResultPage() {
   if (isError || !payload) {
     return (
       <div className="w-full space-y-4 py-8 text-center">
-        <DiplomaHeader
+        <UserDashboardHeader
           icon={<CircleQuestionMark size={45} className="text-white" />}
           title="Submission Results"
         />

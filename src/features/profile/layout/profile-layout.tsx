@@ -1,4 +1,4 @@
-import DiplomaHeader from '@/features/diploma/components/shared/header';
+import UserDashboardHeader from '@/shared/components/user-dashboard-header';
 import ProfileSidebar from '@/features/profile/components/profile-sidebar';
 import { UserRound } from 'lucide-react';
 import { Outlet } from 'react-router';
@@ -7,7 +7,7 @@ export default function UserProfileLayout() {
   return (
     <div className="grid gap-4">
       {/* Header Banner */}
-      <DiplomaHeader
+      <UserDashboardHeader
         icon={<UserRound className="size-11.25 text-white" />}
         title="Account Settings"
       />

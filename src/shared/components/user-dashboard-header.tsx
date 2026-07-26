@@ -8,7 +8,7 @@ interface IDiplomaHeaderProps {
   onBack?: () => void;
 }
 
-export default function DiplomaHeader({
+export default function UserDashboardHeader({
   title,
   icon,
   showBackButton,

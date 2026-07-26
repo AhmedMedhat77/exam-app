@@ -1,4 +1,4 @@
-import DiplomaHeader from '@/features/diploma/components/shared/header';
+import UserDashboardHeader from '@/shared/components/user-dashboard-header';
 import { CircleQuestionMark } from 'lucide-react';
 
 interface ResultHeaderProgressProps {
@@ -12,7 +12,7 @@ export default function ResultHeaderProgress({
 }: ResultHeaderProgressProps) {
   return (
     <>
-      <DiplomaHeader
+      <UserDashboardHeader
         icon={<CircleQuestionMark size={45} className="text-white" />}
         title={`${title || 'Exam'} Questions`}
       />

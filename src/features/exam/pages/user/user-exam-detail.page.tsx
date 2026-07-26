@@ -1,5 +1,5 @@
 import { ROUTES } from '@/app/routes';
-import DiplomaHeader from '@/features/diploma/components/shared/header';
+import UserDashboardHeader from '@/shared/components/user-dashboard-header';
 import DonutBar from '@/features/exam/components/user/donut-bar';
 import ProgressBar from '@/features/exam/components/user/progressbar';
 import QuestionStepCounter from '@/features/exam/components/user/question-step-counter';
@@ -237,7 +237,7 @@ export default function UserExamDetailPage() {
       >
         <ArrowLeft className="h-4 w-4" /> Exit exam
       </Button>
-      <DiplomaHeader
+      <UserDashboardHeader
         icon={<CircleQuestionMark size={45} className="text-white" />}
         title={examData.exam.title || ''}
       />
