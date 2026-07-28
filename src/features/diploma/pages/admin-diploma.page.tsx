@@ -6,6 +6,7 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
+  SelectValue,
 } from '@/shared/ui/select';
 import { ChevronsUpDown, Search, SlidersHorizontal } from 'lucide-react';
 
@@ -21,10 +22,11 @@ export default function AdminDiplomaPage() {
           rightIcon={<Search className="size-4 text-gray-200" />}
         />
 
-        <div className="flex items-center gap-3">
+        <div className="flex w-full items-center gap-3">
           <Select>
-            <SelectTrigger className="w-1/3">
-              <ChevronsUpDown />
+            <SelectTrigger className="w-1/2 rounded-xs px-3">
+              <SelectValue placeholder="Diploma" />
+              <ChevronsUpDown className="text-muted-foreground size-4" />
             </SelectTrigger>
 
             <SelectContent>
@@ -35,8 +37,9 @@ export default function AdminDiplomaPage() {
           </Select>
 
           <Select>
-            <SelectTrigger className="w-1/3">
-              <span>Status</span>
+            <SelectTrigger className="w-1/2 rounded-xs px-3">
+              <SelectValue placeholder="Immutability" />
+              <ChevronsUpDown className="text-muted-foreground size-4" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="draft">Draft</SelectItem>
