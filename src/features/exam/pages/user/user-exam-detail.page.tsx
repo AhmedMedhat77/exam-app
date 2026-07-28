@@ -44,11 +44,11 @@ export default function UserExamDetailPage() {
   const questions = questionsData?.payload?.questions ?? [];
   const latestSubmission = submissionsData?.payload?.data?.[0];
 
-  // 1. Initialize or restore session from localStorage
+  // 1. Initialize or restore session from sessionStorage
   useEffect(() => {
     if (!id) return;
 
-    const saved = localStorage.getItem(storageKey);
+    const saved = sessionStorage.getItem(storageKey);
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -66,7 +66,7 @@ export default function UserExamDetailPage() {
     } else {
       const newStart = new Date().toISOString();
       setStartedAt(newStart);
-      localStorage.setItem(
+      sessionStorage.setItem(
         storageKey,
         JSON.stringify({
           examId: id,
@@ -80,11 +80,11 @@ export default function UserExamDetailPage() {
     setIsInitialized(true);
   }, [id, storageKey]);
 
-  // 2. Persist progress to localStorage whenever answers or step changes
+  // 2. Persist progress to sessionStorage whenever answers or step changes
   useEffect(() => {
     if (!id || !startedAt || !isInitialized || isSubmitted) return;
 
-    localStorage.setItem(
+    sessionStorage.setItem(
       storageKey,
       JSON.stringify({
         examId: id,
@@ -129,7 +129,7 @@ export default function UserExamDetailPage() {
         },
         {
           onSuccess: (res) => {
-            localStorage.removeItem(storageKey);
+            sessionStorage.removeItem(storageKey);
             setIsSubmitted(true);
             const resPayload = res?.payload as
               { id?: string; submission?: { id?: string } } | undefined;
@@ -167,7 +167,7 @@ export default function UserExamDetailPage() {
   }, [isInitialized, isSubmitted, latestSubmission?.id, navigate]);
 
   const handleExitExam = () => {
-    localStorage.removeItem(storageKey);
+    sessionStorage.removeItem(storageKey);
     navigate(ROUTES.EXAMS);
   };
 

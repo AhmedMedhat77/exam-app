@@ -75,7 +75,7 @@ export default function UserSubmissionResultPage() {
 
   const handleRestart = () => {
     if (submission?.examId) {
-      localStorage.removeItem(`exam_session_${submission.examId}`);
+      sessionStorage.removeItem(`exam_session_${submission.examId}`);
       navigate(`/exams/${submission.examId}`);
     }
   };
