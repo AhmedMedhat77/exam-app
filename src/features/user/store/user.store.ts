@@ -21,7 +21,7 @@ export const useUserStore = create<UserStore>()(
         set({
           user,
           token,
-          isAdmin: ADMIN_ROLES.includes(user.role),
+          isAdmin: ADMIN_ROLES.includes(user.role.toLowerCase()),
         }),
       logout: () => set({ user: null, token: null, isAdmin: false }),
     }),

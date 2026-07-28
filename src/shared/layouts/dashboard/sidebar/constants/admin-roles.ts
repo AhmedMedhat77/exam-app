@@ -1,1 +1,1 @@
-export const ADMIN_ROLES = ['admin', 'super-admin'];
+export const ADMIN_ROLES = ['admin', 'ADMIN', 'super-admin', 'SUPER_ADMIN'];
