@@ -11,11 +11,16 @@ import {
 import { useGetUserDiplomas } from '@/features/diploma/hooks/use-get-diploma';
 import type { SORT_BY, SORT_ORDER } from '@/features/diploma/types/diploma';
 import AdminFiltersContainer from '@/shared/components/admin-filters-container';
+import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.context';
 import { SlidersHorizontal } from 'lucide-react';
 import { useMemo } from 'react';
 import { useSearchParams } from 'react-router';
 
 export default function AdminDiplomaPage() {
+  useBreadcrumb({
+    items: [{ title: 'Diplomas', href: '/' }],
+  });
+
   const [searchParams] = useSearchParams();
 
   const search = searchParams.get(SEARCH_QUERY_KEY) || '';
