@@ -14,7 +14,7 @@ interface AdminDiplomaHeaderProps {
 }
 
 export default function AdminDiplomaHeader({
-  title = 'Diplomas',
+  title = '',
   total = 0,
   totalPages = 1,
   limit = 10,
@@ -28,10 +28,6 @@ export default function AdminDiplomaHeader({
   const endItem = Math.min(page * limit, total);
 
   const [inputPage, setInputPage] = useState<string>(String(page));
-
-  useEffect(() => {
-    setInputPage(String(page));
-  }, [page]);
 
   const updatePageParam = (newPage: number) => {
     const validPage = Math.max(1, Math.min(newPage, totalPages));
@@ -58,7 +54,7 @@ export default function AdminDiplomaHeader({
     }
   };
 
-  const handlePageSubmit = (e: React.FormEvent) => {
+  const handlePageSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
     const parsed = parseInt(inputPage, 10);
     if (!isNaN(parsed) && parsed !== page) {
@@ -77,17 +73,15 @@ export default function AdminDiplomaHeader({
     }
   };
 
-  return (
-    <div className="mb-4 flex flex-col gap-4">
-      {/* Top Header Title */}
-      <h1 className="font-mono text-2xl font-semibold tracking-tight text-gray-900">
-        {title}
-      </h1>
+  useEffect(() => {
+    setInputPage(String(page));
+  }, [page]);
 
-      {/* Header Controls Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 rounded-md border border-gray-200 bg-white p-3 shadow-xs">
+  return (
+    <div className="flex items-center justify-between border-gray-100 bg-white p-4 -mt-8">
+      <div className="flex items-center gap-1">
         {/* Left: Range Summary */}
-        <div className="font-mono text-sm font-medium text-gray-600">
+        <div className="font-mono text-xs font-medium text-gray-800">
           {isLoading ? (
             <span className="text-gray-400">Loading count...</span>
           ) : (
@@ -141,17 +135,19 @@ export default function AdminDiplomaHeader({
             <ChevronRight className="size-4" />
           </Button>
         </div>
-
-        {/* Right: Add New Diploma Button */}
-        <Button
-          type="button"
-          onClick={onAddNew}
-          className="flex h-9 w-auto cursor-pointer items-center gap-1.5 rounded-md border-none bg-[#00c9a7] px-4 font-mono font-medium text-white shadow-xs transition-colors hover:bg-[#00b395]"
-        >
-          <Plus className="size-4" />
-          <span>Add New Diploma</span>
-        </Button>
       </div>
+
+      {/* Right: Add New Diploma Button */}
+      <Button
+        variant="success"
+        size={'xl'}
+        type="button"
+        onClick={onAddNew}
+        className="flex h-9 w-auto"
+      >
+        <Plus className="size-4" />
+        <span>Add New Diploma</span>
+      </Button>
     </div>
   );
 }
