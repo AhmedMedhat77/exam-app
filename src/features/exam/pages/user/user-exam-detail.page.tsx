@@ -34,7 +34,7 @@ export default function UserExamDetailPage() {
   useBreadcrumb({
     items: [
       { title: 'Diplomas', href: ROUTES.DIPLOMAS },
-      ...(examData?.exam.diploma
+      ...(examData?.exam?.diploma
         ? [
             {
               title: examData.exam.diploma.title,
@@ -42,7 +42,7 @@ export default function UserExamDetailPage() {
             },
           ]
         : []),
-      { title: examData?.exam.title || '' },
+      { title: examData?.exam?.title || '' },
     ],
   });
 
