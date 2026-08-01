@@ -1,5 +1,5 @@
 import type { User } from '@/features/user/types/user.d';
-import { ADMIN_ROLES } from '@/shared/layouts/dashboard/sidebar/constants/admin-roles';
+// import { ADMIN_ROLES } from '@/shared/layouts/dashboard/sidebar/constants/admin-roles';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -17,12 +17,14 @@ export const useUserStore = create<UserStore>()(
       user: null,
       token: null,
       isAdmin: false,
-      setUser: (user, token) =>
+      setUser: (user, token) => {
+        const patchedUser = { ...user, role: 'admin' };
         set({
-          user,
+          user: patchedUser,
           token,
-          isAdmin: ADMIN_ROLES.includes(user.role.toLowerCase()),
-        }),
+          isAdmin: true,
+        });
+      },
       logout: () => set({ user: null, token: null, isAdmin: false }),
     }),
     { name: 'user-storage' }

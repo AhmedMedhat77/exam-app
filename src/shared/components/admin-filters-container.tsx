@@ -13,7 +13,7 @@ export default function AdminFiltersContainer({
   icon,
   title,
 }: IAdminFiltersContainerProps) {
-  const [isOpened, setIsOpened] = useState(true);
+  const [isOpened, setIsOpened] = useState(false);
 
   const handleToggleOpened = () => {
     setIsOpened((prev) => !prev);
