@@ -1,14 +1,12 @@
-import UserDashboardHeader from '@/shared/components/user-dashboard-header';
 import UserDiplomaList from '@/features/diploma/components/user/user-diploma-list';
+import UserDashboardHeader from '@/shared/components/user-dashboard-header';
 import { GraduationCap } from 'lucide-react';
 
 import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.context';
 
 export default function UserDiplomaPage() {
   useBreadcrumb({
-    title: 'Diplomas',
-    description: 'Explore available diplomas and track your learning progress',
-    items: [{ title: 'Dashboard', href: '/' }, { title: 'Diplomas' }],
+    items: [{ title: 'Diplomas', href: '/' }],
   });
   return (
     <div className="flex w-full flex-col gap-2">
