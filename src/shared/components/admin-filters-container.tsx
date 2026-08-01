@@ -43,7 +43,7 @@ export default function AdminFiltersContainer({
           'flex flex-col gap-4 bg-white p-4 transition-all duration-500 ease-in-out',
           isOpened
             ? 'max-h-auto opacity-100'
-            : 'max-h-0 overflow-hidden opacity-0',
+            : 'max-h-0 overflow-hidden opacity-0'
         )}
       >
         {children}
