@@ -50,7 +50,6 @@ export default function AdminDiplomaPage() {
 
   return (
     <div className="max-w-full space-y-6">
-      <BreadCrumb />
       <AdminDiplomaHeader
         total={metadata?.total}
         totalPages={metadata?.totalPages}

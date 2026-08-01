@@ -1,4 +1,6 @@
 import { PAGE_QUERY_KEY } from '@/features/diploma/components/constants/search-params.keys';
+import BreadCrumb from '@/shared/layouts/dashboard/breadcrumb/BreadCrumb';
+import { cn } from '@/shared/lib/utils';
 import { Button } from '@/shared/ui/button';
 import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -14,7 +16,6 @@ interface AdminDiplomaHeaderProps {
 }
 
 export default function AdminDiplomaHeader({
-  title = '',
   total = 0,
   totalPages = 1,
   limit = 10,
@@ -78,8 +79,14 @@ export default function AdminDiplomaHeader({
   }, [page]);
 
   return (
-    <div className="-mt-8 flex items-center justify-between border-gray-100 bg-white p-4">
-      <div className="flex items-center gap-1">
+    <div
+      className={cn(
+        'sticky top-0 z-50 flex flex-wrap items-center justify-between gap-4 rounded-md border border-gray-200 bg-white p-4 shadow-xs',
+        '-mx-3.5'
+      )}
+    >
+      <BreadCrumb />
+      <div className="flex flex-wrap items-center gap-4">
         {/* Left: Range Summary */}
         <div className="font-mono text-xs font-medium text-gray-800">
           {isLoading ? (
@@ -90,7 +97,7 @@ export default function AdminDiplomaHeader({
         </div>
 
         {/* Center: Pagination Controls */}
-        <div className="flex items-center overflow-hidden rounded-md border border-gray-200 bg-gray-100 shadow-2xs">
+        <div className="flex items-center overflow-hidden rounded-md border border-gray-200 shadow-2xs">
           <Button
             type="button"
             variant="ghost"
