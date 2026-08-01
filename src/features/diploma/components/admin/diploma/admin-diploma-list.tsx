@@ -1,11 +1,17 @@
-import { useGetUserDiplomas } from '@/features/diploma/hooks/use-get-diploma';
-import type { IDiploma } from '@/features/diploma/types/diploma';
+import { AdminDiplomaSortDropdown } from '@/features/diploma/components/admin/diploma/admin-diploma-sort-dropdown';
+import { AdminDiplomaTableRow } from '@/features/diploma/components/admin/diploma/admin-diploma-table-row';
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/shared/ui/dropdown-menu';
+  PAGE_QUERY_KEY,
+  SEARCH_QUERY_KEY,
+  SORT_BY_KEY,
+  SORT_ORDER_KEY,
+} from '@/features/diploma/components/constants/search-params.keys';
+import { useGetUserDiplomas } from '@/features/diploma/hooks/use-get-diploma';
+import type {
+  IDiploma,
+  SORT_BY,
+  SORT_ORDER,
+} from '@/features/diploma/types/diploma';
 import {
   Table,
   TableBody,
@@ -14,20 +20,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/shared/ui/table';
-import {
-  ArrowDown,
-  ArrowDownUp,
-  ArrowUp,
-  Calendar,
-  Ellipsis,
-  Eye,
-  Pencil,
-  Trash2,
-} from 'lucide-react';
-import { useMemo, useState } from 'react';
-
-type SortOption =
-  'title-desc' | 'title-asc' | 'newest-desc' | 'newest-asc' | null;
+import { useMemo } from 'react';
+import { useSearchParams } from 'react-router';
 
 interface AdminDiplomaListProps {
   onView?: (diploma?: IDiploma) => void;
@@ -40,41 +34,25 @@ export default function AdminDiplomaList({
   onEdit,
   onDelete,
 }: AdminDiplomaListProps) {
-  const [sortBy, setSortBy] = useState<SortOption>(null);
+  const [searchParams] = useSearchParams();
+
+  const search = searchParams.get(SEARCH_QUERY_KEY) || '';
+  const page = Number(searchParams.get(PAGE_QUERY_KEY)) || 1;
+  const sortBy = (searchParams.get(SORT_BY_KEY) as SORT_BY) || undefined;
+  const sortOrder =
+    (searchParams.get(SORT_ORDER_KEY) as SORT_ORDER) || undefined;
 
   const { data, isLoading } = useGetUserDiplomas({
-    limit: Number(10),
-    page: Number(1),
+    limit: 10,
+    page,
+    search,
+    sortBy,
+    sortOrder,
   });
 
-  const rawDiplomas = useMemo(() => {
+  const diplomas = useMemo(() => {
     return data?.pages.flatMap((page) => page.payload?.data) || [];
   }, [data]);
-
-  const diplomas = useMemo(() => {
-    if (!rawDiplomas.length) return [];
-    const list = [...rawDiplomas];
-
-    if (sortBy === 'title-asc') {
-      list.sort((a, b) => (a?.title || '').localeCompare(b?.title || ''));
-    } else if (sortBy === 'title-desc') {
-      list.sort((a, b) => (b?.title || '').localeCompare(a?.title || ''));
-    } else if (sortBy === 'newest-desc') {
-      list.sort(
-        (a, b) =>
-          new Date(b?.createdAt || 0).getTime() -
-          new Date(a?.createdAt || 0).getTime()
-      );
-    } else if (sortBy === 'newest-asc') {
-      list.sort(
-        (a, b) =>
-          new Date(a?.createdAt || 0).getTime() -
-          new Date(b?.createdAt || 0).getTime()
-      );
-    }
-
-    return list;
-  }, [rawDiplomas, sortBy]);
 
   return (
     <div className="w-full overflow-x-auto rounded-md border border-gray-200 bg-white shadow-xs">
@@ -97,81 +75,7 @@ export default function AdminDiplomaList({
               Description
             </TableHead>
             <TableHead className="px-6 py-3.5 text-right font-mono font-medium text-white">
-              <DropdownMenu>
-                <DropdownMenuTrigger className="inline-flex cursor-pointer items-center justify-end gap-1.5 font-mono text-sm text-white outline-none hover:opacity-90">
-                  <span>Sort</span>
-                  <ArrowDownUp className="size-4" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  align="end"
-                  className="w-52 p-1.5 shadow-lg"
-                >
-                  <DropdownMenuItem
-                    onClick={() => setSortBy('title-desc')}
-                    className={`flex cursor-pointer items-center gap-2.5 px-3 py-2 font-mono text-xs ${
-                      sortBy === 'title-desc'
-                        ? 'bg-accent text-primary font-semibold'
-                        : 'text-gray-700'
-                    }`}
-                  >
-                    <ArrowDown className="size-4 text-gray-500" />
-                    <span>
-                      Title{' '}
-                      <span className="text-[10px] text-gray-400">
-                        (descending)
-                      </span>
-                    </span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => setSortBy('title-asc')}
-                    className={`flex cursor-pointer items-center gap-2.5 px-3 py-2 font-mono text-xs ${
-                      sortBy === 'title-asc'
-                        ? 'bg-accent text-primary font-semibold'
-                        : 'text-gray-700'
-                    }`}
-                  >
-                    <ArrowUp className="size-4 text-gray-500" />
-                    <span>
-                      Title{' '}
-                      <span className="text-[10px] text-gray-400">
-                        (ascending)
-                      </span>
-                    </span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => setSortBy('newest-desc')}
-                    className={`flex cursor-pointer items-center gap-2.5 px-3 py-2 font-mono text-xs ${
-                      sortBy === 'newest-desc'
-                        ? 'bg-accent text-primary font-semibold'
-                        : 'text-gray-700'
-                    }`}
-                  >
-                    <Calendar className="size-4 text-gray-500" />
-                    <span>
-                      Newest{' '}
-                      <span className="text-[10px] text-gray-400">
-                        (descending)
-                      </span>
-                    </span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => setSortBy('newest-asc')}
-                    className={`flex cursor-pointer items-center gap-2.5 px-3 py-2 font-mono text-xs ${
-                      sortBy === 'newest-asc'
-                        ? 'bg-accent text-primary font-semibold'
-                        : 'text-gray-700'
-                    }`}
-                  >
-                    <Calendar className="size-4 text-gray-500" />
-                    <span>
-                      Newest{' '}
-                      <span className="text-[10px] text-gray-400">
-                        (ascending)
-                      </span>
-                    </span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <AdminDiplomaSortDropdown />
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -197,63 +101,13 @@ export default function AdminDiplomaList({
             </TableRow>
           ) : (
             diplomas.map((item) => (
-              <TableRow
+              <AdminDiplomaTableRow
                 key={item?.id}
-                className="border-b border-gray-100 transition-colors hover:bg-gray-50/80"
-              >
-                <TableCell className="px-6 py-4 align-top">
-                  <div className="size-18 overflow-hidden rounded-xs border border-gray-100 bg-gray-100">
-                    <img
-                      src={item?.image}
-                      alt={item?.title || 'Diploma'}
-                      className="h-full w-full object-cover"
-                      onError={(e) => {
-                        (e.target as HTMLElement).style.display = 'none';
-                      }}
-                    />
-                  </div>
-                </TableCell>
-                <TableCell className="wrap-break-words px-6 py-4 pr-4 align-top font-mono text-sm font-semibold whitespace-normal text-gray-900">
-                  {item?.title}
-                </TableCell>
-                <TableCell className="warp-break-words px-6 py-4 align-top font-mono text-xs leading-relaxed whitespace-normal text-gray-500">
-                  <p className="line-clamp-4">{item?.description}</p>
-                </TableCell>
-                <TableCell className="px-6 py-4 text-right align-top">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger className="ml-auto flex h-8 w-8 cursor-pointer items-center justify-center rounded bg-gray-100 text-gray-600 transition-colors outline-none hover:bg-gray-200">
-                      <Ellipsis className="size-4" />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent
-                      align="end"
-                      className="w-36 p-1 shadow-md"
-                    >
-                      <DropdownMenuItem
-                        onClick={() => onView?.(item)}
-                        className="flex cursor-pointer items-center gap-2 px-3 py-2 font-mono text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-600"
-                      >
-                        <Eye className="size-4 text-emerald-500" />
-                        <span>View</span>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        onClick={() => onEdit?.(item)}
-                        className="flex cursor-pointer items-center gap-2 px-3 py-2 font-mono text-xs text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-                      >
-                        <Pencil className="size-4 text-blue-500" />
-                        <span>Edit</span>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        onClick={() => onDelete?.(item)}
-                        variant="destructive"
-                        className="flex cursor-pointer items-center gap-2 px-3 py-2 font-mono text-red-600 hover:bg-red-50"
-                      >
-                        <Trash2 className="size-4 text-red-500" />
-                        <span>Delete</span>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
-              </TableRow>
+                diploma={item}
+                onView={onView}
+                onEdit={onEdit}
+                onDelete={onDelete}
+              />
             ))
           )}
         </TableBody>

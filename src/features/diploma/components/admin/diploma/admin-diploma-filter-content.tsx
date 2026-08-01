@@ -1,3 +1,5 @@
+import { SEARCH_QUERY_KEY } from '@/features/diploma/components/constants/search-params.keys';
+import { useDebounce } from '@/shared/hooks/use-debounce';
 import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
 import {
@@ -7,13 +9,35 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/ui/select';
+
 import { ChevronsUpDown, Search } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router';
 
 export default function AdminDiplomaFilterContent() {
+  const [query, setQuery] = useSearchParams();
+  const [search, setSearch] = useState(query.get(SEARCH_QUERY_KEY) || '');
+  const debouncedSearch = useDebounce(search, 300);
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+
+  useEffect(() => {
+    if (debouncedSearch) {
+      query.set(SEARCH_QUERY_KEY, debouncedSearch);
+    } else {
+      query.delete(SEARCH_QUERY_KEY);
+    }
+    setQuery(query);
+  }, [debouncedSearch, query, setQuery]);
+
   return (
     <>
       <Input
         placeholder="Search by title"
+        onChange={handleSearchChange}
+        value={search}
         rightIcon={<Search className="size-4 text-gray-200" />}
       />
 
