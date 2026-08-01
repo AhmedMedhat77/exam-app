@@ -81,8 +81,8 @@ export default function AdminDiplomaHeader({
   return (
     <div
       className={cn(
-        'sticky top-0 z-50 flex flex-wrap items-center justify-between gap-4 rounded-md border border-gray-200 bg-white p-4 shadow-xs',
-        '-mx-3.5'
+        'sticky top-0 z-50 flex flex-wrap items-center justify-between gap-4 border border-gray-200 bg-white p-4 shadow-xs',
+        '-mx-4 -mt-8'
       )}
     >
       <BreadCrumb />
