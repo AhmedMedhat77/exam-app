@@ -1,4 +1,4 @@
-import AdminSearchFiltersContainer from '@/shared/components/admin-search-filters-container';
+import AdminFiltersContainer from '@/shared/components/admin-filters-container';
 import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
 import {
@@ -13,7 +13,7 @@ import { ChevronsUpDown, Search, SlidersHorizontal } from 'lucide-react';
 export default function AdminDiplomaPage() {
   return (
     <div>
-      <AdminSearchFiltersContainer
+      <AdminFiltersContainer
         title="Search & Filters"
         icon={<SlidersHorizontal className="size-6" />}
       >
@@ -26,11 +26,13 @@ export default function AdminDiplomaPage() {
           <Select>
             <SelectTrigger className="w-1/2 rounded-xs px-3">
               <SelectValue placeholder="Diploma" />
+
               <ChevronsUpDown className="text-muted-foreground size-4" />
             </SelectTrigger>
 
             <SelectContent>
               <SelectItem value="draft">Draft</SelectItem>
+
               <SelectItem value="archived">Archived</SelectItem>
               <SelectItem value="published">Published</SelectItem>
             </SelectContent>
@@ -57,7 +59,7 @@ export default function AdminDiplomaPage() {
             Apply
           </Button>
         </div>
-      </AdminSearchFiltersContainer>
+      </AdminFiltersContainer>
     </div>
   );
 }

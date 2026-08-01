@@ -1,18 +1,18 @@
-import { Button } from '@/shared/ui/button';
-import { ChevronDown, ChevronsDownUp } from 'lucide-react';
+import { cn } from '@/shared/lib/utils';
+import { ChevronsDownUp } from 'lucide-react';
 import { useState } from 'react';
 
-interface IAdminSearchFiltersContainerProps {
+interface IAdminFiltersContainerProps {
   children: React.ReactNode;
   icon?: React.ReactNode;
   title: string;
 }
 
-export default function AdminSearchFiltersContainer({
+export default function AdminFiltersContainer({
   children,
   icon,
   title,
-}: IAdminSearchFiltersContainerProps) {
+}: IAdminFiltersContainerProps) {
   const [isOpened, setIsOpened] = useState(true);
 
   const handleToggleOpened = () => {
@@ -37,9 +37,17 @@ export default function AdminSearchFiltersContainer({
           {isOpened ? 'Hide' : 'Show'}
         </button>
       </div>
-      {isOpened && (
-        <div className="flex flex-col gap-4 bg-white p-4">{children}</div>
-      )}
+
+      <div
+        className={cn(
+          'flex flex-col gap-4 bg-white p-4 transition-all duration-500 ease-in-out',
+          isOpened
+            ? 'max-h-auto opacity-100'
+            : 'max-h-0 overflow-hidden opacity-0',
+        )}
+      >
+        {children}
+      </div>
     </div>
   );
 }
