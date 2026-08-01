@@ -78,16 +78,16 @@ export default function AdminDiplomaHeader({
   };
 
   return (
-    <div className="flex flex-col gap-4 mb-4">
+    <div className="mb-4 flex flex-col gap-4">
       {/* Top Header Title */}
-      <h1 className="text-2xl font-mono font-semibold tracking-tight text-gray-900">
+      <h1 className="font-mono text-2xl font-semibold tracking-tight text-gray-900">
         {title}
       </h1>
 
       {/* Header Controls Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 rounded-md bg-white p-3 border border-gray-200 shadow-xs">
+      <div className="flex flex-wrap items-center justify-between gap-4 rounded-md border border-gray-200 bg-white p-3 shadow-xs">
         {/* Left: Range Summary */}
-        <div className="font-mono text-sm text-gray-600 font-medium">
+        <div className="font-mono text-sm font-medium text-gray-600">
           {isLoading ? (
             <span className="text-gray-400">Loading count...</span>
           ) : (
@@ -96,21 +96,24 @@ export default function AdminDiplomaHeader({
         </div>
 
         {/* Center: Pagination Controls */}
-        <div className="flex items-center rounded-md border border-gray-200 bg-gray-100 overflow-hidden shadow-2xs">
+        <div className="flex items-center overflow-hidden rounded-md border border-gray-200 bg-gray-100 shadow-2xs">
           <Button
             type="button"
             variant="ghost"
             size="icon"
             onClick={handlePrev}
             disabled={page <= 1 || isLoading}
-            className="h-9 w-9 rounded-none bg-gray-100 hover:bg-gray-200 border-r border-gray-200 text-gray-600 disabled:opacity-40"
+            className="h-9 w-9 rounded-none border-r border-gray-200 bg-gray-100 text-gray-600 hover:bg-gray-200 disabled:opacity-40"
             aria-label="Previous page"
           >
             <ChevronLeft className="size-4" />
           </Button>
 
-          <form onSubmit={handlePageSubmit} className="flex items-center bg-white px-3 py-1.5 border-r border-gray-200">
-            <span className="font-mono text-xs text-gray-500 mr-1.5 select-none">
+          <form
+            onSubmit={handlePageSubmit}
+            className="flex items-center border-r border-gray-200 bg-white px-3 py-1.5"
+          >
+            <span className="mr-1.5 font-mono text-xs text-gray-500 select-none">
               Page
             </span>
             <input
@@ -118,10 +121,10 @@ export default function AdminDiplomaHeader({
               value={inputPage}
               onChange={(e) => setInputPage(e.target.value)}
               onBlur={handlePageBlur}
-              className="w-8 text-center font-mono text-xs font-semibold text-gray-800 bg-transparent outline-none focus:ring-1 focus:ring-emerald-500 rounded px-0.5"
+              className="w-8 rounded bg-transparent px-0.5 text-center font-mono text-xs font-semibold text-gray-800 outline-none focus:ring-1 focus:ring-emerald-500"
               aria-label="Current page number"
             />
-            <span className="font-mono text-xs text-gray-500 ml-1.5 select-none">
+            <span className="ml-1.5 font-mono text-xs text-gray-500 select-none">
               of {totalPages}
             </span>
           </form>
@@ -132,7 +135,7 @@ export default function AdminDiplomaHeader({
             size="icon"
             onClick={handleNext}
             disabled={page >= totalPages || isLoading}
-            className="h-9 w-9 rounded-none bg-gray-100 hover:bg-gray-200 text-gray-600 disabled:opacity-40"
+            className="h-9 w-9 rounded-none bg-gray-100 text-gray-600 hover:bg-gray-200 disabled:opacity-40"
             aria-label="Next page"
           >
             <ChevronRight className="size-4" />
@@ -143,7 +146,7 @@ export default function AdminDiplomaHeader({
         <Button
           type="button"
           onClick={onAddNew}
-          className="w-auto bg-[#00c9a7] hover:bg-[#00b395] text-white font-mono font-medium px-4 h-9 rounded-md flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer border-none"
+          className="flex h-9 w-auto cursor-pointer items-center gap-1.5 rounded-md border-none bg-[#00c9a7] px-4 font-mono font-medium text-white shadow-xs transition-colors hover:bg-[#00b395]"
         >
           <Plus className="size-4" />
           <span>Add New Diploma</span>
