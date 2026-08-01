@@ -22,7 +22,11 @@ const BreadcrumbContext = createContext<BreadcrumbContextType>({
   setBreadcrumbs: () => {},
 });
 
-export function BreadcrumbProvider({ children }: { children: React.ReactNode }) {
+export function BreadcrumbProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [breadcrumbs, setBreadcrumbs] = useState<BreadcrumbData>({});
   const { pathname } = useLocation();
 
@@ -49,7 +53,11 @@ export function useBreadcrumb(data?: BreadcrumbData) {
   const items = data?.items;
 
   useEffect(() => {
-    if (title !== undefined || description !== undefined || items !== undefined) {
+    if (
+      title !== undefined ||
+      description !== undefined ||
+      items !== undefined
+    ) {
       setBreadcrumbs({ title, description, items });
     }
   }, [title, description, JSON.stringify(items), setBreadcrumbs]);
