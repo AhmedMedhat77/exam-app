@@ -25,17 +25,23 @@ import { useMemo } from 'react';
 import { useSearchParams } from 'react-router';
 
 interface AdminDiplomaListProps {
+  diplomas?: IDiploma[];
+  isLoading?: boolean;
   onView?: (diploma?: IDiploma) => void;
   onEdit?: (diploma?: IDiploma) => void;
   onDelete?: (diploma?: IDiploma) => void;
 }
 
 export default function AdminDiplomaList({
+  diplomas: diplomasProp,
+  isLoading: isLoadingProp,
   onView,
   onEdit,
   onDelete,
 }: AdminDiplomaListProps) {
   const [searchParams] = useSearchParams();
+
+  const isControlled = diplomasProp !== undefined;
 
   const search = searchParams.get(SEARCH_QUERY_KEY) || '';
   const page = Number(searchParams.get(PAGE_QUERY_KEY)) || 1;
@@ -46,18 +52,25 @@ export default function AdminDiplomaList({
   const immutable =
     immutableParam !== null ? immutableParam === 'true' : undefined;
 
-  const { data, isLoading } = useGetUserDiplomas({
-    limit: 10,
-    page,
-    search,
-    immutable,
-    sortBy,
-    sortOrder,
-  });
+  const { data, isLoading: isQueryLoading } = useGetUserDiplomas(
+    isControlled
+      ? undefined
+      : {
+          limit: 10,
+          page,
+          search,
+          immutable,
+          sortBy,
+          sortOrder,
+        }
+  );
 
-  const diplomas = useMemo(() => {
+  const queryDiplomas = useMemo(() => {
     return data?.pages.flatMap((page) => page.payload?.data) || [];
   }, [data]);
+
+  const diplomas = isControlled ? diplomasProp : queryDiplomas;
+  const isLoading = isControlled ? isLoadingProp : isQueryLoading;
 
   return (
     <div className="w-full overflow-x-auto rounded-md border border-gray-200 bg-white shadow-xs">
