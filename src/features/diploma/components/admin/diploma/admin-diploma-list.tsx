@@ -1,6 +1,7 @@
 import { AdminDiplomaSortDropdown } from '@/features/diploma/components/admin/diploma/admin-diploma-sort-dropdown';
 import { AdminDiplomaTableRow } from '@/features/diploma/components/admin/diploma/admin-diploma-table-row';
 import {
+  IMMUTABLE_QUERY_KEY,
   PAGE_QUERY_KEY,
   SEARCH_QUERY_KEY,
   SORT_BY_KEY,
@@ -41,11 +42,15 @@ export default function AdminDiplomaList({
   const sortBy = (searchParams.get(SORT_BY_KEY) as SORT_BY) || undefined;
   const sortOrder =
     (searchParams.get(SORT_ORDER_KEY) as SORT_ORDER) || undefined;
+  const immutableParam = searchParams.get(IMMUTABLE_QUERY_KEY);
+  const immutable =
+    immutableParam !== null ? immutableParam === 'true' : undefined;
 
   const { data, isLoading } = useGetUserDiplomas({
     limit: 10,
     page,
     search,
+    immutable,
     sortBy,
     sortOrder,
   });
