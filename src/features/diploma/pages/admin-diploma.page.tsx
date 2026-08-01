@@ -16,6 +16,8 @@ import { SlidersHorizontal } from 'lucide-react';
 import { useMemo } from 'react';
 import { useSearchParams } from 'react-router';
 
+import BreadCrumb from '@/shared/layouts/dashboard/breadcrumb/BreadCrumb';
+
 export default function AdminDiplomaPage() {
   useBreadcrumb({
     items: [{ title: 'Diplomas', href: '/' }],
@@ -48,6 +50,7 @@ export default function AdminDiplomaPage() {
 
   return (
     <div className="max-w-full space-y-6">
+      <BreadCrumb />
       <AdminDiplomaHeader
         total={metadata?.total}
         totalPages={metadata?.totalPages}
