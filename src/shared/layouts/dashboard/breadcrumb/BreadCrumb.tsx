@@ -15,6 +15,7 @@ export interface BreadCrumbProps {
   title?: string;
   description?: string;
   items?: BreadcrumbItem[];
+  className?: string;
 }
 
 export default function BreadCrumb(props: BreadCrumbProps) {
@@ -34,52 +35,45 @@ export default function BreadCrumb(props: BreadCrumbProps) {
     }),
   ];
 
-  const defaultTitle =
-    pathSegments.length > 0
-      ? formatSegmentTitle(pathSegments[pathSegments.length - 1])
-      : 'Diplomas';
-
   const displayItems = props.items || contextBreadcrumbs.items || defaultItems;
-  const displayTitle = props.title ?? contextBreadcrumbs.title ?? defaultTitle;
+  const displayTitle = props.title ?? contextBreadcrumbs.title;
   const displayDescription =
     props.description ?? contextBreadcrumbs.description;
 
   return (
-    <header className="mb-6 flex flex-col gap-2 border-b border-gray-100 bg-white px-6 py-5 shadow-xs">
-      <nav aria-label="Breadcrumb">
-        <ol className="flex items-center gap-2 text-sm font-medium">
-          {displayItems.map((crumb, index) => {
-            const isLast = index === displayItems.length - 1;
+    <nav aria-label="Breadcrumb" className={`w-full ${props.className || ''}`}>
+      <ol className="flex flex-wrap items-center gap-2 font-mono text-sm">
+        {displayItems.map((crumb, index) => {
+          const isLast = index === displayItems.length - 1;
 
-            return (
-              <li
-                key={crumb.href ? `${crumb.href}-${index}` : index}
-                className="flex items-center gap-2"
-              >
-                {index > 0 && <span className="text-gray-400">/</span>}
-                {isLast || !crumb.href ? (
-                  <span
-                    className="flex items-center gap-1 text-gray-400"
-                    aria-current={isLast ? 'page' : undefined}
-                  >
-                    {crumb.title}
-                  </span>
-                ) : (
-                  <Link
-                    to={crumb.href}
-                    className="hover:text-primary flex items-center gap-1 text-gray-500 transition-colors hover:underline"
-                  >
-                    {crumb.title}
-                  </Link>
-                )}
-              </li>
-            );
-          })}
-        </ol>
-      </nav>
+          return (
+            <li
+              key={crumb.href ? `${crumb.href}-${index}` : index}
+              className="flex items-center gap-2"
+            >
+              {index > 0 && <span className="text-gray-400">/</span>}
+              {isLast || !crumb.href ? (
+                <span
+                  className="font-medium text-gray-500"
+                  aria-current={isLast ? 'page' : undefined}
+                >
+                  {crumb.title}
+                </span>
+              ) : (
+                <Link
+                  to={crumb.href}
+                  className="hover:text-primary text-gray-600 transition-colors hover:underline"
+                >
+                  {crumb.title}
+                </Link>
+              )}
+            </li>
+          );
+        })}
+      </ol>
 
       {(displayTitle || displayDescription) && (
-        <div className="mt-1 flex flex-col gap-1">
+        <div className="mt-2 flex flex-col gap-1">
           {displayTitle && (
             <h1 className="font-mono text-2xl font-semibold tracking-tight text-gray-900">
               {displayTitle}
@@ -90,6 +84,6 @@ export default function BreadCrumb(props: BreadCrumbProps) {
           )}
         </div>
       )}
-    </header>
+    </nav>
   );
 }

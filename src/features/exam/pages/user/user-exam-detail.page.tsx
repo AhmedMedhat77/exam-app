@@ -1,13 +1,14 @@
 import { ROUTES } from '@/app/routes';
-import UserDashboardHeader from '@/shared/components/user-dashboard-header';
 import DonutBar from '@/features/exam/components/user/donut-bar';
 import ProgressBar from '@/features/exam/components/user/progressbar';
 import QuestionStepCounter from '@/features/exam/components/user/question-step-counter';
 import { useGetExamById } from '@/features/exam/hooks/use-get-exam-by-id';
-import useGetExamSubmissions from '@/features/submission/hooks/use-get-exam-submissions';
-import useSubmitExam from '@/features/submission/hooks/use-submit-exam';
 import QuestionsList from '@/features/question/components/user/questions-list';
 import useGetExamQuestions from '@/features/question/hooks/use-get-exam-questions';
+import useGetExamSubmissions from '@/features/submission/hooks/use-get-exam-submissions';
+import useSubmitExam from '@/features/submission/hooks/use-submit-exam';
+import UserDashboardHeader from '@/shared/components/user-dashboard-header';
+import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.context';
 import { Button } from '@/shared/ui/button';
 import { ArrowLeft, CircleQuestionMark, Loader2 } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -29,6 +30,21 @@ export default function UserExamDetailPage() {
 
   const { data, isLoading, isError, error } = useGetExamById(id);
   const examData = data?.payload;
+
+  useBreadcrumb({
+    items: [
+      { title: 'Diplomas', href: ROUTES.DIPLOMAS },
+      ...(examData?.exam.diploma
+        ? [
+            {
+              title: examData.exam.diploma.title,
+              href: `${ROUTES.EXAMS}?diplomaId=${examData.exam.diploma.id}`,
+            },
+          ]
+        : []),
+      { title: examData?.exam.title || '' },
+    ],
+  });
 
   // API fetching questions
   const { data: questionsData } = useGetExamQuestions({
@@ -166,11 +182,6 @@ export default function UserExamDetailPage() {
     }
   }, [isInitialized, isSubmitted, latestSubmission?.id, navigate]);
 
-  const handleExitExam = () => {
-    sessionStorage.removeItem(storageKey);
-    navigate(ROUTES.EXAMS);
-  };
-
   // 3. Time calculations
   const totalDurationSeconds = (examData?.exam.duration || 0) * 60;
   const elapsedSeconds = startedAt
@@ -230,13 +241,6 @@ export default function UserExamDetailPage() {
 
   return (
     <div className="w-full space-y-6 py-4">
-      <Button
-        variant="outline"
-        onClick={handleExitExam}
-        className="flex cursor-pointer items-center gap-2 text-xs"
-      >
-        <ArrowLeft className="h-4 w-4" /> Exit exam
-      </Button>
       <UserDashboardHeader
         icon={<CircleQuestionMark size={45} className="text-white" />}
         title={examData.exam.title || ''}
