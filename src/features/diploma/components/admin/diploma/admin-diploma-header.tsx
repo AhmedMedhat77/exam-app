@@ -78,7 +78,7 @@ export default function AdminDiplomaHeader({
   }, [page]);
 
   return (
-    <div className="flex items-center justify-between border-gray-100 bg-white p-4 -mt-8">
+    <div className="-mt-8 flex items-center justify-between border-gray-100 bg-white p-4">
       <div className="flex items-center gap-1">
         {/* Left: Range Summary */}
         <div className="font-mono text-xs font-medium text-gray-800">
