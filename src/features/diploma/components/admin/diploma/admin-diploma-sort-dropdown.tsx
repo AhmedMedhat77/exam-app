@@ -10,7 +10,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/shared/ui/dropdown-menu';
-import { ArrowDown, ArrowDownUp, ArrowUp, Calendar } from 'lucide-react';
+import {
+  ArrowDown,
+  ArrowDownNarrowWideIcon,
+  ArrowUp,
+  CalendarArrowDown,
+  CalendarArrowUp
+} from 'lucide-react';
 import { useSearchParams } from 'react-router';
 
 export function AdminDiplomaSortDropdown() {
@@ -38,7 +44,7 @@ export function AdminDiplomaSortDropdown() {
     <DropdownMenu>
       <DropdownMenuTrigger className="inline-flex cursor-pointer items-center justify-end gap-1.5 font-mono text-sm text-white outline-none hover:opacity-90">
         <span>Sort</span>
-        <ArrowDownUp className="size-4" />
+        <ArrowDownNarrowWideIcon className="size-4" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-52 p-1.5 shadow-lg">
         <DropdownMenuItem
@@ -77,7 +83,7 @@ export function AdminDiplomaSortDropdown() {
               'bg-accent text-primary font-semibold'
           )}
         >
-          <Calendar className="size-4 text-gray-500" />
+          <CalendarArrowUp className="size-4 text-gray-500" />
           <span>
             Newest{' '}
             <span className="text-[10px] text-gray-400">(descending)</span>
@@ -92,7 +98,7 @@ export function AdminDiplomaSortDropdown() {
               'bg-accent text-primary font-semibold'
           )}
         >
-          <Calendar className="size-4 text-gray-500" />
+          <CalendarArrowDown className="size-4 text-gray-500" />
           <span>
             Newest{' '}
             <span className="text-[10px] text-gray-400">(ascending)</span>
