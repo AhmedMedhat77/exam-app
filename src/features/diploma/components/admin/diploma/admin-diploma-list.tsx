@@ -1,3 +1,4 @@
+import { ROUTES } from '@/app/routes';
 import { AdminDiplomaActionsMenu } from '@/features/diploma/components/admin/diploma/admin-diploma-actions-menu';
 import { AdminDiplomaSortDropdown } from '@/features/diploma/components/admin/diploma/admin-diploma-sort-dropdown';
 import {
@@ -17,8 +18,8 @@ import {
   AdminTable,
   type AdminTableColumn,
 } from '@/shared/components/admin-table';
-import { useMemo } from 'react';
-import { useSearchParams } from 'react-router';
+import { useCallback, useMemo } from 'react';
+import { useNavigate, useSearchParams } from 'react-router';
 
 interface AdminDiplomaListProps {
   diplomas?: IDiploma[];
@@ -35,7 +36,19 @@ export default function AdminDiplomaList({
   onEdit,
   onDelete,
 }: AdminDiplomaListProps) {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+
+  const handleView = useCallback(
+    (diploma?: IDiploma) => {
+      if (onView) {
+        onView(diploma);
+      } else if (diploma?.id) {
+        navigate(ROUTES.DIPLOMA_DETAIL.replace(':id', diploma.id));
+      }
+    },
+    [onView, navigate]
+  );
 
   const isControlled = diplomasProp !== undefined;
 
@@ -106,14 +119,14 @@ export default function AdminDiplomaList({
         cell: (item) => (
           <AdminDiplomaActionsMenu
             diploma={item}
-            onView={onView}
+            onView={handleView}
             onEdit={onEdit}
             onDelete={onDelete}
           />
         ),
       },
     ],
-    [onView, onEdit, onDelete]
+    [handleView, onEdit, onDelete]
   );
 
   return (

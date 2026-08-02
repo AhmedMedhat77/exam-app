@@ -31,7 +31,7 @@ export function AdminDiplomaActionsMenu({
           className="flex cursor-pointer items-center gap-2 px-3 py-2 font-mono text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-600"
         >
           <Eye className="size-4 text-emerald-500" />
-          <span>View</span>
+          <span>Details</span>
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => onEdit?.(diploma)}

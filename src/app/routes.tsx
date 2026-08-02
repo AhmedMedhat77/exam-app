@@ -7,6 +7,7 @@ import EmailPage from '@/features/auth/pages/registration/email.page';
 import PasswordPage from '@/features/auth/pages/registration/password.page';
 import UserInfoPage from '@/features/auth/pages/registration/user-info.page';
 import VerifyOtpPage from '@/features/auth/pages/registration/verify-otp.page';
+import AdminDiplomaDetailPage from '@/features/diploma/pages/admin-diploma-detail.page';
 import AdminDiplomaPage from '@/features/diploma/pages/admin-diploma.page';
 import UserDiplomaPage from '@/features/diploma/pages/user-diploma.page';
 import UserExamDetailPage from '@/features/exam/pages/user/user-exam-detail.page';
@@ -28,6 +29,7 @@ export const ROUTES = {
   RESET_PASSWORD: '/reset-password',
   HOME: '/',
   DIPLOMAS: '/',
+  DIPLOMA_DETAIL: '/diplomas/:id',
   ACCOUNT_SETTINGS: '/account-settings',
   ACCOUNT_DETAIL: '/account/:id',
   // Exams
@@ -53,6 +55,12 @@ export const USER_ROUTES: route[] = [
     path: ROUTES.DIPLOMAS,
     icon: <GraduationCap />,
     element: UserDiplomaPage,
+  },
+  {
+    title: 'Diploma Detail',
+    path: ROUTES.DIPLOMA_DETAIL,
+    element: AdminDiplomaDetailPage,
+    hidden: true,
   },
   {
     title: 'Account Settings',
@@ -86,6 +94,12 @@ export const ADMIN_ROUTES: route[] = [
     path: ROUTES.DIPLOMAS,
     icon: <GraduationCap />,
     element: AdminDiplomaPage,
+  },
+  {
+    title: 'Diploma Detail',
+    path: ROUTES.DIPLOMA_DETAIL,
+    element: AdminDiplomaDetailPage,
+    hidden: true,
   },
 
   {
