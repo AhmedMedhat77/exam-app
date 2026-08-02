@@ -48,7 +48,7 @@ export default function BreadCrumb(props: BreadCrumbProps) {
 
           return (
             <li
-              key={crumb.href ? `${crumb.href}-${index}` : index}
+              key={crumb.href ? `${crumb.href}-${crumb.title}` : crumb.title}
               className="flex items-center gap-2"
             >
               {index > 0 && <span className="text-gray-400">/</span>}

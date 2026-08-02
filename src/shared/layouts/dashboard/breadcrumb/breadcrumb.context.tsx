@@ -34,8 +34,13 @@ export function BreadcrumbProvider({
     setBreadcrumbs({});
   }, [pathname]);
 
+  const value = React.useMemo(
+    () => ({ breadcrumbs, setBreadcrumbs }),
+    [breadcrumbs]
+  );
+
   return (
-    <BreadcrumbContext.Provider value={{ breadcrumbs, setBreadcrumbs }}>
+    <BreadcrumbContext.Provider value={value}>
       {children}
     </BreadcrumbContext.Provider>
   );

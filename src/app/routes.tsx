@@ -13,8 +13,9 @@ import UserExamDetailPage from '@/features/exam/pages/user/user-exam-detail.page
 import ExamsPage from '@/features/exam/pages/user/user-exams.page';
 import UserSubmissionResultPage from '@/features/submission/pages/user-submission-result.page';
 
+import AdminExamsPage from '@/features/exam/pages/admin/admin-exams.page';
 import UserProfileLayout from '@/features/profile/layout/profile-layout';
-import { GraduationCap, Logs, UserRound } from 'lucide-react';
+import { BookOpenCheck, GraduationCap, Logs, UserRound } from 'lucide-react';
 
 export const ROUTES = {
   LOGIN: '/login',
@@ -86,6 +87,14 @@ export const ADMIN_ROUTES: route[] = [
     icon: <GraduationCap />,
     element: AdminDiplomaPage,
   },
+
+  {
+    title: 'Exams',
+    path: ROUTES.EXAMS,
+    icon: <BookOpenCheck />,
+    element: AdminExamsPage,
+  },
+
   {
     title: 'Account Settings',
     path: ROUTES.ACCOUNT_SETTINGS,
