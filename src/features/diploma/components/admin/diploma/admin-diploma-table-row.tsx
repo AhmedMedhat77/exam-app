@@ -1,6 +1,7 @@
 import { AdminDiplomaActionsMenu } from '@/features/diploma/components/admin/diploma/admin-diploma-actions-menu';
 import type { IDiploma } from '@/features/diploma/types/diploma';
 import { TableCell, TableRow } from '@/shared/ui/table';
+import { useState } from 'react';
 
 interface AdminDiplomaTableRowProps {
   diploma?: IDiploma;
@@ -15,26 +16,33 @@ export function AdminDiplomaTableRow({
   onEdit,
   onDelete,
 }: AdminDiplomaTableRowProps) {
+  const [imageError, setImageError] = useState(false);
+
   if (!diploma) return null;
+
   return (
     <TableRow className="border-b border-gray-100 transition-colors hover:bg-gray-50/80">
       <TableCell className="px-6 py-4 align-top">
         <div className="size-18 overflow-hidden rounded-xs border border-gray-100 bg-gray-100">
-          <img
-            src={diploma?.image}
-            alt={diploma?.title || 'Diploma'}
-            className="h-full w-full object-cover"
-            onError={(e) => {
-              (e.target as HTMLElement).style.display = 'none';
-            }}
-          />
+          {!imageError && diploma.image ? (
+            <img
+              src={diploma.image}
+              alt={diploma.title || 'Diploma'}
+              className="h-full w-full object-cover"
+              onError={() => setImageError(true)}
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center bg-gray-100 text-xs text-gray-400">
+              No image
+            </div>
+          )}
         </div>
       </TableCell>
-      <TableCell className="wrap-break-words px-6 py-4 pr-4 align-top font-mono text-sm font-semibold whitespace-normal text-gray-900">
-        {diploma?.title}
+      <TableCell className="px-6 py-4 pr-4 align-top font-mono text-sm font-semibold break-words whitespace-normal text-gray-900">
+        {diploma.title}
       </TableCell>
-      <TableCell className="warp-break-words px-6 py-4 align-top font-mono text-xs leading-relaxed whitespace-normal text-gray-500">
-        <p className="line-clamp-4">{diploma?.description}</p>
+      <TableCell className="px-6 py-4 align-top font-mono text-xs leading-relaxed break-words whitespace-normal text-gray-500">
+        <p className="line-clamp-4">{diploma.description}</p>
       </TableCell>
       <TableCell className="px-6 py-4 text-right align-top">
         <AdminDiplomaActionsMenu

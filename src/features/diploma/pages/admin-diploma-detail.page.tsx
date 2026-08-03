@@ -7,24 +7,22 @@ import BreadCrumb from '@/shared/layouts/dashboard/breadcrumb/BreadCrumb';
 import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.context';
 import { Button } from '@/shared/ui/button';
 import { ArrowLeft, Ban, Pencil, Trash2 } from 'lucide-react';
-import { useMemo } from 'react';
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 export default function AdminDiplomaDetailPage() {
   const { id = '' } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const [imageError, setImageError] = useState(false);
 
   const { data, isLoading, isError } = useGetDiplomaById(id);
   const { mutate: deleteDiploma, isPending: isDeleting } = useDeleteDiploma();
 
   const diplomaPayload = data?.payload;
-  const diploma: IDiploma | undefined = useMemo(() => {
-    if (!diplomaPayload) return undefined;
-    if ('diploma' in diplomaPayload && diplomaPayload.diploma) {
-      return (diplomaPayload as { diploma: IDiploma }).diploma;
-    }
-    return diplomaPayload as unknown as IDiploma;
-  }, [diplomaPayload]);
+  const diploma: IDiploma | undefined =
+    diplomaPayload && 'diploma' in diplomaPayload
+      ? (diplomaPayload as { diploma: IDiploma }).diploma
+      : (diplomaPayload as IDiploma | undefined);
 
   useBreadcrumb({
     items: [
@@ -73,7 +71,6 @@ export default function AdminDiplomaDetailPage() {
   return (
     <div className="max-w-full space-y-6">
       <div className="-mx-4 -mt-7 bg-white px-4 py-5">
-        {/* Top Breadcrumb */}
         <BreadCrumb
           items={[
             { title: 'Diplomas', href: ROUTES.DIPLOMAS },
@@ -81,7 +78,7 @@ export default function AdminDiplomaDetailPage() {
           ]}
         />
       </div>
-      {/* Header Title & Actions Row */}
+
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="font-sans text-2xl font-bold tracking-tight text-gray-900">
           {diploma.title}
@@ -118,26 +115,27 @@ export default function AdminDiplomaDetailPage() {
         </div>
       </div>
 
-      {/* Main Details Card */}
       <div className="space-y-6 rounded-lg border border-gray-100 bg-white p-6 shadow-2xs sm:p-8">
-        {/* Image Section */}
         <div className="space-y-2">
           <p className="font-mono text-xs font-medium tracking-wide text-gray-400">
             Image
           </p>
           <div className="aspect-4/3 w-full max-w-xs overflow-hidden rounded-md border border-gray-100 bg-gray-50 sm:max-w-sm">
-            <img
-              src={diploma.image}
-              alt={diploma.title}
-              className="h-full w-full object-cover"
-              onError={(e) => {
-                (e.target as HTMLElement).style.display = 'none';
-              }}
-            />
+            {!imageError && diploma.image ? (
+              <img
+                src={diploma.image}
+                alt={diploma.title}
+                className="h-full w-full object-cover"
+                onError={() => setImageError(true)}
+              />
+            ) : (
+              <div className="flex h-full w-full items-center justify-center bg-gray-50 text-xs text-gray-400">
+                No image available
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Title Section */}
         <div className="space-y-1">
           <p className="font-mono text-xs font-medium tracking-wide text-gray-400">
             Title
@@ -147,7 +145,6 @@ export default function AdminDiplomaDetailPage() {
           </p>
         </div>
 
-        {/* Description Section */}
         <div className="space-y-1">
           <p className="text-xs font-medium tracking-wide text-gray-400">
             Description

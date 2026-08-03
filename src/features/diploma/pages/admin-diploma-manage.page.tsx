@@ -8,7 +8,6 @@ import { diplomaSchema } from '@/features/diploma/schemas/diploma.schema';
 import type { IDiploma } from '@/features/diploma/types/diploma.d';
 import CustomError from '@/shared/components/custom-error';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router';
 
@@ -32,13 +31,10 @@ export default function AdminDiplomaManagePage() {
   const apiError = createError || updateError || getError;
 
   const diplomaPayload = data?.payload;
-  const diploma: IDiploma | undefined = useMemo(() => {
-    if (!diplomaPayload) return undefined;
-    if ('diploma' in diplomaPayload && diplomaPayload.diploma) {
-      return (diplomaPayload as { diploma: IDiploma }).diploma;
-    }
-    return diplomaPayload as unknown as IDiploma;
-  }, [diplomaPayload]);
+  const diploma: IDiploma | undefined =
+    diplomaPayload && 'diploma' in diplomaPayload
+      ? (diplomaPayload as { diploma: IDiploma }).diploma
+      : (diplomaPayload as IDiploma | undefined);
 
   const form = useForm({
     values: diploma ? { ...diploma } : undefined,
@@ -72,7 +68,7 @@ export default function AdminDiplomaManagePage() {
           const newDiploma =
             res?.payload && 'diploma' in res.payload
               ? res.payload.diploma
-              : (res?.payload as unknown as IDiploma);
+              : (res?.payload as IDiploma | undefined);
           const newId = newDiploma?.id;
           if (newId) {
             navigate(ROUTES.DIPLOMA_DETAIL.replace(':id', newId));
@@ -85,7 +81,11 @@ export default function AdminDiplomaManagePage() {
   });
 
   if (id && isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex h-48 items-center justify-center font-mono text-sm text-gray-500">
+        Loading...
+      </div>
+    );
   }
 
   return (
