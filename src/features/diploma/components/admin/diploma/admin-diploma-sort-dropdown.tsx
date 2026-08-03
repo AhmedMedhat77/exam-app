@@ -2,13 +2,13 @@ import {
   SORT_BY_KEY,
   SORT_ORDER_KEY,
 } from '@/features/diploma/components/constants/search-params.keys';
-import type { SORT_BY } from '@/features/diploma/types/diploma';
+import type { SortBy } from '@/features/diploma/types/diploma.d';
 import {
   AdminSortDropdown,
   type SortOption,
 } from '@/shared/components/admin-sort-dropdown';
 
-const DIPLOMA_SORT_OPTIONS: SortOption<SORT_BY>[] = [
+const DIPLOMA_SORT_OPTIONS: SortOption<SortBy>[] = [
   {
     label: 'Title',
     sortBy: 'title',
@@ -33,10 +33,11 @@ const DIPLOMA_SORT_OPTIONS: SortOption<SORT_BY>[] = [
 
 export function AdminDiplomaSortDropdown() {
   return (
-    <AdminSortDropdown<SORT_BY>
+    <AdminSortDropdown<SortBy>
       options={DIPLOMA_SORT_OPTIONS}
       sortByParamKey={SORT_BY_KEY}
       sortOrderParamKey={SORT_ORDER_KEY}
     />
   );
 }
+
