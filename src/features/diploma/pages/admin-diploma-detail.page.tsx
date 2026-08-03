@@ -85,7 +85,9 @@ export default function AdminDiplomaDetailPage() {
           <Button
             size="sm"
             className="h-9 w-auto gap-1.5 bg-blue-600 px-4 font-mono text-xs font-medium text-white hover:bg-blue-700"
-            onClick={() => navigate(ROUTES.DIPLOMA_MANAGE.replace(':id', diploma.id))}
+            onClick={() =>
+              navigate(ROUTES.DIPLOMA_MANAGE.replace(':id', diploma.id))
+            }
           >
             <Pencil className="size-3.5" />
             <span>Edit</span>

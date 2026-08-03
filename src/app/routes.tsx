@@ -40,7 +40,7 @@ export const ROUTES = {
   LOGS: '/logs',
   PAYMENTS: '/payments',
   PAYMENT_DETAIL: '/payments/:paymentId',
-  
+
   DIPLOMA_MANAGE: '/diplomas/:id/manage',
 } as const;
 
