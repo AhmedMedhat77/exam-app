@@ -17,6 +17,7 @@ import UserSubmissionResultPage from '@/features/submission/pages/user-submissio
 import AdminExamsPage from '@/features/exam/pages/admin/admin-exams.page';
 import UserProfileLayout from '@/features/profile/layout/profile-layout';
 import { BookOpenCheck, GraduationCap, Logs, UserRound } from 'lucide-react';
+import AdminDiplomaManagePage from '@/features/diploma/pages/admin-diploma-manage.page';
 
 export const ROUTES = {
   LOGIN: '/login',
@@ -39,6 +40,8 @@ export const ROUTES = {
   LOGS: '/logs',
   PAYMENTS: '/payments',
   PAYMENT_DETAIL: '/payments/:paymentId',
+  
+  DIPLOMA_MANAGE: '/diplomas/:id/manage',
 } as const;
 
 type route = {
@@ -99,6 +102,12 @@ export const ADMIN_ROUTES: route[] = [
     title: 'Diploma Detail',
     path: ROUTES.DIPLOMA_DETAIL,
     element: AdminDiplomaDetailPage,
+    hidden: true,
+  },
+  {
+    title: 'Diploma Manage',
+    path: ROUTES.DIPLOMA_MANAGE,
+    element: AdminDiplomaManagePage,
     hidden: true,
   },
 

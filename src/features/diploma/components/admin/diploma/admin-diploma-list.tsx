@@ -50,6 +50,17 @@ export default function AdminDiplomaList({
     [onView, navigate]
   );
 
+  const handleEdit = useCallback(
+    (diploma?: IDiploma) => {
+      if (onEdit) {
+        onEdit(diploma);
+      } else if (diploma?.id) {
+        navigate(ROUTES.DIPLOMA_MANAGE.replace(':id', diploma.id));
+      }
+    },
+    [onEdit, navigate]
+  );
+
   const isControlled = diplomasProp !== undefined;
 
   const search = searchParams.get(SEARCH_QUERY_KEY) || '';
@@ -120,7 +131,7 @@ export default function AdminDiplomaList({
           <AdminDiplomaActionsMenu
             diploma={item}
             onView={handleView}
-            onEdit={onEdit}
+            onEdit={handleEdit}
             onDelete={onDelete}
           />
         ),
