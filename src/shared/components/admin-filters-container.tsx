@@ -27,6 +27,7 @@ export default function AdminFiltersContainer({
         </div>
 
         <button
+          type="button"
           onClick={handleToggleOpened}
           aria-label={isOpened ? 'Close filters' : 'Open filters'}
           className="flex items-center gap-1 text-lg font-semibold text-white"

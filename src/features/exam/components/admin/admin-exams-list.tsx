@@ -83,6 +83,7 @@ export default function AdminExamsList({
         align: 'right',
         cell: (item) => (
           <button
+            type="button"
             onClick={() => onView?.(item)}
             className="ml-auto flex h-8 w-8 cursor-pointer items-center justify-center rounded bg-gray-100 text-gray-600 transition-colors hover:bg-gray-200"
             aria-label="Exam options"
