@@ -1,7 +1,8 @@
 import { ROUTES } from '@/app/routes';
+import { useDeleteDiploma } from '@/features/diploma/hooks/use-delete-diploma';
 import { useGetDiplomaById } from '@/features/diploma/hooks/use-get-diploma-by-id';
 import AdminDiplomaDetailSkeleton from '@/features/diploma/skeletons/admin-diploma-detail-skeleton';
-import type { IDiploma } from '@/features/diploma/types/diploma';
+import type { IDiploma } from '@/features/diploma/types/diploma.d';
 import BreadCrumb from '@/shared/layouts/dashboard/breadcrumb/BreadCrumb';
 import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.context';
 import { Button } from '@/shared/ui/button';
@@ -14,6 +15,7 @@ export default function AdminDiplomaDetailPage() {
   const navigate = useNavigate();
 
   const { data, isLoading, isError } = useGetDiplomaById(id);
+  const { mutate: deleteDiploma, isPending: isDeleting } = useDeleteDiploma();
 
   const diplomaPayload = data?.payload;
   const diploma: IDiploma | undefined = useMemo(() => {
@@ -30,6 +32,17 @@ export default function AdminDiplomaDetailPage() {
       { title: diploma?.title || 'Diploma Details' },
     ],
   });
+
+  const handleDelete = () => {
+    if (!diploma?.id) return;
+    if (confirm(`Are you sure you want to delete "${diploma.title}"?`)) {
+      deleteDiploma(diploma.id, {
+        onSuccess: () => {
+          navigate(ROUTES.DIPLOMAS);
+        },
+      });
+    }
+  };
 
   if (isLoading) {
     return <AdminDiplomaDetailSkeleton />;
@@ -96,12 +109,11 @@ export default function AdminDiplomaDetailPage() {
             size="sm"
             variant="destructive"
             className="h-9 w-auto gap-1.5 bg-red-600 px-4 font-mono text-xs font-medium text-white hover:bg-red-700"
-            onClick={() => {
-              console.log('Delete diploma', diploma.id);
-            }}
+            onClick={handleDelete}
+            disabled={isDeleting}
           >
             <Trash2 className="size-3.5" />
-            <span>Delete</span>
+            <span>{isDeleting ? 'Deleting...' : 'Delete'}</span>
           </Button>
         </div>
       </div>

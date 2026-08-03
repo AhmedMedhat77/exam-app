@@ -8,12 +8,14 @@ import {
   SORT_BY_KEY,
   SORT_ORDER_KEY,
 } from '@/features/diploma/components/constants/search-params.keys';
+
+import { useDeleteDiploma } from '@/features/diploma/hooks/use-delete-diploma';
 import { useGetUserDiplomas } from '@/features/diploma/hooks/use-get-diploma';
 import type {
   IDiploma,
   SORT_BY,
   SORT_ORDER,
-} from '@/features/diploma/types/diploma';
+} from '@/features/diploma/types/diploma.d';
 import {
   AdminTable,
   type AdminTableColumn,
@@ -38,6 +40,7 @@ export default function AdminDiplomaList({
 }: AdminDiplomaListProps) {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const { mutate: deleteDiploma } = useDeleteDiploma();
 
   const handleView = useCallback(
     (diploma?: IDiploma) => {
@@ -59,6 +62,19 @@ export default function AdminDiplomaList({
       }
     },
     [onEdit, navigate]
+  );
+
+  const handleDelete = useCallback(
+    (diploma?: IDiploma) => {
+      if (onDelete) {
+        onDelete(diploma);
+      } else if (diploma?.id) {
+        if (confirm(`Are you sure you want to delete "${diploma.title}"?`)) {
+          deleteDiploma(diploma.id);
+        }
+      }
+    },
+    [onDelete, deleteDiploma]
   );
 
   const isControlled = diplomasProp !== undefined;
@@ -132,12 +148,12 @@ export default function AdminDiplomaList({
             diploma={item}
             onView={handleView}
             onEdit={handleEdit}
-            onDelete={onDelete}
+            onDelete={handleDelete}
           />
         ),
       },
     ],
-    [handleView, onEdit, onDelete]
+    [handleView, handleEdit, handleDelete]
   );
 
   return (
