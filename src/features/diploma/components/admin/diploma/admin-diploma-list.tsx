@@ -1,27 +1,14 @@
 import { ROUTES } from '@/app/routes';
 import { AdminDiplomaActionsMenu } from '@/features/diploma/components/admin/diploma/admin-diploma-actions-menu';
 import { AdminDiplomaSortDropdown } from '@/features/diploma/components/admin/diploma/admin-diploma-sort-dropdown';
-import {
-  IMMUTABLE_QUERY_KEY,
-  PAGE_QUERY_KEY,
-  SEARCH_QUERY_KEY,
-  SORT_BY_KEY,
-  SORT_ORDER_KEY,
-} from '@/features/diploma/components/constants/search-params.keys';
-
 import { useDeleteDiploma } from '@/features/diploma/hooks/use-delete-diploma';
-import { useGetUserDiplomas } from '@/features/diploma/hooks/use-get-diploma';
-import type {
-  IDiploma,
-  SORT_BY,
-  SORT_ORDER,
-} from '@/features/diploma/types/diploma.d';
+import type { IDiploma } from '@/features/diploma/types/diploma.d';
 import {
   AdminTable,
   type AdminTableColumn,
 } from '@/shared/components/admin-table';
-import { useCallback, useMemo } from 'react';
-import { useNavigate, useSearchParams } from 'react-router';
+import { useCallback, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router';
 
 interface AdminDiplomaListProps {
   diplomas?: IDiploma[];
@@ -31,15 +18,43 @@ interface AdminDiplomaListProps {
   onDelete?: (diploma?: IDiploma) => void;
 }
 
+function DiplomaImageCell({
+  image,
+  title,
+}: {
+  image?: string;
+  title?: string;
+}) {
+  const [hasError, setHasError] = useState(false);
+
+  return (
+    <div className="size-18 overflow-hidden rounded-xs border border-gray-100 bg-gray-100">
+      {!hasError && image ? (
+        <img
+          src={image}
+          alt={title || 'Diploma'}
+          className="h-full w-full object-cover"
+          onError={() => setHasError(true)}
+        />
+      ) : (
+        <div className="flex h-full w-full items-center justify-center bg-gray-100 text-xs text-gray-400">
+          No image
+        </div>
+      )}
+    </div>
+  );
+}
+
+const EMPTY_DIPLOMAS: IDiploma[] = [];
+
 export default function AdminDiplomaList({
-  diplomas: diplomasProp,
-  isLoading: isLoadingProp,
+  diplomas = EMPTY_DIPLOMAS,
+  isLoading = false,
   onView,
   onEdit,
   onDelete,
 }: AdminDiplomaListProps) {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
   const { mutate: deleteDiploma } = useDeleteDiploma();
 
   const handleView = useCallback(
@@ -77,66 +92,26 @@ export default function AdminDiplomaList({
     [onDelete, deleteDiploma]
   );
 
-  const isControlled = diplomasProp !== undefined;
-
-  const search = searchParams.get(SEARCH_QUERY_KEY) || '';
-  const page = Number(searchParams.get(PAGE_QUERY_KEY)) || 1;
-  const sortBy = (searchParams.get(SORT_BY_KEY) as SORT_BY) || undefined;
-  const sortOrder =
-    (searchParams.get(SORT_ORDER_KEY) as SORT_ORDER) || undefined;
-  const immutableParam = searchParams.get(IMMUTABLE_QUERY_KEY);
-  const immutable =
-    immutableParam !== null ? immutableParam === 'true' : undefined;
-
-  const { data, isLoading: isQueryLoading } = useGetUserDiplomas(
-    isControlled
-      ? undefined
-      : {
-          limit: 10,
-          page,
-          search,
-          immutable,
-          sortBy,
-          sortOrder,
-        }
-  );
-
-  const queryDiplomas = useMemo(() => {
-    return data?.pages.flatMap((page) => page.payload?.data ?? []) ?? [];
-  }, [data]);
-
-  const diplomas = isControlled ? diplomasProp : queryDiplomas;
-  const isLoading = isControlled ? isLoadingProp : isQueryLoading;
-
   const columns: AdminTableColumn<IDiploma>[] = useMemo(
     () => [
       {
         header: 'Image',
         colClassName: 'w-24 sm:w-28',
         cell: (item) => (
-          <div className="size-18 overflow-hidden rounded-xs border border-gray-100 bg-gray-100">
-            <img
-              src={item?.image}
-              alt={item?.title || 'Diploma'}
-              className="h-full w-full object-cover"
-              onError={(e) => {
-                (e.target as HTMLElement).style.display = 'none';
-              }}
-            />
-          </div>
+          <DiplomaImageCell image={item?.image} title={item?.title} />
         ),
       },
       {
         header: 'Title',
         colClassName: 'w-48 sm:w-64',
         cellClassName:
-          'wrap-break-words pr-4 font-mono text-sm font-semibold whitespace-normal text-gray-900',
+          'break-words pr-4 font-mono text-sm font-semibold whitespace-normal text-gray-900',
         cell: (item) => item?.title,
       },
       {
         header: 'Description',
         cellClassName:
-          'warp-break-words font-mono text-xs leading-relaxed whitespace-normal text-gray-500',
+          'break-words font-mono text-xs leading-relaxed whitespace-normal text-gray-500',
         cell: (item) => <p className="line-clamp-4">{item?.description}</p>,
       },
       {

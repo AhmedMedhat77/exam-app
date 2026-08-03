@@ -1,8 +1,16 @@
 import { DIPLOMA_QUERY_KEYS } from '@/features/diploma/constants/diploma-keys';
 import DiplomaService from '@/features/diploma/services/diploma.service';
 import type { IGetDiplomaParams } from '@/features/diploma/types/diploma.d';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
-import { useInfiniteQuery } from '@tanstack/react-query';
+export function useGetDiplomas(
+  params: IGetDiplomaParams = { page: 1, limit: 10 }
+) {
+  return useQuery({
+    queryKey: DIPLOMA_QUERY_KEYS.diplomas.getAll(params),
+    queryFn: () => DiplomaService.getDiplomasApi(params),
+  });
+}
 
 export function useGetUserDiplomas(
   params: IGetDiplomaParams = { page: 1, limit: 10 }
