@@ -84,7 +84,7 @@ export default function AdminDiplomaManagePage() {
     }
   });
 
-  if (isLoading) {
+  if (id && isLoading) {
     return <div>Loading...</div>;
   }
 

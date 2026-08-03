@@ -1,3 +1,4 @@
+import { ROUTES } from '@/app/routes';
 import AdminDiplomaFilterContent from '@/features/diploma/components/admin/diploma/admin-diploma-filter-content';
 import AdminDiplomaHeader from '@/features/diploma/components/admin/diploma/admin-diploma-header';
 import AdminDiplomaList from '@/features/diploma/components/admin/diploma/admin-diploma-list';
@@ -9,16 +10,16 @@ import {
   SORT_ORDER_KEY,
 } from '@/features/diploma/components/constants/search-params.keys';
 import { useGetUserDiplomas } from '@/features/diploma/hooks/use-get-diploma';
-import type { SORT_BY, SORT_ORDER } from '@/features/diploma/types/diploma';
+import type { SORT_BY, SORT_ORDER } from '@/features/diploma/types/diploma.d';
 import AdminFiltersContainer from '@/shared/components/admin-filters-container';
 import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.context';
 import { SlidersHorizontal } from 'lucide-react';
 import { useMemo } from 'react';
-import { useSearchParams } from 'react-router';
-
-import BreadCrumb from '@/shared/layouts/dashboard/breadcrumb/BreadCrumb';
+import { useNavigate, useSearchParams } from 'react-router';
 
 export default function AdminDiplomaPage() {
+  const navigate = useNavigate();
+
   useBreadcrumb({
     items: [{ title: 'Diplomas', href: '/' }],
   });
@@ -55,6 +56,7 @@ export default function AdminDiplomaPage() {
         totalPages={metadata?.totalPages}
         limit={metadata?.limit}
         isLoading={isLoading}
+        onAddNew={() => navigate(ROUTES.DIPLOMA_CREATE)}
       />
       <AdminFiltersContainer
         title="Search & Filters"

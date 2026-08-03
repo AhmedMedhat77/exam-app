@@ -41,7 +41,8 @@ export const ROUTES = {
   PAYMENTS: '/payments',
   PAYMENT_DETAIL: '/payments/:paymentId',
 
-  DIPLOMA_MANAGE: '/diplomas/:id/manage',
+  DIPLOMA_CREATE: '/diplomas/manage',
+  DIPLOMA_MANAGE: '/diplomas/:id?/manage',
 } as const;
 
 type route = {

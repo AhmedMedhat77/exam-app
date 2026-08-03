@@ -58,7 +58,7 @@ export default function AdminDiplomaList({
       if (onEdit) {
         onEdit(diploma);
       } else if (diploma?.id) {
-        navigate(ROUTES.DIPLOMA_MANAGE.replace(':id', diploma.id));
+        navigate(ROUTES.DIPLOMA_MANAGE.replace(/:id\??/, diploma.id));
       }
     },
     [onEdit, navigate]
