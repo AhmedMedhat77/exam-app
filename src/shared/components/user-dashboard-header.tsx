@@ -1,5 +1,6 @@
-import { useLocation, useNavigate } from 'react-router';
+import BreadCrumb from '@/shared/layouts/dashboard/breadcrumb/BreadCrumb';
 import { ChevronLeft } from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router';
 
 interface IDiplomaHeaderProps {
   title: string;
@@ -34,23 +35,26 @@ export default function UserDashboardHeader({
   };
 
   return (
-    <div className="flex items-center gap-3">
-      {shouldShowBackButton && (
-        <button
-          type="button"
-          onClick={handleBack}
-          aria-label="Go back"
-          className="border-primary text-primary hover:bg-primary/10 flex h-19.25 w-12 shrink-0 cursor-pointer items-center justify-center border bg-white transition-colors"
-        >
-          <ChevronLeft className="h-6 w-6" />
-        </button>
-      )}
-      <div className="bg-primary flex h-19.25 flex-1 items-center gap-5 px-4">
-        <div className="flex items-center gap-3">
-          {icon}
-          <h4 className="font-heading text-3xl leading-8 font-semibold text-white">
-            {title}
-          </h4>
+    <div className="flex flex-col gap-2">
+      <BreadCrumb />
+      <div className="flex items-center gap-3">
+        {shouldShowBackButton && (
+          <button
+            type="button"
+            onClick={handleBack}
+            aria-label="Go back"
+            className="border-primary text-primary hover:bg-primary/10 flex h-19.25 w-12 shrink-0 cursor-pointer items-center justify-center border bg-white transition-colors"
+          >
+            <ChevronLeft className="h-6 w-6" />
+          </button>
+        )}
+        <div className="bg-primary flex h-19.25 flex-1 items-center gap-5 px-4">
+          <div className="flex items-center gap-3">
+            {icon}
+            <h4 className="font-heading text-3xl leading-8 font-semibold text-white">
+              {title}
+            </h4>
+          </div>
         </div>
       </div>
     </div>

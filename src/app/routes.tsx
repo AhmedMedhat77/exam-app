@@ -7,14 +7,17 @@ import EmailPage from '@/features/auth/pages/registration/email.page';
 import PasswordPage from '@/features/auth/pages/registration/password.page';
 import UserInfoPage from '@/features/auth/pages/registration/user-info.page';
 import VerifyOtpPage from '@/features/auth/pages/registration/verify-otp.page';
+import AdminDiplomaDetailPage from '@/features/diploma/pages/admin-diploma-detail.page';
 import AdminDiplomaPage from '@/features/diploma/pages/admin-diploma.page';
 import UserDiplomaPage from '@/features/diploma/pages/user-diploma.page';
 import UserExamDetailPage from '@/features/exam/pages/user/user-exam-detail.page';
 import ExamsPage from '@/features/exam/pages/user/user-exams.page';
 import UserSubmissionResultPage from '@/features/submission/pages/user-submission-result.page';
 
+import AdminExamsPage from '@/features/exam/pages/admin/admin-exams.page';
 import UserProfileLayout from '@/features/profile/layout/profile-layout';
-import { GraduationCap, Logs, UserRound } from 'lucide-react';
+import { BookOpenCheck, GraduationCap, Logs, UserRound } from 'lucide-react';
+import AdminDiplomaManagePage from '@/features/diploma/pages/admin-diploma-manage.page';
 
 export const ROUTES = {
   LOGIN: '/login',
@@ -27,6 +30,7 @@ export const ROUTES = {
   RESET_PASSWORD: '/reset-password',
   HOME: '/',
   DIPLOMAS: '/',
+  DIPLOMA_DETAIL: '/diplomas/:id',
   ACCOUNT_SETTINGS: '/account-settings',
   ACCOUNT_DETAIL: '/account/:id',
   // Exams
@@ -36,6 +40,9 @@ export const ROUTES = {
   LOGS: '/logs',
   PAYMENTS: '/payments',
   PAYMENT_DETAIL: '/payments/:paymentId',
+
+  DIPLOMA_CREATE: '/diplomas/manage',
+  DIPLOMA_MANAGE: '/diplomas/:id?/manage',
 } as const;
 
 type route = {
@@ -52,6 +59,12 @@ export const USER_ROUTES: route[] = [
     path: ROUTES.DIPLOMAS,
     icon: <GraduationCap />,
     element: UserDiplomaPage,
+  },
+  {
+    title: 'Diploma Detail',
+    path: ROUTES.DIPLOMA_DETAIL,
+    element: AdminDiplomaDetailPage,
+    hidden: true,
   },
   {
     title: 'Account Settings',
@@ -86,6 +99,26 @@ export const ADMIN_ROUTES: route[] = [
     icon: <GraduationCap />,
     element: AdminDiplomaPage,
   },
+  {
+    title: 'Diploma Detail',
+    path: ROUTES.DIPLOMA_DETAIL,
+    element: AdminDiplomaDetailPage,
+    hidden: true,
+  },
+  {
+    title: 'Diploma Manage',
+    path: ROUTES.DIPLOMA_MANAGE,
+    element: AdminDiplomaManagePage,
+    hidden: true,
+  },
+
+  {
+    title: 'Exams',
+    path: ROUTES.EXAMS,
+    icon: <BookOpenCheck />,
+    element: AdminExamsPage,
+  },
+
   {
     title: 'Account Settings',
     path: ROUTES.ACCOUNT_SETTINGS,
