@@ -75,9 +75,14 @@ export default function AdminDiplomaFilterContent() {
           value={immutable}
           onValueChange={(val) => val !== null && setImmutable(val)}
         >
-          <SelectTrigger className="min-h-full w-1/2 rounded-xs px-3 text-gray-400">
-            <SelectValue placeholder="Immutability" />
-
+          <SelectTrigger className="min-h-full w-1/2 rounded-xs px-3 text-gray-700">
+            <SelectValue placeholder="Immutability">
+              {immutable === 'true'
+                ? 'Immutable'
+                : immutable === 'false'
+                  ? 'Mutable'
+                  : 'None'}
+            </SelectValue>
             <ChevronsUpDown className="text-muted-foreground size-4" />
           </SelectTrigger>
           <SelectContent>
