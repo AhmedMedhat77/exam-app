@@ -21,7 +21,7 @@ export default function AdminDiplomaFilterContent() {
   const [query, setQuery] = useSearchParams();
   const [search, setSearch] = useState(() => query.get(SEARCH_QUERY_KEY) || '');
   const [immutable, setImmutable] = useState<string>(
-    () => query.get(IMMUTABLE_QUERY_KEY) || 'all'
+    () => query.get(IMMUTABLE_QUERY_KEY) || 'none'
   );
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +38,7 @@ export default function AdminDiplomaFilterContent() {
         next.delete(SEARCH_QUERY_KEY);
       }
 
-      if (immutable && immutable !== 'all') {
+      if (immutable && immutable !== 'none') {
         next.set(IMMUTABLE_QUERY_KEY, immutable);
       } else {
         next.delete(IMMUTABLE_QUERY_KEY);
@@ -51,7 +51,7 @@ export default function AdminDiplomaFilterContent() {
 
   const handleClear = () => {
     setSearch('');
-    setImmutable('all');
+    setImmutable('none');
     setQuery((prev) => {
       const next = new URLSearchParams(prev);
       next.delete(SEARCH_QUERY_KEY);
@@ -77,26 +77,27 @@ export default function AdminDiplomaFilterContent() {
         >
           <SelectTrigger className="min-h-full w-1/2 rounded-xs px-3 text-gray-400">
             <SelectValue placeholder="Immutability" />
+
             <ChevronsUpDown className="text-muted-foreground size-4" />
           </SelectTrigger>
           <SelectContent>
             <SelectItem
               className="text-gray-500 hover:text-gray-300"
-              value="all"
+              value="none"
             >
-              All
+              None
             </SelectItem>
             <SelectItem
               className="text-gray-500 hover:text-gray-300"
               value="true"
             >
-              True
+              Immutable
             </SelectItem>
             <SelectItem
               className="text-gray-500 hover:text-gray-300"
               value="false"
             >
-              False
+              Mutable
             </SelectItem>
           </SelectContent>
         </Select>
