@@ -23,4 +23,3 @@ export interface IGetDiplomaParams extends IPaginatedParams {
   sortOrder?: SortOrder;
   search?: string;
 }
-
