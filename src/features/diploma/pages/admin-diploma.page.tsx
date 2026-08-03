@@ -17,6 +17,8 @@ import { SlidersHorizontal } from 'lucide-react';
 import { useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 
+const LIMIT = 12;
+
 export default function AdminDiplomaPage() {
   const navigate = useNavigate();
 
@@ -36,7 +38,7 @@ export default function AdminDiplomaPage() {
     immutableParam !== null ? immutableParam === 'true' : undefined;
 
   const { data, isLoading } = useGetUserDiplomas({
-    limit: 10,
+    limit: LIMIT,
     page,
     search,
     immutable,
