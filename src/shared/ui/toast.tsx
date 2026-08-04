@@ -3,6 +3,7 @@ import { Toast as ToastPrimitive } from '@base-ui/react/toast';
 
 import { cn } from '@/shared/lib/utils';
 import { Button } from '@/shared/ui/button';
+import { toast } from '@/shared/ui/toast-manager';
 import {
   XIcon,
   CircleCheckIcon,
@@ -11,19 +12,6 @@ import {
   OctagonXIcon,
   Loader2Icon,
 } from 'lucide-react';
-
-const baseToast = ToastPrimitive.createToastManager();
-
-const toast = Object.assign(baseToast, {
-  success: (title: string, description?: string) =>
-    baseToast.add({ title, description, type: 'success' }),
-  error: (title: string, description?: string) =>
-    baseToast.add({ title, description, type: 'error' }),
-  info: (title: string, description?: string) =>
-    baseToast.add({ title, description, type: 'info' }),
-  warning: (title: string, description?: string) =>
-    baseToast.add({ title, description, type: 'warning' }),
-});
 
 function ToastProvider({ ...props }: ToastPrimitive.Provider.Props) {
   return <ToastPrimitive.Provider {...props} />;
@@ -230,9 +218,6 @@ function Toaster({
   );
 }
 
-const createToastManager = ToastPrimitive.createToastManager;
-const useToastManager = ToastPrimitive.useToastManager;
-
 export {
   Toaster,
   Toast,
@@ -244,7 +229,4 @@ export {
   ToastProvider,
   ToastTitle,
   ToastViewport,
-  createToastManager,
-  toast,
-  useToastManager,
 };
