@@ -1,0 +1,127 @@
+import type { IQuestion } from '@/features/question/types/questions';
+import { Button } from '@/shared/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/shared/ui/dropdown-menu';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/shared/ui/table';
+import { ArrowDownWideNarrow, MoreHorizontal, Plus } from 'lucide-react';
+
+interface AdminExamQuestionsCardProps {
+  questions?: IQuestion[];
+  onAddQuestion?: () => void;
+  onRemoveQuestion?: (id: string) => void;
+}
+
+export default function AdminExamQuestionsCard({
+  questions,
+  onAddQuestion,
+  onRemoveQuestion,
+}: AdminExamQuestionsCardProps) {
+  return (
+    <div className="overflow-hidden rounded-md border border-gray-200 bg-white shadow-2xs">
+      {/* Header Bar */}
+      <div className="flex items-center justify-between bg-blue-600 px-5 py-3 text-white">
+        <h3 className="font-mono text-sm font-semibold tracking-wide">
+          Exam Questions
+        </h3>
+        <Button
+          type="button"
+          onClick={onAddQuestion}
+          size="sm"
+          className="h-8 w-auto gap-1.5 border border-white/20 bg-white/10 px-3 font-mono text-xs font-medium text-white hover:bg-white/20 active:bg-white/30"
+        >
+          <Plus className="size-3.5" />
+          <span>Add Questions</span>
+        </Button>
+      </div>
+
+      {/* Questions Table */}
+      <div className="overflow-x-auto">
+        <Table>
+          <TableHeader className="border-b border-gray-200 bg-gray-100/70">
+            <TableRow className="hover:bg-transparent">
+              <TableHead className="px-6 py-2.5 font-mono text-xs font-semibold text-gray-700">
+                Title
+              </TableHead>
+              <TableHead className="flex items-center justify-end gap-2 px-6 py-2.5 text-end font-mono text-xs font-semibold text-gray-800">
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="flex items-center gap-2">
+                    Sort
+                    <ArrowDownWideNarrow className="size-5" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem>
+                      <div className="flex items-center gap-2">
+                        <span>A-Z</span>
+                        <ArrowDownWideNarrow className="size-4" />
+                      </div>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {questions?.length === 0 ? (
+              <TableRow>
+                <TableCell
+                  colSpan={2}
+                  className="py-8 text-center font-mono text-xs text-gray-400"
+                >
+                  No questions added yet. Click &quot;+ Add Questions&quot; to
+                  add questions.
+                </TableCell>
+              </TableRow>
+            ) : (
+              questions?.map((q) => (
+                <TableRow
+                  key={q.id}
+                  className="border-b border-gray-100 transition-colors hover:bg-gray-50/60"
+                >
+                  <TableCell className="px-6 py-3 font-mono text-xs font-medium text-gray-800">
+                    {q.text}
+                  </TableCell>
+                  <TableCell className="px-6 py-3 text-right">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon-xs"
+                          className="h-7 w-7 rounded border border-gray-200 bg-gray-50 text-gray-500 hover:bg-gray-100 hover:text-gray-800"
+                        >
+                          <MoreHorizontal className="size-3.5" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent
+                        align="end"
+                        className="w-36 font-mono text-xs"
+                      >
+                        <DropdownMenuItem
+                          className="cursor-pointer text-red-600 focus:bg-red-50 focus:text-red-700"
+                          onClick={() => onRemoveQuestion?.(q.id)}
+                        >
+                          Remove Question
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </div>
+    </div>
+  );
+}

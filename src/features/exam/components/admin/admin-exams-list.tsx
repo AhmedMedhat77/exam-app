@@ -7,40 +7,69 @@ import {
   AdminTable,
   type AdminTableColumn,
 } from '@/shared/components/admin-table';
-import { MoreHorizontal } from 'lucide-react';
-import { useMemo } from 'react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/shared/ui/dropdown-menu';
+import { Eye, MoreHorizontal, Pencil } from 'lucide-react';
+import { useCallback, useMemo } from 'react';
+import { useNavigate } from 'react-router';
 
 const EXAM_SORT_OPTIONS: SortOption<string>[] = [
   { label: 'Title', sortBy: 'title', sortOrder: 'desc' },
   { label: 'Title', sortBy: 'title', sortOrder: 'asc' },
   { label: 'Newest', sortBy: 'createdAt', sortOrder: 'desc' },
   { label: 'Newest', sortBy: 'createdAt', sortOrder: 'asc' },
-  { label: 'Duration', sortBy: 'duration', sortOrder: 'desc' },
-  { label: 'Duration', sortBy: 'duration', sortOrder: 'asc' },
+  { label: 'Questions', sortBy: 'questions', sortOrder: 'desc' },
+  { label: 'Questions', sortBy: 'questions', sortOrder: 'asc' },
 ];
+
+const EMPTY_EXAMS: IExam[] = [];
 
 interface AdminExamsListProps {
   exams?: IExam[];
   isLoading?: boolean;
-  onView?: (exam?: IExam) => void;
-  onEdit?: (exam?: IExam) => void;
-  onDelete?: (exam?: IExam) => void;
+  onView?: (exam: IExam) => void;
 }
 
 export default function AdminExamsList({
-  exams = [],
+  exams = EMPTY_EXAMS,
   isLoading = false,
   onView,
-  onEdit,
-  onDelete,
 }: AdminExamsListProps) {
+  const navigate = useNavigate();
+
+  const handleView = useCallback(
+    (exam: IExam) => {
+      if (onView) {
+        onView(exam);
+      } else {
+        navigate(`/exams/${exam.id}`);
+      }
+    },
+    [onView, navigate]
+  );
+
+  const handleEdit = useCallback(
+    (exam: IExam) => {
+      navigate(`/exams/${exam.id}/manage`);
+    },
+    [navigate]
+  );
+
   const columns: AdminTableColumn<IExam>[] = useMemo(
     () => [
       {
         header: 'Image',
         colClassName: 'w-24 sm:w-28',
         cell: (item) => (
-          <div className="size-18 overflow-hidden rounded-xs border border-gray-100 bg-gray-100">
+          <button
+            type="button"
+            onClick={() => handleView(item)}
+            className="size-16 cursor-pointer overflow-hidden rounded-xs border border-gray-100 bg-gray-100 text-left transition-opacity hover:opacity-80 focus:outline-none"
+          >
             <img
               src={item?.image}
               alt={item?.title || 'Exam'}
@@ -49,7 +78,7 @@ export default function AdminExamsList({
                 (e.target as HTMLElement).style.display = 'none';
               }}
             />
-          </div>
+          </button>
         ),
       },
       {
@@ -57,7 +86,15 @@ export default function AdminExamsList({
         colClassName: 'w-48 sm:w-64',
         cellClassName:
           'wrap-break-words pr-4 font-mono text-sm font-semibold whitespace-normal text-gray-900',
-        cell: (item) => item?.title,
+        cell: (item) => (
+          <button
+            type="button"
+            onClick={() => handleView(item)}
+            className="cursor-pointer text-left hover:text-blue-600 focus:outline-none"
+          >
+            {item?.title}
+          </button>
+        ),
       },
       {
         header: 'Description',
@@ -82,18 +119,32 @@ export default function AdminExamsList({
         colClassName: 'w-24 sm:w-28',
         align: 'right',
         cell: (item) => (
-          <button
-            type="button"
-            onClick={() => onView?.(item)}
-            className="ml-auto flex h-8 w-8 cursor-pointer items-center justify-center rounded bg-gray-100 text-gray-600 transition-colors hover:bg-gray-200"
-            aria-label="Exam options"
-          >
-            <MoreHorizontal className="size-4" />
-          </button>
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              className="ml-auto flex h-8 w-8 cursor-pointer items-center justify-center rounded bg-gray-100 text-gray-600 transition-colors hover:bg-gray-200"
+              aria-label="Exam options"
+            >
+              <MoreHorizontal className="size-4" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-36 font-mono text-xs">
+              <DropdownMenuItem
+                className="cursor-pointer gap-2"
+                onClick={() => handleView(item)}
+              >
+                <Eye className="size-3.5" /> View Exam
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="cursor-pointer gap-2"
+                onClick={() => handleEdit(item)}
+              >
+                <Pencil className="size-3.5" /> Edit Exam
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         ),
       },
     ],
-    [onView]
+    [handleView, handleEdit]
   );
 
   return (

@@ -8,16 +8,17 @@ import PasswordPage from '@/features/auth/pages/registration/password.page';
 import UserInfoPage from '@/features/auth/pages/registration/user-info.page';
 import VerifyOtpPage from '@/features/auth/pages/registration/verify-otp.page';
 import AdminDiplomaDetailPage from '@/features/diploma/pages/admin-diploma-detail.page';
+import AdminDiplomaManagePage from '@/features/diploma/pages/admin-diploma-manage.page';
 import AdminDiplomaPage from '@/features/diploma/pages/admin-diploma.page';
 import UserDiplomaPage from '@/features/diploma/pages/user-diploma.page';
+import AdminExamDetailPage from '@/features/exam/pages/admin/admin-exam-detail.page';
+import AdminExamManagePage from '@/features/exam/pages/admin/admin-exam-manage.page';
+import AdminExamsPage from '@/features/exam/pages/admin/admin-exams.page';
 import UserExamDetailPage from '@/features/exam/pages/user/user-exam-detail.page';
 import ExamsPage from '@/features/exam/pages/user/user-exams.page';
-import UserSubmissionResultPage from '@/features/submission/pages/user-submission-result.page';
-
-import AdminExamsPage from '@/features/exam/pages/admin/admin-exams.page';
 import UserProfileLayout from '@/features/profile/layout/profile-layout';
+import UserSubmissionResultPage from '@/features/submission/pages/user-submission-result.page';
 import { BookOpenCheck, GraduationCap, Logs, UserRound } from 'lucide-react';
-import AdminDiplomaManagePage from '@/features/diploma/pages/admin-diploma-manage.page';
 
 export const ROUTES = {
   LOGIN: '/login',
@@ -36,6 +37,8 @@ export const ROUTES = {
   // Exams
   EXAMS: '/exams',
   EXAM_DETAIL: '/exams/:id',
+  EXAM_CREATE: '/exams/manage',
+  EXAM_MANAGE: '/exams/:id?/manage',
   EXAM_RESULT: '/submissions/:id',
   LOGS: '/logs',
   PAYMENTS: '/payments',
@@ -117,6 +120,18 @@ export const ADMIN_ROUTES: route[] = [
     path: ROUTES.EXAMS,
     icon: <BookOpenCheck />,
     element: AdminExamsPage,
+  },
+  {
+    title: 'Exam Detail',
+    path: ROUTES.EXAM_DETAIL,
+    element: AdminExamDetailPage,
+    hidden: true,
+  },
+  {
+    title: 'Exam Manage',
+    path: ROUTES.EXAM_MANAGE,
+    element: AdminExamManagePage,
+    hidden: true,
   },
 
   {
