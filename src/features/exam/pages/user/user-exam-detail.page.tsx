@@ -8,7 +8,7 @@ import useGetExamQuestions from '@/features/question/hooks/use-get-exam-question
 import useGetExamSubmissions from '@/features/submission/hooks/use-get-exam-submissions';
 import useSubmitExam from '@/features/submission/hooks/use-submit-exam';
 import UserDashboardHeader from '@/shared/components/user-dashboard-header';
-import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.context';
+import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';
 import { Button } from '@/shared/ui/button';
 import { ArrowLeft, CircleQuestionMark, Loader2 } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';

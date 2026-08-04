@@ -1,26 +1,12 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
+import {
+  BreadcrumbContext,
+  type BreadcrumbData,
+  type BreadcrumbItem,
+} from './breadcrumb-context';
 
-export interface BreadcrumbItem {
-  title: string;
-  href?: string;
-}
-
-export interface BreadcrumbData {
-  title?: string;
-  description?: string;
-  items?: BreadcrumbItem[];
-}
-
-interface BreadcrumbContextType {
-  breadcrumbs: BreadcrumbData;
-  setBreadcrumbs: React.Dispatch<React.SetStateAction<BreadcrumbData>>;
-}
-
-const BreadcrumbContext = createContext<BreadcrumbContextType>({
-  breadcrumbs: {},
-  setBreadcrumbs: () => {},
-});
+export type { BreadcrumbData, BreadcrumbItem };
 
 export function BreadcrumbProvider({
   children,
@@ -44,26 +30,4 @@ export function BreadcrumbProvider({
       {children}
     </BreadcrumbContext.Provider>
   );
-}
-
-export function useBreadcrumbContext() {
-  return useContext(BreadcrumbContext);
-}
-
-export function useBreadcrumb(data?: BreadcrumbData) {
-  const { setBreadcrumbs } = useBreadcrumbContext();
-
-  const title = data?.title;
-  const description = data?.description;
-  const items = data?.items;
-
-  useEffect(() => {
-    if (
-      title !== undefined ||
-      description !== undefined ||
-      items !== undefined
-    ) {
-      setBreadcrumbs({ title, description, items });
-    }
-  }, [title, description, JSON.stringify(items), setBreadcrumbs]);
 }

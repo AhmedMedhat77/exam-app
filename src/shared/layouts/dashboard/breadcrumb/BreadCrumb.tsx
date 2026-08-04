@@ -1,8 +1,6 @@
 import { Link, useLocation } from 'react-router';
-import {
-  useBreadcrumbContext,
-  type BreadcrumbItem,
-} from './breadcrumb.context';
+import { type BreadcrumbItem } from './breadcrumb.context';
+import { useBreadcrumbContext } from './breadcrumb.hooks';
 
 function formatSegmentTitle(segment: string): string {
   return segment
