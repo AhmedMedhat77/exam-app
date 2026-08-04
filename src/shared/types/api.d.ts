@@ -39,6 +39,6 @@ export interface IPaginatedParams {
   page?: number;
   limit?: number;
   search?: string;
-  orderBy?: string;
+  sortBy?: string;
   sortOrder?: 'asc' | 'desc';
 }
