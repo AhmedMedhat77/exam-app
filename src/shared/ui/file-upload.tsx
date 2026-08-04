@@ -1,7 +1,7 @@
 import { cn } from '@/shared/lib/utils';
 import { Field, FieldLabel } from '@/shared/ui/field';
-import { CloudUpload, Image as ImageIcon, X } from 'lucide-react';
-import React, { useCallback, useId, useMemo, useState } from 'react';
+import { CloudUpload, Download, Trash2 } from 'lucide-react';
+import React, { useCallback, useEffect, useId, useMemo, useState } from 'react';
 
 export interface FileUploadProps {
   value?: File | string | null;
@@ -14,6 +14,8 @@ export interface FileUploadProps {
   id?: string;
   required?: boolean;
   placeholderText?: React.ReactNode;
+  fileName?: string;
+  fileSize?: string;
 }
 
 export function FileUpload({
@@ -27,17 +29,50 @@ export function FileUpload({
   id: customId,
   required,
   placeholderText,
+  fileName: customFileName,
+  fileSize: customFileSize,
 }: FileUploadProps) {
   const generatedId = useId();
   const id = customId || generatedId;
   const [isDragOver, setIsDragOver] = useState(false);
+  const [objectUrl, setObjectUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (value instanceof File) {
+      const url = URL.createObjectURL(value);
+      setObjectUrl(url);
+      return () => {
+        URL.revokeObjectURL(url);
+      };
+    }
+    setObjectUrl(null);
+  }, [value]);
 
   const previewUrl = useMemo(() => {
     if (!value) return null;
     if (typeof value === 'string') return value;
-    if (value instanceof File) return URL.createObjectURL(value);
+    if (value instanceof File) return objectUrl;
     return null;
-  }, [value]);
+  }, [value, objectUrl]);
+
+  const fileName = useMemo(() => {
+    if (customFileName) return customFileName;
+    if (value instanceof File) return value.name;
+    if (typeof value === 'string') {
+      const parts = value.split('/');
+      return parts[parts.length - 1] || 'Image_upload.png';
+    }
+    return 'Image_upload.png';
+  }, [value, customFileName]);
+
+  const fileSize = useMemo(() => {
+    if (customFileSize) return customFileSize;
+    if (value instanceof File) {
+      const mb = value.size / (1024 * 1024);
+      return `${mb.toFixed(2)} MB`;
+    }
+    return '1.48 MB';
+  }, [value, customFileSize]);
 
   const handleFile = useCallback(
     (file: File | null) => {
@@ -90,11 +125,11 @@ export function FileUpload({
     <Field className="flex flex-col gap-1.5">
       {label && (
         <FieldLabel
-          className="font-mono text-sm font-medium text-gray-700"
+          className="font-mono text-xs font-medium text-gray-700"
           htmlFor={id}
         >
           {label}
-          {required && <span className="ml-1 text-red-500">*</span>}
+          {required && <span className="text-destructive ml-1">*</span>}
         </FieldLabel>
       )}
 
@@ -103,10 +138,10 @@ export function FileUpload({
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         className={cn(
-          'relative flex min-h-[100px] w-full items-center gap-6 rounded-md border border-gray-200 bg-white p-4 transition-colors',
-          isDragOver && 'border-blue-500 bg-blue-50/40 ring-2 ring-blue-500/20',
+          'relative flex min-h-20 w-full items-center gap-4 rounded-md border border-gray-200 bg-white p-3 transition-colors',
+          isDragOver && 'ring-primary/20 border-primary bg-blue-50/40 ring-2',
           disabled && 'cursor-not-allowed bg-gray-50 opacity-60',
-          error && 'border-red-500',
+          error && 'border-destructive',
           className
         )}
       >
@@ -119,51 +154,74 @@ export function FileUpload({
           className="sr-only"
         />
 
-        {/* Left Preview Box / Placeholder Icon */}
-        <div className="relative flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-md border border-gray-200 bg-gray-50">
-          {previewUrl ? (
-            <>
-              <img
-                src={previewUrl}
-                alt="Uploaded preview"
-                className="h-full w-full object-cover"
-              />
+        {previewUrl ? (
+          <div className="flex w-full items-center justify-between gap-3">
+            <div className="flex items-center gap-3 overflow-hidden">
+              <div className="relative flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-md border border-gray-200 bg-gray-100">
+                <img
+                  src={previewUrl}
+                  alt="Uploaded preview"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div className="flex min-w-0 flex-col">
+                <p className="truncate font-mono text-xs font-medium text-gray-800">
+                  {fileName}
+                </p>
+                <p className="font-mono text-[11px] text-gray-400">
+                  {fileSize}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex shrink-0 items-center gap-1.5">
+              <a
+                href={previewUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="flex h-8 w-8 items-center justify-center rounded-xs border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                aria-label="Download image"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <Download className="h-3.5 w-3.5" />
+              </a>
               {!disabled && (
                 <button
                   type="button"
                   onClick={handleRemove}
-                  className="absolute top-1 right-1 flex h-5 w-5 items-center justify-center rounded-full bg-black/60 text-white transition-colors hover:bg-black/80"
+                  className="flex h-8 w-8 items-center justify-center rounded-xs border border-red-200 bg-red-50 text-red-600 hover:bg-red-100"
                   aria-label="Remove image"
                 >
-                  <X className="h-3 w-3" />
+                  <Trash2 className="h-3.5 w-3.5" />
                 </button>
               )}
-            </>
-          ) : (
-            <ImageIcon className="h-8 w-8 stroke-[1.5] text-gray-300" />
-          )}
-        </div>
-
-        {/* Right Dropzone Text / Trigger */}
-        <div className="flex flex-1 items-center justify-center gap-2 text-center sm:text-left">
-          <CloudUpload className="h-5 w-5 shrink-0 stroke-[1.75] text-gray-400" />
-          <label
-            htmlFor={id}
-            className="cursor-pointer font-mono text-xs text-gray-600 hover:text-gray-800 sm:text-sm"
-          >
-            {placeholderText || (
-              <>
-                Drop an image here or{' '}
-                <span className="font-medium text-blue-600 hover:underline">
-                  select from your computer
-                </span>
-              </>
-            )}
-          </label>
-        </div>
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-1 items-center justify-center gap-3 py-2 text-center sm:text-left">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+              <CloudUpload className="h-5 w-5 stroke-[1.75]" />
+            </div>
+            <label
+              htmlFor={id}
+              className="cursor-pointer font-mono text-xs text-gray-600 hover:text-gray-800"
+            >
+              {placeholderText || (
+                <>
+                  Drop an image here or{' '}
+                  <span className="font-semibold text-blue-600 hover:underline">
+                    select from your computer
+                  </span>
+                </>
+              )}
+            </label>
+          </div>
+        )}
       </div>
 
-      {error && <span className="font-mono text-xs text-red-500">{error}</span>}
+      {error && (
+        <span className="text-destructive font-mono text-xs">{error}</span>
+      )}
     </Field>
   );
 }
