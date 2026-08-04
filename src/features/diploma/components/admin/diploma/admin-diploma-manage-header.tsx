@@ -1,10 +1,8 @@
 import { ROUTES } from '@/app/routes';
 import type { IDiploma } from '@/features/diploma/types/diploma.d';
 import BreadCrumb from '@/shared/layouts/dashboard/breadcrumb/BreadCrumb';
-import {
-  useBreadcrumb,
-  type BreadcrumbItem,
-} from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.context';
+import { type BreadcrumbItem } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.context';
+import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';
 import { Button } from '@/shared/ui/button';
 import { Save } from 'lucide-react';
 import { useMemo } from 'react';

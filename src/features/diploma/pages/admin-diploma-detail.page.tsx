@@ -4,7 +4,7 @@ import { useGetDiplomaById } from '@/features/diploma/hooks/use-get-diploma-by-i
 import AdminDiplomaDetailSkeleton from '@/features/diploma/skeletons/admin-diploma-detail-skeleton';
 import type { IDiploma } from '@/features/diploma/types/diploma.d';
 import BreadCrumb from '@/shared/layouts/dashboard/breadcrumb/BreadCrumb';
-import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.context';
+import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';
 import { Button } from '@/shared/ui/button';
 import { ArrowLeft, Ban, Pencil, Trash2 } from 'lucide-react';
 import { useState } from 'react';
