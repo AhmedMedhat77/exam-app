@@ -20,7 +20,8 @@ const buttonVariants = cva(
         destructive:
           'bg-destructive text-white hover:bg-red-600 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-red-800 dark:hover:bg-red-700 dark:focus-visible:ring-red-600',
         link: 'text-primary underline-offset-4 hover:underline',
-        success: 'bg-emerald-500 hover:bg-emerald-400 text-white',
+        success:
+          'bg-emerald-600 hover:bg-emerald-700 text-white shadow-2xs font-medium',
       },
       size: {
         default:
