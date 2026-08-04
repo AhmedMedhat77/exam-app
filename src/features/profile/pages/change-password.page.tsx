@@ -5,7 +5,8 @@ import CustomError from '@/shared/components/custom-error';
 import { Button } from '@/shared/ui/button';
 import { Field, FieldError, FieldLabel } from '@/shared/ui/field';
 import { Input } from '@/shared/ui/input';
-import { toast } from '@/shared/ui/toast';
+import { toast } from '@/shared/ui/toast-manager';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
