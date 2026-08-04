@@ -38,10 +38,10 @@ export function AdminDiplomaTableRow({
           )}
         </div>
       </TableCell>
-      <TableCell className="px-6 py-4 pr-4 align-top font-mono text-sm font-semibold break-words whitespace-normal text-gray-900">
+      <TableCell className="px-6 py-4 pr-4 align-top font-mono text-sm font-semibold wrap-break-word whitespace-normal text-gray-900">
         {diploma.title}
       </TableCell>
-      <TableCell className="px-6 py-4 align-top font-mono text-xs leading-relaxed break-words whitespace-normal text-gray-500">
+      <TableCell className="px-6 py-4 align-top font-mono text-xs leading-relaxed wrap-break-word whitespace-normal text-gray-500">
         <p className="line-clamp-4">{diploma.description}</p>
       </TableCell>
       <TableCell className="px-6 py-4 text-right align-top">
