@@ -1,23 +1,57 @@
 import { ROUTES } from '@/app/routes';
 import AdminExamInformationCard from '@/features/exam/components/admin/admin-exam-information-card';
 import AdminExamQuestionsCard from '@/features/exam/components/admin/admin-exam-questions-card';
+import {
+  IMMUTABLE_QUERY_KEY,
+  SEARCH_QUERY_KEY,
+  SORT_BY_KEY,
+  SORT_ORDER_KEY,
+} from '@/features/exam/components/constants/search-params.keys';
 import { useCreateExam } from '@/features/exam/hooks/use-create-exam';
 import { useGetExamById } from '@/features/exam/hooks/use-get-exam-by-id';
 import { useUpdateExam } from '@/features/exam/hooks/use-update-exam';
 import { examSchema } from '@/features/exam/schemas/exam.schema';
 import type { IExam } from '@/features/exam/types/exams.d';
+import AddQuestionModal from '@/features/question/components/admin/add-question-modal';
+import DeleteQuestionModal from '@/features/question/components/admin/delete-question-modal';
+import { useDeleteQuestion } from '@/features/question/hooks/use-delete-question';
+import useGetExamQuestions from '@/features/question/hooks/use-get-exam-questions';
+import type {
+  QuestionSortBy,
+  QuestionSortOrder,
+} from '@/features/question/types/questions';
 import CustomError from '@/shared/components/custom-error';
 import BreadCrumb from '@/shared/layouts/dashboard/breadcrumb/BreadCrumb';
 import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';
+import { UploadService } from '@/shared/services/upload.service';
 import { Button } from '@/shared/ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Save, X } from 'lucide-react';
+import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router';
+import { useNavigate, useParams, useSearchParams } from 'react-router';
 
 export default function AdminExamManagePage() {
   const { id = '' } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const [isAddQuestionOpen, setIsAddQuestionOpen] = useState(false);
+  const [questionToDeleteId, setQuestionToDeleteId] = useState<string | null>(
+    null
+  );
+
+  // ========================== PARAMS ==========================
+
+  const [searchParams] = useSearchParams();
+
+  const search = searchParams.get(SEARCH_QUERY_KEY) || undefined;
+  const sortBy = (searchParams.get(SORT_BY_KEY) as QuestionSortBy) || undefined;
+  const sortOrder =
+    (searchParams.get(SORT_ORDER_KEY) as QuestionSortOrder) || undefined;
+  const immutableParam = searchParams.get(IMMUTABLE_QUERY_KEY);
+  const immutable =
+    immutableParam !== null ? immutableParam === 'true' : undefined;
+
+  // ========================== APIS ==========================
 
   const { data, isLoading, error: getError } = useGetExamById(id);
   const {
@@ -31,6 +65,17 @@ export default function AdminExamManagePage() {
     error: updateError,
   } = useUpdateExam();
 
+  const { data: examQuestions } = useGetExamQuestions({
+    examId: id,
+    search,
+    sortBy,
+    sortOrder,
+    immutable,
+  });
+
+  const { mutate: deleteQuestion, isPending: isDeletingQuestion } =
+    useDeleteQuestion();
+
   const isSubmitting = isCreating || isUpdating;
   const apiError = createError || updateError || getError;
 
@@ -40,7 +85,6 @@ export default function AdminExamManagePage() {
       ? (examPayload as { exam: IExam }).exam
       : (examPayload as IExam | undefined);
 
-  // Fallback demo defaults if navigating directly
   const exam = fetchedExam;
 
   useBreadcrumb({
@@ -57,27 +101,39 @@ export default function AdminExamManagePage() {
       title: exam?.title || '',
       description: exam?.description || '',
       diplomaId: exam?.diplomaId || '',
-      duration: exam?.duration || 0,
+      duration: exam?.duration || 20,
       image: exam?.image || null,
     },
     values: exam
       ? {
           title: exam.title,
-          description: exam.description,
+          description: exam.description || '',
           diplomaId: exam.diplomaId || '',
-          duration: exam.duration || 0,
+          duration: exam.duration || 20,
           image: exam.image || null,
         }
       : undefined,
   });
 
-  const onSubmit = form.handleSubmit((values) => {
+  const onSubmit = form.handleSubmit(async (values) => {
+    let imageUrl: string | undefined = undefined;
+
+    if (values.image instanceof File) {
+      try {
+        imageUrl = await UploadService.uploadApi(values.image);
+      } catch (err) {
+        console.error('Failed to upload image:', err);
+      }
+    } else if (typeof values.image === 'string') {
+      imageUrl = values.image;
+    }
+
     const payload = {
       title: values.title,
       description: values.description,
       duration: values.duration,
       diplomaId: values.diplomaId,
-      image: values.image,
+      image: imageUrl,
     };
 
     if (id) {
@@ -85,10 +141,6 @@ export default function AdminExamManagePage() {
         { id, payload },
         {
           onSuccess: () => {
-            navigate(`/exams/${id}`);
-          },
-          onError: () => {
-            // Demo fallback navigation if backend endpoint is mock
             navigate(`/exams/${id}`);
           },
         }
@@ -107,13 +159,29 @@ export default function AdminExamManagePage() {
             navigate(ROUTES.EXAMS);
           }
         },
-        onError: () => {
-          // Demo fallback navigation
-          navigate(ROUTES.EXAMS);
-        },
       });
     }
   });
+
+  const handleRemoveQuestion = (questionId: string) => {
+    setQuestionToDeleteId(questionId);
+  };
+
+  const handleConfirmDeleteQuestion = () => {
+    if (!questionToDeleteId) return;
+    deleteQuestion(questionToDeleteId, {
+      onSuccess: () => {
+        setQuestionToDeleteId(null);
+      },
+      onError: () => {
+        setQuestionToDeleteId(null);
+      },
+    });
+  };
+
+  const handleAddQuestion = () => {
+    setIsAddQuestionOpen(true);
+  };
 
   if (id && isLoading && !fetchedExam) {
     return (
@@ -186,8 +254,31 @@ export default function AdminExamManagePage() {
         <AdminExamInformationCard />
 
         {/* Section 2: Exam Questions Card */}
-        <AdminExamQuestionsCard />
+        {id && (
+          <AdminExamQuestionsCard
+            questions={examQuestions?.payload?.questions}
+            onRemoveQuestion={handleRemoveQuestion}
+            onAddQuestion={handleAddQuestion}
+          />
+        )}
       </form>
+
+      {id && (
+        <>
+          <AddQuestionModal
+            isOpen={isAddQuestionOpen}
+            onClose={() => setIsAddQuestionOpen(false)}
+            examId={id}
+          />
+
+          <DeleteQuestionModal
+            isOpen={!!questionToDeleteId}
+            onClose={() => setQuestionToDeleteId(null)}
+            onConfirm={handleConfirmDeleteQuestion}
+            isDeleting={isDeletingQuestion}
+          />
+        </>
+      )}
     </FormProvider>
   );
 }

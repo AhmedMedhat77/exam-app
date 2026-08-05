@@ -33,7 +33,7 @@ export class ExamsService {
     id: string,
     payload: IUpdateExamPayload
   ): Promise<IApiResponse<{ exam: IExam }>> {
-    const response = await axiosInstance.patch(`${BASE_URL}/${id}`, payload);
+    const response = await axiosInstance.put(`${BASE_URL}/${id}`, payload);
     return response?.data;
   }
 
