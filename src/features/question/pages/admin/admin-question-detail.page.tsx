@@ -1,10 +1,11 @@
 import { ROUTES } from '@/app/routes';
-import AdminQuestionViewCard from '@/features/question/components/admin/admin-question-view-card';
+import AdminQuestionDetailsHeader from '@/features/question/components/admin/admin-question-details-header';
 import DeleteQuestionModal from '@/features/question/components/admin/delete-question-modal';
 import { useDeleteQuestion } from '@/features/question/hooks/use-delete-question';
 import { useGetQuestionById } from '@/features/question/hooks/use-get-question-by-id';
 import { useUpdateQuestionImmutable } from '@/features/question/hooks/use-update-question-immutable';
 import type { IQuestion } from '@/features/question/types/questions';
+import ToggleImmutableModal from '@/shared/components/toggle-immutable-modal';
 import BreadCrumb from '@/shared/layouts/dashboard/breadcrumb/BreadCrumb';
 import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';
 import { Button } from '@/shared/ui/button';
@@ -17,11 +18,14 @@ export default function AdminQuestionDetailPage() {
   const navigate = useNavigate();
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isToggleImmutableModalOpen, setIsToggleImmutableModalOpen] =
+    useState(false);
 
   // ====================== APIS ======================
   const { data, isLoading, isError } = useGetQuestionById(id);
   const { mutate: deleteQuestion, isPending: isDeleting } = useDeleteQuestion();
-  const { mutate: updateImmutable } = useUpdateQuestionImmutable();
+  const { mutate: updateImmutable, isPending: isToggling } =
+    useUpdateQuestionImmutable();
 
   const questionPayload = data?.payload;
   const question: IQuestion | undefined =
@@ -54,12 +58,19 @@ export default function AdminQuestionDetailPage() {
     });
   };
 
-  const handleToggleSelectable = () => {
+  const handleToggleImmutable = () => {
     if (!question) return;
-    updateImmutable({
-      id: question.id,
-      immutable: !question.immutable,
-    });
+    updateImmutable(
+      {
+        id: question.id,
+        immutable: !question.immutable,
+      },
+      {
+        onSuccess: () => {
+          setIsToggleImmutableModalOpen(false);
+        },
+      }
+    );
   };
 
   if (isLoading) {
@@ -93,31 +104,7 @@ export default function AdminQuestionDetailPage() {
   }
 
   return (
-    <div className="max-w-full space-y-6">
-      {/* Top Header Navigation */}
-      <div className="-mx-4 -mt-7 border-b border-gray-100 bg-white px-4 py-5">
-        <BreadCrumb
-          items={[
-            { title: 'Exams', href: ROUTES.EXAMS },
-            {
-              title: question.exam?.title || 'Exam Details',
-              href: `/exams/${question.examId}`,
-            },
-            { title: question.text },
-          ]}
-        />
-      </div>
-
-      {/* Main Question View Card */}
-
-      <AdminQuestionViewCard
-        question={question}
-        onEdit={() => navigate(`/questions/${question.id}/manage`)}
-        onDelete={() => setIsDeleteModalOpen(true)}
-        onToggleSelectable={handleToggleSelectable}
-        isSelectable={!question.immutable}
-      />
-
+    <>
       {/* Delete Question Modal */}
       <DeleteQuestionModal
         isOpen={isDeleteModalOpen}
@@ -125,6 +112,58 @@ export default function AdminQuestionDetailPage() {
         onConfirm={handleConfirmDelete}
         isDeleting={isDeleting}
       />
+
+      <ToggleImmutableModal
+        isOpen={isToggleImmutableModalOpen}
+        onClose={() => setIsToggleImmutableModalOpen(false)}
+        onConfirm={handleToggleImmutable}
+        currentImmutable={question.immutable}
+        entityName={question.text}
+        isLoading={isToggling}
+      />
+
+      <div className="max-w-full space-y-6">
+        {/* Top Header Navigation */}
+        <div className="-mx-4 -mt-7 border-b border-gray-100 bg-white px-4 py-5">
+          <BreadCrumb
+            items={[
+              { title: 'Exams', href: ROUTES.EXAMS },
+              {
+                title: question.exam?.title || 'Exam Details',
+                href: `/exams/${question.examId}`,
+              },
+              { title: question.text },
+            ]}
+          />
+          <AdminQuestionDetailsHeader
+            question={question}
+            onDelete={() => setIsDeleteModalOpen(true)}
+            onEdit={() => navigate(`/questions/${question.id}/manage`)}
+            onToggleImmutable={() => setIsToggleImmutableModalOpen(true)}
+          />
+        </div>
+
+        <div className="space-y-4 bg-white p-4">
+          <DetailsItem label="Headline" value={question.text} />
+          <DetailsItem
+            label="Exam"
+            value={String(question.exam?.title || '')}
+          />
+          <DetailsItem
+            label="Answers"
+            value={String(question.answers.length)}
+          />
+        </div>
+      </div>
+    </>
+  );
+}
+
+function DetailsItem({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <h5 className="text-sm text-gray-400">{label}</h5>
+      <p className="text-sm font-medium text-gray-900">{value}</p>
     </div>
   );
 }
