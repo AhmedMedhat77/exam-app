@@ -27,6 +27,7 @@ export default function UserExamDetailPage() {
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
   const hasSubmittedRef = useRef<boolean>(false);
+  const autoSubmitFiredRef = useRef<boolean>(false);
 
   const { data, isLoading, isError, error } = useGetExamById(id);
   const examData = data?.payload;
@@ -197,8 +198,10 @@ export default function UserExamDetailPage() {
       examData &&
       totalDurationSeconds > 0 &&
       remainingSeconds <= 0 &&
-      !hasSubmittedRef.current
+      !hasSubmittedRef.current &&
+      !autoSubmitFiredRef.current
     ) {
+      autoSubmitFiredRef.current = true;
       handleSubmitExam(answers);
     }
   }, [
