@@ -38,7 +38,7 @@ export default function DeleteQuestionModal({
           </DialogDescription>
         </DialogHeader>
 
-        <DialogFooter className="mt-4 flex flex-row items-center justify-end gap-2">
+        <DialogFooter className="mt-4 grid grid-cols-2 gap-4">
           <Button
             type="button"
             variant="outline"
