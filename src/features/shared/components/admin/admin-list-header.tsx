@@ -1,24 +1,24 @@
 import { PAGE_QUERY_KEY as DEFAULT_PAGE_QUERY_KEY } from '@/features/diploma/components/constants/search-params.keys';
-import CustomPagination from '@/shared/components/pagination';
-import BreadCrumb, {
-  type BreadCrumbProps,
-} from '@/shared/layouts/dashboard/breadcrumb/BreadCrumb';
-import type { BreadcrumbItem } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.context';
+import AdminPagination from '@/features/shared/components/admin/admin-pagination';
+import Breadcrumb, {
+  type BreadcrumbProps,
+} from '@/shared/layouts/dashboard/breadcrumb/breadcrumb-view';
+import type { BreadcrumbItem } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb-provider';
 import { cn } from '@/shared/lib/utils';
 import { Button } from '@/shared/ui/button';
 import { Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
 
-export interface AdminHeaderProps {
+export interface AdminListHeaderProps {
   /** Custom breadcrumb items to override context/defaults */
   breadcrumbItems?: BreadcrumbItem[];
   /** Custom breadcrumb title */
   breadcrumbTitle?: string;
   /** Custom breadcrumb description */
   breadcrumbDescription?: string;
-  /** Direct props passed to BreadCrumb component */
-  breadcrumbProps?: BreadCrumbProps;
+  /** Direct props passed to Breadcrumb component */
+  breadcrumbProps?: BreadcrumbProps;
 
   /** Total number of items */
   total?: number;
@@ -42,7 +42,7 @@ export interface AdminHeaderProps {
   className?: string;
 }
 
-export default function AdminHeader({
+export default function AdminListHeader({
   breadcrumbItems,
   breadcrumbTitle,
   breadcrumbDescription,
@@ -56,7 +56,7 @@ export default function AdminHeader({
   addNewLabel = 'Add New',
   actionNode,
   className,
-}: AdminHeaderProps) {
+}: AdminListHeaderProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = Number(searchParams.get(pageQueryKey)) || 1;
 
@@ -121,7 +121,7 @@ export default function AdminHeader({
         className
       )}
     >
-      <BreadCrumb
+      <Breadcrumb
         items={breadcrumbItems}
         title={breadcrumbTitle}
         description={breadcrumbDescription}
@@ -137,7 +137,7 @@ export default function AdminHeader({
           )}
         </div>
 
-        <CustomPagination
+        <AdminPagination
           handleNext={handleNext}
           handlePrev={handlePrev}
           handlePageSubmit={handlePageSubmit}

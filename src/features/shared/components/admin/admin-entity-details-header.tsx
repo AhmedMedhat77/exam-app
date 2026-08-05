@@ -1,8 +1,8 @@
-import BreadCrumb from '@/shared/layouts/dashboard/breadcrumb/BreadCrumb';
+import Breadcrumb from '@/shared/layouts/dashboard/breadcrumb/breadcrumb-view';
 import { Button } from '@/shared/ui/button';
 import { Ban, Pencil, Trash2 } from 'lucide-react';
 
-interface AdminDetailsScreenHeaderProps {
+interface AdminEntityDetailsHeaderProps {
   title: string;
   immutable: boolean;
   isDeleting: boolean;
@@ -13,7 +13,7 @@ interface AdminDetailsScreenHeaderProps {
   breadcrumbItems: Array<{ title: string; href?: string }>;
 }
 
-export default function AdminDetailsScreenHeader({
+export default function AdminEntityDetailsHeader({
   title,
   immutable,
   isDeleting,
@@ -22,10 +22,10 @@ export default function AdminDetailsScreenHeader({
   onDelete,
   onToggleImmutable,
   breadcrumbItems,
-}: AdminDetailsScreenHeaderProps) {
+}: AdminEntityDetailsHeaderProps) {
   return (
     <div className="-mx-4 -mt-7 space-y-2 bg-white px-4 pb-4">
-      <BreadCrumb items={breadcrumbItems} />
+      <Breadcrumb items={breadcrumbItems} />
 
       <div className="flex flex-col gap-4 border-t border-t-gray-100 pt-1.5 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="font-mono text-xl font-bold tracking-tight text-gray-900 sm:text-2xl">

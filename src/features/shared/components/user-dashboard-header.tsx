@@ -1,4 +1,4 @@
-import BreadCrumb from '@/shared/layouts/dashboard/breadcrumb/BreadCrumb';
+import Breadcrumb from '@/shared/layouts/dashboard/breadcrumb/breadcrumb-view';
 import { ChevronLeft } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router';
 
@@ -36,7 +36,7 @@ export default function UserDashboardHeader({
 
   return (
     <div className="flex flex-col gap-2">
-      <BreadCrumb />
+      <Breadcrumb />
       <div className="flex items-center gap-3">
         {shouldShowBackButton && (
           <button
