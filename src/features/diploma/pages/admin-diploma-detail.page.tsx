@@ -1,8 +1,11 @@
 import { ROUTES } from '@/app/routes';
 import { useDeleteDiploma } from '@/features/diploma/hooks/use-delete-diploma';
 import { useGetDiplomaById } from '@/features/diploma/hooks/use-get-diploma-by-id';
+import { useUpdateDiplomaImmutable } from '@/features/diploma/hooks/use-update-diploma-immutable';
 import AdminDiplomaDetailSkeleton from '@/features/diploma/skeletons/admin-diploma-detail-skeleton';
 import type { IDiploma } from '@/features/diploma/types/diploma.d';
+import DeleteConfirmModal from '@/shared/components/delete-confirm-modal';
+import ToggleImmutableModal from '@/shared/components/toggle-immutable-modal';
 import BreadCrumb from '@/shared/layouts/dashboard/breadcrumb/BreadCrumb';
 import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';
 import { Button } from '@/shared/ui/button';
@@ -14,9 +17,13 @@ export default function AdminDiplomaDetailPage() {
   const { id = '' } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [imageError, setImageError] = useState(false);
+  const [isDeleteDiplomaOpen, setIsDeleteDiplomaOpen] = useState(false);
+  const [isToggleImmutableOpen, setIsToggleImmutableOpen] = useState(false);
 
   const { data, isLoading, isError } = useGetDiplomaById(id);
   const { mutate: deleteDiploma, isPending: isDeleting } = useDeleteDiploma();
+  const { mutate: updateDiplomaImmutable, isPending: isUpdatingImmutable } =
+    useUpdateDiplomaImmutable();
 
   const diplomaPayload = data?.payload;
   const diploma: IDiploma | undefined =
@@ -32,14 +39,35 @@ export default function AdminDiplomaDetailPage() {
   });
 
   const handleDelete = () => {
+    setIsDeleteDiplomaOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
     if (!diploma?.id) return;
-    if (confirm(`Are you sure you want to delete "${diploma.title}"?`)) {
-      deleteDiploma(diploma.id, {
+    deleteDiploma(diploma.id, {
+      onSuccess: () => {
+        setIsDeleteDiplomaOpen(false);
+        navigate(ROUTES.DIPLOMAS);
+      },
+      onError: () => {
+        setIsDeleteDiplomaOpen(false);
+      },
+    });
+  };
+
+  const handleConfirmToggleImmutable = () => {
+    if (!diploma?.id) return;
+    updateDiplomaImmutable(
+      { id: diploma.id, immutable: !diploma.immutable },
+      {
         onSuccess: () => {
-          navigate(ROUTES.DIPLOMAS);
+          setIsToggleImmutableOpen(false);
         },
-      });
-    }
+        onError: () => {
+          setIsToggleImmutableOpen(false);
+        },
+      }
+    );
   };
 
   if (isLoading) {
@@ -87,10 +115,18 @@ export default function AdminDiplomaDetailPage() {
           <Button
             variant="outline"
             size="sm"
-            className="h-9 w-auto cursor-default gap-1.5 border-gray-200 bg-gray-100 px-3.5 font-mono text-xs font-medium text-gray-700 hover:bg-gray-200"
+            onClick={() => setIsToggleImmutableOpen(true)}
+            disabled={isUpdatingImmutable}
+            className="h-9 w-auto cursor-pointer gap-1.5 border-gray-200 bg-gray-100 px-3.5 font-mono text-xs font-medium text-gray-700 hover:bg-gray-200"
           >
             <Ban className="size-3.5 text-gray-600" />
-            <span>{diploma.immutable ? 'Immutable' : 'Mutable'}</span>
+            <span>
+              {isUpdatingImmutable
+                ? 'Updating...'
+                : diploma.immutable
+                  ? 'Immutable'
+                  : 'Mutable'}
+            </span>
           </Button>
           <Button
             size="sm"
@@ -154,6 +190,25 @@ export default function AdminDiplomaDetailPage() {
           </p>
         </div>
       </div>
+
+      <DeleteConfirmModal
+        isOpen={isDeleteDiplomaOpen}
+        onClose={() => setIsDeleteDiplomaOpen(false)}
+        onConfirm={handleConfirmDelete}
+        isDeleting={isDeleting}
+        title="Delete Diploma"
+        description={`Are you sure you want to delete "${diploma.title}"? This action cannot be undone.`}
+        confirmLabel="Delete Diploma"
+      />
+
+      <ToggleImmutableModal
+        isOpen={isToggleImmutableOpen}
+        onClose={() => setIsToggleImmutableOpen(false)}
+        onConfirm={handleConfirmToggleImmutable}
+        currentImmutable={Boolean(diploma.immutable)}
+        isLoading={isUpdatingImmutable}
+        entityName="diploma"
+      />
     </div>
   );
 }

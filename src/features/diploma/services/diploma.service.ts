@@ -82,4 +82,16 @@ export default class DiplomaService {
     const response = await axiosInstance.delete(`${BASE_URL}/${id}`);
     return response.data;
   };
+
+  /** PATCH /api/admin/diplomas/{id}/immutable - Set diploma immutable flag */
+  static updateImmutableDiplomaApi = async (
+    id: string,
+    immutable: boolean
+  ): Promise<IApiResponse<{ message?: string }>> => {
+    const response = await axiosInstance.patch(
+      `/api/admin/diplomas/${id}/immutable`,
+      { immutable }
+    );
+    return response.data;
+  };
 }
