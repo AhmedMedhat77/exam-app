@@ -11,7 +11,8 @@ interface Props {
 
 function SidebarLinkItem({ path, title, icon }: Props) {
   const { pathname } = useLocation();
-  const isActive = path === '/' ? pathname === '/' : pathname.startsWith(path);
+  const isActive =
+    path === '/' ? pathname === '/' || pathname.startsWith('/diploma') : pathname.startsWith(path);
   const { link } = useSidebarStyles();
 
   return (

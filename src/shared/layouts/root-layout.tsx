@@ -21,12 +21,16 @@ export default function RootLayout() {
   const isAuth = !!token;
   const { pathname } = useLocation();
 
-  if (isAuth && AuthRoutes.includes(pathname)) {
-    return <Navigate to={ROUTES.DIPLOMAS} replace />;
+  const isAuthRoute = AuthRoutes.includes(pathname);
+
+  // Redirect to login if not authenticated and accessing a protected route (e.g. /diplomas/123123)
+  if (!isAuth && !isAuthRoute) {
+    return <Navigate to={ROUTES.LOGIN} replace />;
   }
 
-  if (!isAuth && !AuthRoutes.includes(pathname)) {
-    return <Navigate to={ROUTES.LOGIN} replace />;
+  // Redirect to home/diplomas if authenticated and accessing an auth route (e.g. /login)
+  if (isAuth && isAuthRoute) {
+    return <Navigate to={ROUTES.DIPLOMAS} replace />;
   }
 
   return (
