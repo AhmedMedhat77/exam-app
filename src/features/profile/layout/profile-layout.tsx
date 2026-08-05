@@ -1,4 +1,4 @@
-import UserDashboardHeader from '@/shared/components/user-dashboard-header';
+import UserDashboardHeader from '@/features/shared/components/user-dashboard-header';
 import ProfileSidebar from '@/features/profile/components/profile-sidebar';
 import { UserRound } from 'lucide-react';
 import { Outlet } from 'react-router';

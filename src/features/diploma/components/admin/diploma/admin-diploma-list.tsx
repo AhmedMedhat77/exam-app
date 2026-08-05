@@ -6,7 +6,7 @@ import type { IDiploma } from '@/features/diploma/types/diploma.d';
 import {
   AdminTable,
   type AdminTableColumn,
-} from '@/shared/components/admin-table';
+} from '@/features/shared/components/admin/admin-table';
 import { useCallback, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router';
 

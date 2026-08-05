@@ -1,7 +1,7 @@
 import { ROUTES } from '@/app/routes';
 import UserExamsList from '@/features/exam/components/user/exams-list';
 import { useGetAllExams } from '@/features/exam/hooks/use-get-all-exams';
-import UserDashboardHeader from '@/shared/components/user-dashboard-header';
+import UserDashboardHeader from '@/features/shared/components/user-dashboard-header';
 import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';
 import { GraduationCap } from 'lucide-react';
 import { useSearchParams } from 'react-router';

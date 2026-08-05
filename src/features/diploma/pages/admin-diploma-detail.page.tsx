@@ -4,7 +4,7 @@ import { useGetDiplomaById } from '@/features/diploma/hooks/use-get-diploma-by-i
 import { useUpdateDiplomaImmutable } from '@/features/diploma/hooks/use-update-diploma-immutable';
 import AdminDiplomaDetailSkeleton from '@/features/diploma/skeletons/admin-diploma-detail-skeleton';
 import type { IDiploma } from '@/features/diploma/types/diploma.d';
-import AdminDetailsScreenHeader from '@/features/shared/components/admin-details-screen-header';
+import AdminDetailsScreenHeader from '@/features/shared/components/admin/admin-details-screen-header';
 import DeleteConfirmModal from '@/shared/components/delete-confirm-modal';
 import ToggleImmutableModal from '@/shared/components/toggle-immutable-modal';
 import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';

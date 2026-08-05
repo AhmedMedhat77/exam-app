@@ -1,4 +1,4 @@
-import UserDashboardHeader from '@/shared/components/user-dashboard-header';
+import UserDashboardHeader from '@/features/shared/components/user-dashboard-header';
 import { CircleQuestionMark } from 'lucide-react';
 
 interface ResultHeaderProgressProps {

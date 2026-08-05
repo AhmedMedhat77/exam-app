@@ -1,5 +1,5 @@
 import UserDiplomaList from '@/features/diploma/components/user/user-diploma-list';
-import UserDashboardHeader from '@/shared/components/user-dashboard-header';
+import UserDashboardHeader from '@/features/shared/components/user-dashboard-header';
 import { GraduationCap } from 'lucide-react';
 
 import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';

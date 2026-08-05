@@ -11,7 +11,7 @@ import {
 } from '@/features/diploma/components/constants/search-params.keys';
 import { useGetDiplomas } from '@/features/diploma/hooks/use-get-diploma';
 import type { SortBy, SortOrder } from '@/features/diploma/types/diploma.d';
-import AdminFiltersContainer from '@/shared/components/admin-filters-container';
+import AdminFiltersContainer from '@/features/shared/components/admin/admin-filters-container';
 import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';
 import { SlidersHorizontal } from 'lucide-react';
 import { useNavigate, useSearchParams } from 'react-router';

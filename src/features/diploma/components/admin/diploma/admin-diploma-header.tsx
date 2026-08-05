@@ -1,6 +1,6 @@
 import AdminHeader, {
   type AdminHeaderProps,
-} from '@/shared/components/admin-header';
+} from '@/features/shared/components/admin/admin-header';
 
 export type AdminDiplomaHeaderProps = AdminHeaderProps;
 

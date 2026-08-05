@@ -2,11 +2,11 @@ import type { IExam } from '@/features/exam/types/exams.d';
 import {
   AdminSortDropdown,
   type SortOption,
-} from '@/shared/components/admin-sort-dropdown';
+} from '@/features/shared/components/admin/admin-sort-dropdown';
 import {
   AdminTable,
   type AdminTableColumn,
-} from '@/shared/components/admin-table';
+} from '@/features/shared/components/admin/admin-table';
 import {
   DropdownMenu,
   DropdownMenuContent,

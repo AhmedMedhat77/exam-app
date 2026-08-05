@@ -1,5 +1,5 @@
 import { ROUTES } from '@/app/routes';
-import UserDashboardHeader from '@/shared/components/user-dashboard-header';
+import UserDashboardHeader from '@/features/shared/components/user-dashboard-header';
 import ResultActions from '@/features/submission/components/result-actions';
 import ResultHeaderProgress from '@/features/submission/components/result-header-progress';
 import ResultQuestionsList from '@/features/submission/components/result-questions-list';

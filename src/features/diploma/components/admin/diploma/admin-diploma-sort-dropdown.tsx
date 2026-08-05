@@ -6,7 +6,7 @@ import type { SortBy } from '@/features/diploma/types/diploma.d';
 import {
   AdminSortDropdown,
   type SortOption,
-} from '@/shared/components/admin-sort-dropdown';
+} from '@/features/shared/components/admin/admin-sort-dropdown';
 
 const DIPLOMA_SORT_OPTIONS: SortOption<SortBy>[] = [
   {

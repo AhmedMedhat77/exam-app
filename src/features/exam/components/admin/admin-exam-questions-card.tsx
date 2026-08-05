@@ -4,7 +4,7 @@ import type {
 } from '@/features/question/types/questions';
 import AdminSortDropdown, {
   type SortOption,
-} from '@/shared/components/admin-sort-dropdown';
+} from '@/features/shared/components/admin/admin-sort-dropdown';
 import { Button } from '@/shared/ui/button';
 import {
   DropdownMenu,

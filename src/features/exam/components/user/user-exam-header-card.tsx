@@ -1,7 +1,7 @@
 import DonutBar from '@/features/exam/components/user/donut-bar';
 import ProgressBar from '@/features/exam/components/user/progressbar';
 import QuestionStepCounter from '@/features/exam/components/user/question-step-counter';
-import UserDashboardHeader from '@/shared/components/user-dashboard-header';
+import UserDashboardHeader from '@/features/shared/components/user-dashboard-header';
 import { CircleQuestionMark } from 'lucide-react';
 import React from 'react';
 

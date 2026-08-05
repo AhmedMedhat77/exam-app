@@ -18,7 +18,7 @@ import type {
   QuestionSortBy,
   QuestionSortOrder,
 } from '@/features/question/types/questions';
-import AdminDetailsScreenHeader from '@/features/shared/components/admin-details-screen-header';
+import AdminDetailsScreenHeader from '@/features/shared/components/admin/admin-details-screen-header';
 import DeleteConfirmModal from '@/shared/components/delete-confirm-modal';
 import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';
 

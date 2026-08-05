@@ -14,8 +14,8 @@ import type {
   ExamSortOrder,
   IExam,
 } from '@/features/exam/types/exams.d';
-import AdminFiltersContainer from '@/shared/components/admin-filters-container';
-import AdminHeader from '@/shared/components/admin-header';
+import AdminFiltersContainer from '@/features/shared/components/admin/admin-filters-container';
+import AdminHeader from '@/features/shared/components/admin/admin-header';
 import { SlidersHorizontal } from 'lucide-react';
 import { useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
