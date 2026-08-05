@@ -1,5 +1,5 @@
 import AdminExamFilterContent from '@/features/exam/components/admin/admin-exam-filter-content';
-import AdminExamsList from '@/features/exam/components/admin/admin-exams-list';
+import AdminExamList from '@/features/exam/components/admin/admin-exam-list';
 import {
   DIPLOMA_ID_QUERY_KEY,
   IMMUTABLE_QUERY_KEY,
@@ -14,8 +14,8 @@ import type {
   ExamSortOrder,
   IExam,
 } from '@/features/exam/types/exams.d';
-import AdminFiltersContainer from '@/features/shared/components/admin/admin-filters-container';
-import AdminHeader from '@/features/shared/components/admin/admin-header';
+import AdminFiltersPanel from '@/features/shared/components/admin/admin-filters-panel';
+import AdminListHeader from '@/features/shared/components/admin/admin-list-header';
 import { SlidersHorizontal } from 'lucide-react';
 import { useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
@@ -57,7 +57,7 @@ export default function AdminExamListPage() {
 
   return (
     <div className="max-w-full space-y-6">
-      <AdminHeader
+      <AdminListHeader
         breadcrumbItems={[{ title: 'Exams', href: '/exams' }]}
         addNewLabel="Add New Exam"
         total={metadata?.total ?? exams.length}
@@ -68,13 +68,13 @@ export default function AdminExamListPage() {
           navigate('/exams/manage');
         }}
       />
-      <AdminFiltersContainer
+      <AdminFiltersPanel
         title="Search & Filters"
         icon={<SlidersHorizontal className="size-6" />}
       >
         <AdminExamFilterContent />
-      </AdminFiltersContainer>
-      <AdminExamsList exams={exams} isLoading={isLoading} />
+      </AdminFiltersPanel>
+      <AdminExamList exams={exams} isLoading={isLoading} />
     </div>
   );
 }

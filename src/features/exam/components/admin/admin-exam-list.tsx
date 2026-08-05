@@ -28,17 +28,17 @@ const EXAM_SORT_OPTIONS: SortOption<string>[] = [
 
 const EMPTY_EXAMS: IExam[] = [];
 
-interface AdminExamsListProps {
+interface AdminExamListProps {
   exams?: IExam[];
   isLoading?: boolean;
   onView?: (exam: IExam) => void;
 }
 
-export default function AdminExamsList({
+export default function AdminExamList({
   exams = EMPTY_EXAMS,
   isLoading = false,
   onView,
-}: AdminExamsListProps) {
+}: AdminExamListProps) {
   const navigate = useNavigate();
 
   const handleView = useCallback(

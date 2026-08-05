@@ -1,8 +1,8 @@
 import { ROUTES } from '@/app/routes';
-import UserExamsList from '@/features/exam/components/user/exams-list';
+import UserExamList from '@/features/exam/components/user/user-exam-list';
 import { useGetAllExams } from '@/features/exam/hooks/use-get-all-exams';
 import UserDashboardHeader from '@/features/shared/components/user-dashboard-header';
-import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';
+import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/use-breadcrumb';
 import { GraduationCap } from 'lucide-react';
 import { useSearchParams } from 'react-router';
 
@@ -37,7 +37,7 @@ export default function UserExamListPage() {
         title="Exams"
         icon={<GraduationCap size={45} className="text-white" />}
       />
-      <UserExamsList diplomaId={diplomaId} />
+      <UserExamList diplomaId={diplomaId} />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { ROUTES } from '@/app/routes';
-import AdminExamDetailInfoCard from '@/features/exam/components/admin/admin-exam-detail-info-card';
+import AdminExamDetailsCard from '@/features/exam/components/admin/admin-exam-details-card';
 import AdminExamQuestionsCard from '@/features/exam/components/admin/admin-exam-questions-card';
-import ToggleImmutableModal from '@/features/exam/components/admin/toggle-immutable-modal';
+import ExamImmutableStatusDialog from '@/features/exam/components/admin/exam-immutable-status-dialog';
 import {
   IMMUTABLE_QUERY_KEY,
   SEARCH_QUERY_KEY,
@@ -18,9 +18,9 @@ import type {
   QuestionSortBy,
   QuestionSortOrder,
 } from '@/features/question/types/questions';
-import AdminDetailsScreenHeader from '@/features/shared/components/admin/admin-details-screen-header';
-import DeleteConfirmModal from '@/shared/components/delete-confirm-modal';
-import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';
+import AdminEntityDetailsHeader from '@/features/shared/components/admin/admin-entity-details-header';
+import DeleteConfirmDialog from '@/shared/components/delete-confirm-dialog';
+import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/use-breadcrumb';
 
 import { Button } from '@/shared/ui/button';
 import { ArrowLeft } from 'lucide-react';
@@ -180,7 +180,7 @@ export default function AdminExamDetailsPage() {
       {/* Top Header Navigation */}
 
       {/* Top Controls Bar */}
-      <AdminDetailsScreenHeader
+      <AdminEntityDetailsHeader
         breadcrumbItems={[
           { title: 'Exams', href: ROUTES.EXAMS },
           { title: exam.title },
@@ -195,7 +195,7 @@ export default function AdminExamDetailsPage() {
       />
 
       {/* Exam Detail Info Card */}
-      <AdminExamDetailInfoCard exam={exam} />
+      <AdminExamDetailsCard exam={exam} />
 
       {/* Exam Questions Section Card */}
       <AdminExamQuestionsCard
@@ -204,7 +204,7 @@ export default function AdminExamDetailsPage() {
         onRemoveQuestion={handleRemoveQuestion}
       />
 
-      <DeleteConfirmModal
+      <DeleteConfirmDialog
         isOpen={!!questionToDeleteId}
         onClose={() => setQuestionToDeleteId(null)}
         onConfirm={handleConfirmDeleteQuestion}
@@ -214,7 +214,7 @@ export default function AdminExamDetailsPage() {
         confirmLabel="Delete Question"
       />
 
-      <ToggleImmutableModal
+      <ExamImmutableStatusDialog
         isOpen={isToggleImmutableOpen}
         onClose={() => setIsToggleImmutableOpen(false)}
         onConfirm={handleConfirmToggleImmutable}
@@ -222,7 +222,7 @@ export default function AdminExamDetailsPage() {
         isLoading={isUpdatingImmutable}
       />
 
-      <DeleteConfirmModal
+      <DeleteConfirmDialog
         isOpen={isDeleteExamOpen}
         onClose={() => setIsDeleteExamOpen(false)}
         onConfirm={handleConfirmDeleteExam}

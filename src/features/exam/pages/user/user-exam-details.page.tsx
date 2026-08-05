@@ -5,7 +5,7 @@ import { useGetExamById } from '@/features/exam/hooks/use-get-exam-by-id';
 import useGetExamQuestions from '@/features/question/hooks/use-get-exam-questions';
 import useGetExamSubmissions from '@/features/submission/hooks/use-get-exam-submissions';
 import useSubmitExam from '@/features/submission/hooks/use-submit-exam';
-import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';
+import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/use-breadcrumb';
 import { Button } from '@/shared/ui/button';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';

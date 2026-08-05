@@ -1,4 +1,4 @@
-import UserExamsCard from '@/features/exam/components/user/exams-card';
+import UserExamCard from '@/features/exam/components/user/user-exam-card';
 import { useGetAllExams } from '@/features/exam/hooks/use-get-all-exams';
 import UserExamCardSkeleton from '@/features/exam/skeletons/user/user-exam-card-skeleton';
 import { ChevronDown, Loader } from 'lucide-react';
@@ -8,7 +8,7 @@ interface Props {
   diplomaId?: string;
 }
 
-export default function UserExamsList({ diplomaId }: Props) {
+export default function UserExamList({ diplomaId }: Props) {
   const {
     data,
     isLoading,
@@ -69,7 +69,7 @@ export default function UserExamsList({ diplomaId }: Props) {
       >
         <div className="flex flex-col gap-4">
           {exams.map((exam, index) => (
-            <UserExamsCard key={exam.id || index} {...exam} />
+            <UserExamCard key={exam.id || index} {...exam} />
           ))}
         </div>
       </InfiniteScroll>

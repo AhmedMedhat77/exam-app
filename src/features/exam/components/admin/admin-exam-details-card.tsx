@@ -2,13 +2,13 @@ import type { IExam } from '@/features/exam/types/exams.d';
 import { ExternalLink } from 'lucide-react';
 import { useState } from 'react';
 
-interface AdminExamDetailInfoCardProps {
+interface AdminExamDetailsCardProps {
   exam: IExam;
 }
 
-export default function AdminExamDetailInfoCard({
+export default function AdminExamDetailsCard({
   exam,
-}: AdminExamDetailInfoCardProps) {
+}: AdminExamDetailsCardProps) {
   const [imageError, setImageError] = useState(false);
 
   return (

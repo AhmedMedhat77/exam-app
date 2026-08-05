@@ -4,7 +4,7 @@ import { Button } from '@/shared/ui/button';
 import { Clock, HelpCircle, MoveRight } from 'lucide-react';
 import { Link } from 'react-router';
 
-export default function UserExamsCard(props: Partial<IExam>) {
+export default function UserExamCard(props: Partial<IExam>) {
   return (
     <div className="group/card relative flex h-34 w-full flex-col items-start gap-4 overflow-hidden bg-blue-50 px-4 py-4.5 transition-all hover:shadow-sm sm:flex-row">
       {/* Thumbnail Box */}

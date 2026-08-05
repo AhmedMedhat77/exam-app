@@ -19,10 +19,10 @@ import type {
   QuestionSortBy,
   QuestionSortOrder,
 } from '@/features/question/types/questions';
-import CustomError from '@/shared/components/custom-error';
-import DeleteConfirmModal from '@/shared/components/delete-confirm-modal';
-import BreadCrumb from '@/shared/layouts/dashboard/breadcrumb/BreadCrumb';
-import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';
+import ErrorAlert from '@/shared/components/error-alert';
+import DeleteConfirmDialog from '@/shared/components/delete-confirm-dialog';
+import Breadcrumb from '@/shared/layouts/dashboard/breadcrumb/breadcrumb-view';
+import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/use-breadcrumb';
 import { UploadService } from '@/shared/services/upload.service';
 import { Button } from '@/shared/ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -195,7 +195,7 @@ export default function AdminExamFormPage() {
       <form onSubmit={onSubmit} className="max-w-full space-y-6">
         {/* Top Header Navigation */}
         <div className="-mx-4 -mt-7 flex flex-col justify-between gap-4 border-b border-gray-100 bg-white px-4 py-5 sm:flex-row sm:items-center">
-          <BreadCrumb
+          <Breadcrumb
             items={[
               { title: 'Exams', href: ROUTES.EXAMS },
               { title: exam?.title || 'Exam' },
@@ -247,7 +247,7 @@ export default function AdminExamFormPage() {
           </div>
         </div>
 
-        <CustomError error={apiError} />
+        <ErrorAlert error={apiError} />
 
         {/* Section 1: Exam Information Card */}
         <AdminExamInformationCard />
@@ -263,7 +263,7 @@ export default function AdminExamFormPage() {
       </form>
 
       {id && (
-        <DeleteConfirmModal
+        <DeleteConfirmDialog
           isOpen={!!questionToDeleteId}
           onClose={() => setQuestionToDeleteId(null)}
           onConfirm={handleConfirmDeleteQuestion}
