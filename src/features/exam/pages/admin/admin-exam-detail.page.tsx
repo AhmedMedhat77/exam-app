@@ -9,6 +9,7 @@ import {
 import { useDeleteExam } from '@/features/exam/hooks/use-delete-exam';
 import { useGetExamById } from '@/features/exam/hooks/use-get-exam-by-id';
 import type { IExam } from '@/features/exam/types/exams.d';
+import { useDeleteQuestion } from '@/features/question/hooks/use-delete-question';
 import useGetExamQuestions from '@/features/question/hooks/use-get-exam-questions';
 import type {
   QuestionSortBy,
@@ -39,6 +40,7 @@ export default function AdminExamDetailPage() {
   // ========================== APIS ==========================
   const { data, isLoading, isError } = useGetExamById(id);
   const { mutate: deleteExam, isPending: isDeleting } = useDeleteExam();
+  const { mutate: deleteQuestion } = useDeleteQuestion();
   const { data: examQuestions } = useGetExamQuestions({
     examId: id,
     search,
@@ -74,6 +76,12 @@ export default function AdminExamDetailPage() {
           navigate(ROUTES.EXAMS);
         },
       });
+    }
+  };
+
+  const handleRemoveQuestion = (questionId: string) => {
+    if (confirm('Are you sure you want to delete this question?')) {
+      deleteQuestion(questionId);
     }
   };
 
@@ -252,7 +260,7 @@ export default function AdminExamDetailPage() {
       <AdminExamQuestionsCard
         questions={examQuestions?.payload?.questions}
         onAddQuestion={handleAddExam}
-        onRemoveQuestion={() => {}}
+        onRemoveQuestion={handleRemoveQuestion}
       />
     </div>
   );
