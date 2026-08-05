@@ -1,9 +1,13 @@
-import type { IExamQuestionParams } from '@/features/question/types/questions';
+import type {
+  ICreateQuestionPayload,
+  IExamQuestionParams,
+  IQuestion,
+  IUpdateQuestionPayload,
+} from '@/features/question/types/questions';
 import { axiosInstance } from '@/shared/lib/axios';
 import type { IApiResponse } from '@/shared/types/api';
-import type { IQuestion } from '../types/questions';
 
-const BASE_RUL = '/api/questions';
+const BASE_URL = '/api/questions';
 
 export default class QuestionService {
   static getExamQuestionsApi = async (
@@ -11,26 +15,39 @@ export default class QuestionService {
   ): Promise<IApiResponse<{ questions: IQuestion[] }>> => {
     const { examId, ...rest } = params;
 
-    const { data } = await axiosInstance.get(`${BASE_RUL}/exam/${examId}`, {
+    const { data } = await axiosInstance.get(`${BASE_URL}/exam/${examId}`, {
       params: rest,
     });
 
     return data;
   };
 
+  static getQuestionByIdApi = async (
+    id: string
+  ): Promise<IApiResponse<{ question: IQuestion } | IQuestion>> => {
+    const { data } = await axiosInstance.get(`${BASE_URL}/${id}`);
+    return data;
+  };
+
   static deleteQuestionApi = async (
     id: string
   ): Promise<IApiResponse<{ message?: string }>> => {
-    const { data } = await axiosInstance.delete(`${BASE_RUL}/${id}`);
-
+    const { data } = await axiosInstance.delete(`${BASE_URL}/${id}`);
     return data;
   };
 
   static createQuestionApi = async (
-    payload: import('@/features/question/types/questions').ICreateQuestionPayload
+    payload: ICreateQuestionPayload
   ): Promise<IApiResponse<{ question: IQuestion }>> => {
-    const { data } = await axiosInstance.post(BASE_RUL, payload);
+    const { data } = await axiosInstance.post(BASE_URL, payload);
+    return data;
+  };
 
+  static updateQuestionApi = async (
+    id: string,
+    payload: IUpdateQuestionPayload
+  ): Promise<IApiResponse<{ question: IQuestion }>> => {
+    const { data } = await axiosInstance.put(`${BASE_URL}/${id}`, payload);
     return data;
   };
 
@@ -42,7 +59,6 @@ export default class QuestionService {
       `/api/admin/questions/${id}/immutable`,
       { immutable }
     );
-
     return data;
   };
 }

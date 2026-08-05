@@ -20,13 +20,14 @@ export interface IQuestion {
   createdAt: string;
   updatedAt: string;
   answers: IAnswer[];
-  exam: IExam;
+  exam?: IExam;
 }
 
 export interface IExam {
   id: string;
   title: string;
 }
+
 export interface IAnswer {
   id: string;
   text: string;
@@ -34,6 +35,7 @@ export interface IAnswer {
 }
 
 export interface ICreateAnswerPayload {
+  id?: string;
   text: string;
   isCorrect: boolean;
 }
@@ -42,4 +44,20 @@ export interface ICreateQuestionPayload {
   text: string;
   examId: string;
   answers: ICreateAnswerPayload[];
+}
+
+export interface IUpdateQuestionPayload {
+  text?: string;
+  examId?: string;
+  answers?: ICreateAnswerPayload[];
+}
+
+export interface IBulkQuestionItem {
+  text: string;
+  answers: ICreateAnswerPayload[];
+}
+
+export interface ICreateBulkQuestionsPayload {
+  examId: string;
+  questions: IBulkQuestionItem[];
 }

@@ -6,4 +6,5 @@ export const QUESTION_KEYS = {
     'question',
     { ...params },
   ],
+  questionDetail: (id: string) => ['question', id],
 };
