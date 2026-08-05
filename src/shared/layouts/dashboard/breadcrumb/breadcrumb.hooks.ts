@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useMemo } from 'react';
 import {
   BreadcrumbContext,
   type BreadcrumbContextType,
@@ -16,6 +16,8 @@ export function useBreadcrumb(data?: BreadcrumbData) {
   const description = data?.description;
   const items = data?.items;
 
+  const itemsString = useMemo(() => JSON.stringify(items), [items]);
+
   useEffect(() => {
     if (
       title !== undefined ||
@@ -24,5 +26,6 @@ export function useBreadcrumb(data?: BreadcrumbData) {
     ) {
       setBreadcrumbs({ title, description, items });
     }
-  }, [title, description, items, setBreadcrumbs]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [title, description, itemsString, setBreadcrumbs]);
 }
