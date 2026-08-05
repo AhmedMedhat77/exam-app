@@ -1,8 +1,9 @@
 import { ROUTES } from '@/app/routes';
-import AdminBulkQuestionForm from '@/features/question/components/admin/admin-bulk-question-form';
-import AdminQuestionFormHeader from '@/features/question/components/admin/admin-question-form-header';
-import AdminQuestionInfoCard from '@/features/question/components/admin/admin-question-info-card';
-import QuestionAnswersField from '@/features/question/components/admin/question-answers-field';
+import AdminQuestionFormHeader, {
+  type QuestionFormMode,
+} from '@/features/question/components/admin/admin-question-form-header';
+import BulkQuestionForm from '@/features/question/components/admin/bulk-question-form';
+import SingleQuestionForm from '@/features/question/components/admin/single-question-form';
 import { useCreateBulkQuestions } from '@/features/question/hooks/use-create-bulk-questions';
 import { useCreateQuestion } from '@/features/question/hooks/use-create-question';
 import { useGetQuestionById } from '@/features/question/hooks/use-get-question-by-id';
@@ -10,21 +11,23 @@ import { useUpdateQuestion } from '@/features/question/hooks/use-update-question
 import {
   bulkQuestionSchema,
   QuestionSchema,
-  type IAnswerFormValues,
   type IBulkQuestionFormValues,
   type IQuestionFormValues,
 } from '@/features/question/schemas/question.schema';
-import type {
-  IAnswer,
-  ICreateAnswerPayload,
-  IQuestion,
-} from '@/features/question/types/questions';
+import type { IQuestion } from '@/features/question/types/questions';
+import {
+  createBulkQuestionDefaults,
+  createSingleQuestionDefaults,
+  toBulkQuestionPayload,
+  toQuestionFormValues,
+  toQuestionPayload,
+} from '@/features/question/utils/question-form.utils';
 import ErrorAlert from '@/shared/components/error-alert';
 import Breadcrumb from '@/shared/layouts/dashboard/breadcrumb/breadcrumb-view';
 import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/use-breadcrumb';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useNavigate, useParams, useSearchParams } from 'react-router';
 
 export default function AdminQuestionFormPage() {
@@ -34,63 +37,49 @@ export default function AdminQuestionFormPage() {
   const navigate = useNavigate();
 
   const isEdit = Boolean(id);
-  const [isBulkMode, setIsBulkMode] = useState(false);
+  const [mode, setMode] = useState<QuestionFormMode>('single');
 
-  // APIs
+  // ==================== APIs  ====================
   const { data: fetchedData, isLoading: isLoadingQuestion } =
     useGetQuestionById(id);
+
   const {
     mutate: createQuestion,
     isPending: isCreatingSingle,
     error: createError,
   } = useCreateQuestion();
+
   const {
     mutate: updateQuestion,
     isPending: isUpdatingSingle,
     error: updateError,
   } = useUpdateQuestion();
+
   const {
     mutate: createBulkQuestions,
     isPending: isCreatingBulk,
     error: bulkError,
   } = useCreateBulkQuestions();
 
+  // ========================== Helper variables ==========================
   const questionPayload = fetchedData?.payload;
   const question: IQuestion | undefined =
     questionPayload && 'question' in questionPayload
       ? (questionPayload as { question: IQuestion }).question
       : (questionPayload as IQuestion | undefined);
 
-  // Single Question React Hook Form
+  // ========================== Forms ==========================
   const singleForm = useForm<IQuestionFormValues>({
     resolver: zodResolver(QuestionSchema),
-    defaultValues: {
-      examId: defaultExamId,
-      text: '',
-      answers: [
-        { text: '', isCorrect: true },
-        { text: '', isCorrect: false },
-      ] as ICreateAnswerPayload[],
-    },
+    defaultValues: createSingleQuestionDefaults(defaultExamId),
   });
 
-  // Bulk Questions React Hook Form
   const bulkForm = useForm<IBulkQuestionFormValues>({
     resolver: zodResolver(bulkQuestionSchema),
-    defaultValues: {
-      examId: defaultExamId,
-      questions: [
-        {
-          text: '',
-          answers: [
-            { text: '', isCorrect: true },
-            { text: '', isCorrect: false },
-          ],
-        },
-      ],
-    },
+    defaultValues: createBulkQuestionDefaults(defaultExamId),
   });
 
+  // ========================== Breadcrumb ==========================
   useBreadcrumb({
     items: [
       { title: 'Questions', href: ROUTES.EXAMS },
@@ -98,19 +87,18 @@ export default function AdminQuestionFormPage() {
     ],
   });
 
-  const isSubmitting = isCreatingSingle || isUpdatingSingle || isCreatingBulk;
-  const apiError = createError || updateError || bulkError;
+  const isBulkMode = mode === 'bulk';
+  const activeFormId = isBulkMode
+    ? 'bulk-question-form'
+    : 'single-question-form';
+  const isSubmitting = isBulkMode
+    ? isCreatingBulk
+    : isCreatingSingle || isUpdatingSingle;
+  const apiError = isBulkMode ? bulkError : createError || updateError;
 
-  // Single Question Form Submit Handler
+  // ========================== Form handlers ==========================
   const handleSingleSubmit = singleForm.handleSubmit((values) => {
-    const payload = {
-      examId: values.examId,
-      text: values.text,
-      answers: values.answers.map((a: IAnswerFormValues) => ({
-        text: a.text,
-        isCorrect: a.isCorrect,
-      })),
-    };
+    const payload = toQuestionPayload(values);
 
     if (isEdit) {
       updateQuestion(
@@ -142,42 +130,21 @@ export default function AdminQuestionFormPage() {
 
   // Bulk Question Form Submit Handler
   const handleBulkSubmit = bulkForm.handleSubmit((values) => {
-    createBulkQuestions(
-      {
-        examId: values.examId,
-        questions: values.questions.map((q) => ({
-          text: q.text,
-          answers: q.answers.map((a: IAnswerFormValues) => ({
-            text: a.text,
-            isCorrect: a.isCorrect,
-          })),
-        })),
+    createBulkQuestions(toBulkQuestionPayload(values), {
+      onSuccess: () => {
+        if (values.examId) {
+          navigate(`/exams/${values.examId}`);
+        } else {
+          navigate(ROUTES.EXAMS);
+        }
       },
-      {
-        onSuccess: () => {
-          if (values.examId) {
-            navigate(`/exams/${values.examId}`);
-          } else {
-            navigate(ROUTES.EXAMS);
-          }
-        },
-      }
-    );
+    });
   });
 
   // Sync existing question for Edit mode
   useEffect(() => {
     if (question) {
-      singleForm.reset({
-        examId: question.examId || '',
-        text: question.text || '',
-        answers:
-          question.answers?.map((a: IAnswer) => ({
-            id: a.id,
-            text: a.text,
-            isCorrect: a.isCorrect,
-          })) || [],
-      });
+      singleForm.reset(toQuestionFormValues(question));
     } else if (defaultExamId) {
       singleForm.setValue('examId', defaultExamId);
       bulkForm.setValue('examId', defaultExamId);
@@ -206,34 +173,27 @@ export default function AdminQuestionFormPage() {
 
       {/* Header */}
       <AdminQuestionFormHeader
-        handleBulkClick={() => setIsBulkMode((prev) => !prev)}
-        handleSubmit={handleSingleSubmit}
-        isBulkMode={isBulkMode}
-        isEdit={isEdit}
+        mode={mode}
+        onModeChange={setMode}
+        activeFormId={activeFormId}
         isSubmitting={isSubmitting}
       />
 
       <ErrorAlert error={apiError} />
 
       {/* Bulk mode Form */}
-      {isBulkMode && !isEdit && (
-        <FormProvider {...bulkForm}>
-          <form onSubmit={handleBulkSubmit} className="space-y-6">
-            <AdminBulkQuestionForm />
-          </form>
-        </FormProvider>
-      )}
-
-      {/* Single Question Form */}
-      {!isBulkMode && (
-        <FormProvider {...singleForm}>
-          <form onSubmit={handleSingleSubmit} className="space-y-6">
-            {/* Card 1: Question Information */}
-            <AdminQuestionInfoCard />
-            {/* Card 2: Question Answers */}
-            <QuestionAnswersField />
-          </form>
-        </FormProvider>
+      {isBulkMode ? (
+        <BulkQuestionForm
+          formId={activeFormId}
+          form={bulkForm}
+          onSubmit={handleBulkSubmit}
+        />
+      ) : (
+        <SingleQuestionForm
+          formId={activeFormId}
+          form={singleForm}
+          onSubmit={handleSingleSubmit}
+        />
       )}
     </div>
   );

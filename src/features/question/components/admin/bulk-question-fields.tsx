@@ -1,14 +1,15 @@
-import AdminBulkTableCell from '@/features/question/components/admin/admin-bulk-table-cell';
+import BulkQuestionTab from '@/features/question/components/admin/bulk-question-tab';
 import QuestionAnswersField from '@/features/question/components/admin/question-answers-field';
 import type { IBulkQuestionFormValues } from '@/features/question/schemas/question.schema';
+import { createEmptyQuestion } from '@/features/question/utils/question-form.utils';
 import ExamDropDown from '@/shared/components/exam-dropdown';
 import { Field, FieldError, FieldLabel } from '@/shared/ui/field';
 import { Input } from '@/shared/ui/input';
 import { Plus } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
-export default function AdminBulkQuestionForm() {
+export default function BulkQuestionFields() {
   // ====================== FORM ======================
   const {
     register,
@@ -25,13 +26,7 @@ export default function AdminBulkQuestionForm() {
 
   // ====================== handlers ======================
   const handleAddQuestionTab = () => {
-    append({
-      text: '',
-      answers: [
-        { text: '', isCorrect: true },
-        { text: '', isCorrect: false },
-      ],
-    });
+    append(createEmptyQuestion());
     setActiveTabIndex(fields.length);
   };
 
@@ -47,19 +42,6 @@ export default function AdminBulkQuestionForm() {
       setActiveTabIndex((prev) => Math.max(0, prev - 1));
     }
   };
-
-  // ====================== Effects ======================
-  useEffect(() => {
-    if (fields.length === 0) {
-      append({
-        text: '',
-        answers: [
-          { text: '', isCorrect: true },
-          { text: '', isCorrect: false },
-        ],
-      });
-    }
-  }, [fields.length, append]);
 
   return (
     <div className="space-y-6">
@@ -85,7 +67,11 @@ export default function AdminBulkQuestionForm() {
         </div>
 
         {/* Question Tabs Bar */}
-        <div className="flex h-11 items-stretch border-b border-gray-200 bg-gray-50/80">
+        <div
+          className="flex h-11 items-stretch border-b border-gray-200 bg-gray-50/80"
+          role="tablist"
+          aria-label="Questions"
+        >
           {/* Scrollable Tabs */}
           <div className="flex flex-1 items-stretch overflow-x-auto">
             {fields.map((field, index) => {
@@ -94,14 +80,12 @@ export default function AdminBulkQuestionForm() {
               const hasError = Boolean(tabError?.text || tabError?.answers);
 
               return (
-                <AdminBulkTableCell
+                <BulkQuestionTab
                   key={field.id}
-                  handleRemoveQuestionTab={(e) =>
-                    handleRemoveQuestionTab(index, e)
-                  }
-                  setActiveTabIndex={() => setActiveTabIndex(index)}
+                  onRemove={(event) => handleRemoveQuestionTab(index, event)}
+                  onSelect={() => setActiveTabIndex(index)}
                   index={index}
-                  fields={fields}
+                  questionCount={fields.length}
                   hasError={hasError}
                   isActive={isActive}
                 />
@@ -115,6 +99,7 @@ export default function AdminBulkQuestionForm() {
             onClick={handleAddQuestionTab}
             className="hover:bg-primary/10 hover:text-primary flex size-11 shrink-0 items-center justify-center border-l border-gray-200 bg-gray-100 text-gray-700 transition-colors"
             title="Add Question"
+            aria-label="Add question"
           >
             <Plus className="size-4" />
           </button>

@@ -2,39 +2,44 @@ import { Button } from '@/shared/ui/button';
 import { CopyPlus, Save, X } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
+export type QuestionFormMode = 'single' | 'bulk';
+
 interface AdminQuestionFormHeaderProps {
-  isBulkMode: boolean;
-  isEdit: boolean;
+  mode: QuestionFormMode;
   isSubmitting: boolean;
-  handleBulkClick: () => void;
-  handleSubmit: () => void;
+  activeFormId: string;
+  onModeChange: (mode: QuestionFormMode) => void;
 }
 
 export default function AdminQuestionFormHeader({
-  isBulkMode,
-  isEdit,
+  mode,
   isSubmitting,
-  handleBulkClick,
-  handleSubmit,
+  activeFormId,
+  onModeChange,
 }: AdminQuestionFormHeaderProps) {
   const navigate = useNavigate();
+
   return (
     <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-      {/* Left: Bulk Add Mode Switch */}
-      <div className="flex items-center gap-3">
-        {!isEdit && (
-          <Button
-            size="xl"
-            onClick={handleBulkClick}
-            variant={isBulkMode ? 'default' : 'secondary'}
-          >
-            <CopyPlus className="size-4" />
-            Bulk Mode
-          </Button>
-        )}
+      <div
+        className="flex items-center gap-2"
+        role="group"
+        aria-label="Question creation mode"
+      >
+        <Button
+          type="button"
+          size="xl"
+          onClick={() => onModeChange(mode === 'single' ? 'bulk' : 'single')}
+          variant={mode === 'bulk' ? 'default' : 'secondary'}
+          aria-pressed={mode === 'bulk'}
+        >
+          <CopyPlus className="size-4" />
+          Bulk Questions
+        </Button>
       </div>
 
-      {/* Right: Cancel and Save Action Buttons */}
+      <div />
+
       <div className="grid w-max grid-cols-2 gap-3 group-data-closed:w-0 group-data-closed:opacity-0">
         <Button
           variant="outline"
@@ -49,8 +54,8 @@ export default function AdminQuestionFormHeader({
         <Button
           variant="success"
           size="xl"
-          type="button"
-          onClick={handleSubmit}
+          type="submit"
+          form={activeFormId}
           disabled={isSubmitting}
         >
           <Save className="size-3.5" />
