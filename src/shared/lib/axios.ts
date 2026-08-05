@@ -1,6 +1,5 @@
-import axios from 'axios';
-import toastUtil from '@/shared/lib/toast';
 import { useUserStore } from '@/features/user/store/user.store';
+import axios from 'axios';
 
 const BASE_URL =
   import.meta.env.VITE_API_BASE_URL ||
@@ -31,7 +30,7 @@ axiosInstance.interceptors.response.use(
         error.response?.data?.message ||
         error.message ||
         'An unexpected error occurred';
-      toastUtil(message, undefined, 'error');
+      return message;
     }
     return Promise.reject(error);
   }
