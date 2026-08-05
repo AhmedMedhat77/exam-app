@@ -26,7 +26,7 @@ export default function Question({
 
       {/* Answer Options */}
       <RadioGroup
-        value={selectedAnswer}
+        value={selectedAnswer ?? ''}
         onValueChange={onAnswerSelect}
         className="gap-4"
       >

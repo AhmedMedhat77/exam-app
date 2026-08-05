@@ -3,10 +3,12 @@ import { RadioGroup as RadioGroupPrimitive } from '@base-ui/react/radio-group';
 
 import { cn } from '@/shared/lib/utils';
 
-function RadioGroup({ className, ...props }: RadioGroupPrimitive.Props) {
+function RadioGroup({ className, value, ...props }: RadioGroupPrimitive.Props) {
+  const isControlled = 'value' in props || value !== undefined;
   return (
     <RadioGroupPrimitive
       data-slot="radio-group"
+      value={isControlled ? (value ?? '') : undefined}
       className={cn('grid w-full gap-2', className)}
       {...props}
     />
