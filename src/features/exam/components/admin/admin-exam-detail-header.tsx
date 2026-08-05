@@ -28,7 +28,7 @@ export default function AdminExamDetailHeader({
           className="h-9 w-auto cursor-default gap-1.5 border-gray-200 bg-gray-100 px-3.5 font-mono text-xs font-medium text-gray-700 hover:bg-gray-200"
         >
           <Ban className="size-3.5 text-gray-600" />
-          <span>{immutable ? 'Immutable' : 'In-active'}</span>
+          <span>{immutable ? 'Immutable' : 'Mutable'}</span>
         </Button>
         <Button
           size="sm"

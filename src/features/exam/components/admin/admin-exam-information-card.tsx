@@ -1,5 +1,5 @@
-import type { ExamFormValues } from '@/features/exam/schemas/exam.schema';
 import { useGetDiplomas } from '@/features/diploma/hooks/use-get-diploma';
+import type { ExamFormValues } from '@/features/exam/schemas/exam.schema';
 import CustomInput from '@/shared/ui/custom-input';
 import { Field, FieldLabel } from '@/shared/ui/field';
 import FileUpload from '@/shared/ui/file-upload';
@@ -63,15 +63,6 @@ export default function AdminExamInformationCard() {
                       <SelectValue placeholder="Select Diploma" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="full-stack-dev">
-                        Full Stack Development
-                      </SelectItem>
-                      <SelectItem value="frontend-dev">
-                        Frontend Development
-                      </SelectItem>
-                      <SelectItem value="backend-dev">
-                        Backend Development
-                      </SelectItem>
                       {diplomas.map((d) => (
                         <SelectItem key={d.id} value={d.id}>
                           {d.title}
