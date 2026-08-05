@@ -1,4 +1,5 @@
 import axios from 'axios';
+import toastUtil from '@/shared/lib/toast';
 import { useUserStore } from '@/features/user/store/user.store';
 
 const BASE_URL =
@@ -18,13 +19,19 @@ axiosInstance.interceptors.request.use((config) => {
   return config;
 });
 
-// Auto Logout on 401
+// Auto Logout on 401 & Global Error Toasts
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
       useUserStore.getState().logout();
       window.location.href = '/login';
+    } else {
+      const message =
+        error.response?.data?.message ||
+        error.message ||
+        'An unexpected error occurred';
+      toastUtil(message, undefined, 'error');
     }
     return Promise.reject(error);
   }
