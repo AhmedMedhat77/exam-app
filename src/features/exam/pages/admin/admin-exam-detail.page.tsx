@@ -2,6 +2,7 @@ import { ROUTES } from '@/app/routes';
 import AdminExamDetailHeader from '@/features/exam/components/admin/admin-exam-detail-header';
 import AdminExamDetailInfoCard from '@/features/exam/components/admin/admin-exam-detail-info-card';
 import AdminExamQuestionsCard from '@/features/exam/components/admin/admin-exam-questions-card';
+import ToggleImmutableModal from '@/features/exam/components/admin/toggle-immutable-modal';
 import {
   IMMUTABLE_QUERY_KEY,
   SEARCH_QUERY_KEY,
@@ -13,7 +14,6 @@ import { useGetExamById } from '@/features/exam/hooks/use-get-exam-by-id';
 import { useUpdateExamImmutable } from '@/features/exam/hooks/use-update-exam-immutable';
 import type { IExam } from '@/features/exam/types/exams.d';
 import DeleteQuestionModal from '@/features/question/components/admin/delete-question-modal';
-import ToggleImmutableModal from '@/features/exam/components/admin/toggle-immutable-modal';
 import { useDeleteQuestion } from '@/features/question/hooks/use-delete-question';
 import useGetExamQuestions from '@/features/question/hooks/use-get-exam-questions';
 import type {
@@ -92,9 +92,6 @@ export default function AdminExamDetailPage() {
         setIsDeleteExamOpen(false);
         navigate(ROUTES.EXAMS);
       },
-      onError: () => {
-        setIsDeleteExamOpen(false);
-      },
     });
   };
 
@@ -104,9 +101,6 @@ export default function AdminExamDetailPage() {
       { id: exam.id, immutable: !exam.immutable },
       {
         onSuccess: () => {
-          setIsToggleImmutableOpen(false);
-        },
-        onError: () => {
           setIsToggleImmutableOpen(false);
         },
       }

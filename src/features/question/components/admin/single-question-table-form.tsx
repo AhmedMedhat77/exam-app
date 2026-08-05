@@ -113,7 +113,7 @@ export default function SingleQuestionTableForm({
   };
 
   return (
-    <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+    <div className="overflow-hidden border border-gray-200 bg-white shadow-sm">
       {/* Header Banner */}
       <div className="bg-primary flex items-center justify-between px-5 py-3 text-white">
         <h3 className="font-mono text-sm font-semibold tracking-wide">

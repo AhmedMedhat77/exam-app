@@ -12,6 +12,7 @@ import { useGetExamById } from '@/features/exam/hooks/use-get-exam-by-id';
 import { useUpdateExam } from '@/features/exam/hooks/use-update-exam';
 import { examSchema } from '@/features/exam/schemas/exam.schema';
 import type { IExam } from '@/features/exam/types/exams.d';
+import AdminManageHeader from '@/features/question/components/admin/admin-manage-header';
 import DeleteQuestionModal from '@/features/question/components/admin/delete-question-modal';
 import { useDeleteQuestion } from '@/features/question/hooks/use-delete-question';
 import useGetExamQuestions from '@/features/question/hooks/use-get-exam-questions';
@@ -200,6 +201,13 @@ export default function AdminExamManagePage() {
               { title: exam?.title || 'Exam' },
               { title: id ? 'Edit' : 'Add' },
             ]}
+          />
+          <AdminManageHeader
+            handleBulkClick={handleAddQuestion}
+            handleSubmit={onSubmit}
+            isBulkMode={false}
+            isEdit={!!id}
+            isSubmitting={isSubmitting}
           />
         </div>
 
