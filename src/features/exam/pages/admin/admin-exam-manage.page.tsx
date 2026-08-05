@@ -41,21 +41,7 @@ export default function AdminExamManagePage() {
       : (examPayload as IExam | undefined);
 
   // Fallback demo defaults if navigating directly
-  const exam = fetchedExam || {
-    id: id || 'demo-exam-id',
-    title: 'Final Full Stack Development Certification Exam',
-    description:
-      'Comprehensive exam covering all full stack development topics in this diploma.',
-    image:
-      'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80',
-    duration: 20,
-    questionsCount: 10,
-    diplomaId: 'full-stack-dev',
-    diploma: { id: 'full-stack-dev', title: 'Full Stack Development' },
-    immutable: true,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  };
+  const exam = fetchedExam;
 
   useBreadcrumb({
     items: [
@@ -70,16 +56,16 @@ export default function AdminExamManagePage() {
     defaultValues: {
       title: exam?.title || '',
       description: exam?.description || '',
-      diplomaId: exam?.diplomaId || 'full-stack-dev',
-      duration: exam?.duration || 20,
+      diplomaId: exam?.diplomaId || '',
+      duration: exam?.duration || 0,
       image: exam?.image || null,
     },
     values: exam
       ? {
           title: exam.title,
           description: exam.description,
-          diplomaId: exam.diplomaId || 'full-stack-dev',
-          duration: exam.duration || 20,
+          diplomaId: exam.diplomaId || '',
+          duration: exam.duration || 0,
           image: exam.image || null,
         }
       : undefined,
@@ -94,7 +80,7 @@ export default function AdminExamManagePage() {
       image: values.image,
     };
 
-    if (id && id !== 'demo-exam-id') {
+    if (id) {
       updateExam(
         { id, payload },
         {
@@ -129,7 +115,7 @@ export default function AdminExamManagePage() {
     }
   });
 
-  if (id && isLoading && !fetchedExam && id !== 'demo-exam-id') {
+  if (id && isLoading && !fetchedExam) {
     return (
       <div className="flex h-48 items-center justify-center font-mono text-sm text-gray-500">
         Loading exam details...
