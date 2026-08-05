@@ -1,10 +1,10 @@
 import { ROUTES } from '@/app/routes';
 import AdminQuestionDetailsHeader from '@/features/question/components/admin/admin-question-details-header';
-import DeleteQuestionModal from '@/features/question/components/admin/delete-question-modal';
 import { useDeleteQuestion } from '@/features/question/hooks/use-delete-question';
 import { useGetQuestionById } from '@/features/question/hooks/use-get-question-by-id';
 import { useUpdateQuestionImmutable } from '@/features/question/hooks/use-update-question-immutable';
 import type { IQuestion } from '@/features/question/types/questions';
+import DeleteConfirmModal from '@/shared/components/delete-confirm-modal';
 import ToggleImmutableModal from '@/shared/components/toggle-immutable-modal';
 import BreadCrumb from '@/shared/layouts/dashboard/breadcrumb/BreadCrumb';
 import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';
@@ -106,11 +106,14 @@ export default function AdminQuestionDetailPage() {
   return (
     <>
       {/* Delete Question Modal */}
-      <DeleteQuestionModal
+      <DeleteConfirmModal
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
         onConfirm={handleConfirmDelete}
         isDeleting={isDeleting}
+        title="Delete Question"
+        description={`Are you sure you want to delete "${question?.text}"? This action cannot be undone.`}
+        confirmLabel="Delete Question"
       />
 
       <ToggleImmutableModal

@@ -33,7 +33,7 @@ export default function DeleteConfirmModal({
       <DialogContent className="max-w-md font-mono">
         <DialogHeader className="flex flex-col items-center gap-2 text-center sm:text-left">
           <div className="flex size-12 items-center justify-center rounded-full bg-red-50 text-red-600">
-            <AlertTriangle className="size-6 stroke-[2]" />
+            <AlertTriangle className="size-6 stroke-2" />
           </div>
           <DialogTitle className="text-lg font-bold text-gray-900">
             {title}

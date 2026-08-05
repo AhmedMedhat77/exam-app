@@ -1,5 +1,4 @@
 import { ROUTES } from '@/app/routes';
-import AdminExamDetailHeader from '@/features/exam/components/admin/admin-exam-detail-header';
 import AdminExamDetailInfoCard from '@/features/exam/components/admin/admin-exam-detail-info-card';
 import AdminExamQuestionsCard from '@/features/exam/components/admin/admin-exam-questions-card';
 import ToggleImmutableModal from '@/features/exam/components/admin/toggle-immutable-modal';
@@ -13,15 +12,14 @@ import { useDeleteExam } from '@/features/exam/hooks/use-delete-exam';
 import { useGetExamById } from '@/features/exam/hooks/use-get-exam-by-id';
 import { useUpdateExamImmutable } from '@/features/exam/hooks/use-update-exam-immutable';
 import type { IExam } from '@/features/exam/types/exams.d';
-import DeleteQuestionModal from '@/features/question/components/admin/delete-question-modal';
 import { useDeleteQuestion } from '@/features/question/hooks/use-delete-question';
 import useGetExamQuestions from '@/features/question/hooks/use-get-exam-questions';
 import type {
   QuestionSortBy,
   QuestionSortOrder,
 } from '@/features/question/types/questions';
+import AdminDetailsScreenHeader from '@/features/shared/components/admin-details-screen-header';
 import DeleteConfirmModal from '@/shared/components/delete-confirm-modal';
-import BreadCrumb from '@/shared/layouts/dashboard/breadcrumb/BreadCrumb';
 import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';
 
 import { Button } from '@/shared/ui/button';
@@ -180,17 +178,13 @@ export default function AdminExamDetailPage() {
   return (
     <div className="max-w-full space-y-6">
       {/* Top Header Navigation */}
-      <div className="-mx-4 -mt-7 border-b border-gray-100 bg-white px-4 py-5">
-        <BreadCrumb
-          items={[
-            { title: 'Exams', href: ROUTES.EXAMS },
-            { title: exam.title },
-          ]}
-        />
-      </div>
 
       {/* Top Controls Bar */}
-      <AdminExamDetailHeader
+      <AdminDetailsScreenHeader
+        breadcrumbItems={[
+          { title: 'Exams', href: ROUTES.EXAMS },
+          { title: exam.title },
+        ]}
         title={exam.title}
         immutable={exam.immutable}
         isDeleting={isDeleting}
@@ -210,11 +204,14 @@ export default function AdminExamDetailPage() {
         onRemoveQuestion={handleRemoveQuestion}
       />
 
-      <DeleteQuestionModal
+      <DeleteConfirmModal
         isOpen={!!questionToDeleteId}
         onClose={() => setQuestionToDeleteId(null)}
         onConfirm={handleConfirmDeleteQuestion}
         isDeleting={isDeletingQuestion}
+        title="Delete Question"
+        description={`Are you sure you want to delete "${examQuestions?.payload?.questions?.find((q) => q.id === questionToDeleteId)?.text}"? This action cannot be undone.`}
+        confirmLabel="Delete Question"
       />
 
       <ToggleImmutableModal

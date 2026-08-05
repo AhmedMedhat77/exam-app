@@ -12,8 +12,7 @@ import { useGetExamById } from '@/features/exam/hooks/use-get-exam-by-id';
 import { useUpdateExam } from '@/features/exam/hooks/use-update-exam';
 import { examSchema } from '@/features/exam/schemas/exam.schema';
 import type { IExam } from '@/features/exam/types/exams.d';
-import AdminManageHeader from '@/features/question/components/admin/admin-manage-header';
-import DeleteQuestionModal from '@/features/question/components/admin/delete-question-modal';
+
 import { useDeleteQuestion } from '@/features/question/hooks/use-delete-question';
 import useGetExamQuestions from '@/features/question/hooks/use-get-exam-questions';
 import type {
@@ -21,6 +20,7 @@ import type {
   QuestionSortOrder,
 } from '@/features/question/types/questions';
 import CustomError from '@/shared/components/custom-error';
+import DeleteConfirmModal from '@/shared/components/delete-confirm-modal';
 import BreadCrumb from '@/shared/layouts/dashboard/breadcrumb/BreadCrumb';
 import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';
 import { UploadService } from '@/shared/services/upload.service';
@@ -202,13 +202,6 @@ export default function AdminExamManagePage() {
               { title: id ? 'Edit' : 'Add' },
             ]}
           />
-          <AdminManageHeader
-            handleBulkClick={handleAddQuestion}
-            handleSubmit={onSubmit}
-            isBulkMode={false}
-            isEdit={!!id}
-            isSubmitting={isSubmitting}
-          />
         </div>
 
         {/* Action Header Title & Buttons */}
@@ -270,11 +263,14 @@ export default function AdminExamManagePage() {
       </form>
 
       {id && (
-        <DeleteQuestionModal
+        <DeleteConfirmModal
           isOpen={!!questionToDeleteId}
           onClose={() => setQuestionToDeleteId(null)}
           onConfirm={handleConfirmDeleteQuestion}
           isDeleting={isDeletingQuestion}
+          title="Delete Exam"
+          description="Are you sure you want to delete this exam? This action cannot be undone."
+          confirmLabel="Delete Exam"
         />
       )}
     </FormProvider>

@@ -4,19 +4,19 @@ import { useGetDiplomaById } from '@/features/diploma/hooks/use-get-diploma-by-i
 import { useUpdateDiplomaImmutable } from '@/features/diploma/hooks/use-update-diploma-immutable';
 import AdminDiplomaDetailSkeleton from '@/features/diploma/skeletons/admin-diploma-detail-skeleton';
 import type { IDiploma } from '@/features/diploma/types/diploma.d';
+import AdminDetailsScreenHeader from '@/features/shared/components/admin-details-screen-header';
 import DeleteConfirmModal from '@/shared/components/delete-confirm-modal';
 import ToggleImmutableModal from '@/shared/components/toggle-immutable-modal';
-import BreadCrumb from '@/shared/layouts/dashboard/breadcrumb/BreadCrumb';
 import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';
 import { Button } from '@/shared/ui/button';
-import { ArrowLeft, Ban, Pencil, Trash2 } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 export default function AdminDiplomaDetailPage() {
   const { id = '' } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [imageError, setImageError] = useState(false);
+
   const [isDeleteDiplomaOpen, setIsDeleteDiplomaOpen] = useState(false);
   const [isToggleImmutableOpen, setIsToggleImmutableOpen] = useState(false);
 
@@ -98,58 +98,19 @@ export default function AdminDiplomaDetailPage() {
 
   return (
     <div className="max-w-full space-y-6">
-      <div className="-mx-4 -mt-7 bg-white px-4 py-5">
-        <BreadCrumb
-          items={[
-            { title: 'Diplomas', href: ROUTES.DIPLOMAS },
-            { title: diploma.title },
-          ]}
-        />
-      </div>
-
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <h1 className="font-sans text-2xl font-bold tracking-tight text-gray-900">
-          {diploma.title}
-        </h1>
-        <div className="flex items-center gap-2.5">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setIsToggleImmutableOpen(true)}
-            disabled={isUpdatingImmutable}
-            className="h-9 w-auto cursor-pointer gap-1.5 border-gray-200 bg-gray-100 px-3.5 font-mono text-xs font-medium text-gray-700 hover:bg-gray-200"
-          >
-            <Ban className="size-3.5 text-gray-600" />
-            <span>
-              {isUpdatingImmutable
-                ? 'Updating...'
-                : diploma.immutable
-                  ? 'Immutable'
-                  : 'Mutable'}
-            </span>
-          </Button>
-          <Button
-            size="sm"
-            className="h-9 w-auto gap-1.5 bg-blue-600 px-4 font-mono text-xs font-medium text-white hover:bg-blue-700"
-            onClick={() =>
-              navigate(ROUTES.DIPLOMA_MANAGE.replace(/:id\??/, diploma.id))
-            }
-          >
-            <Pencil className="size-3.5" />
-            <span>Edit</span>
-          </Button>
-          <Button
-            size="sm"
-            variant="destructive"
-            className="h-9 w-auto gap-1.5 bg-red-600 px-4 font-mono text-xs font-medium text-white hover:bg-red-700"
-            onClick={handleDelete}
-            disabled={isDeleting}
-          >
-            <Trash2 className="size-3.5" />
-            <span>{isDeleting ? 'Deleting...' : 'Delete'}</span>
-          </Button>
-        </div>
-      </div>
+      <AdminDetailsScreenHeader
+        breadcrumbItems={[
+          { title: 'Diplomas', href: ROUTES.DIPLOMAS },
+          { title: diploma.title },
+        ]}
+        title={diploma.title}
+        immutable={diploma.immutable}
+        isDeleting={isDeleting}
+        isTogglingImmutable={isUpdatingImmutable}
+        onEdit={() => navigate(`/diplomas/${diploma.id}/manage`)}
+        onDelete={handleDelete}
+        onToggleImmutable={() => setIsToggleImmutableOpen(true)}
+      />
 
       <div className="space-y-6 rounded-lg border border-gray-100 bg-white p-6 shadow-2xs sm:p-8">
         <div className="space-y-2">
@@ -157,12 +118,11 @@ export default function AdminDiplomaDetailPage() {
             Image
           </p>
           <div className="aspect-4/3 w-full max-w-xs overflow-hidden rounded-md border border-gray-100 bg-gray-50 sm:max-w-sm">
-            {!imageError && diploma.image ? (
+            {diploma.image ? (
               <img
                 src={diploma.image}
                 alt={diploma.title}
                 className="h-full w-full object-cover"
-                onError={() => setImageError(true)}
               />
             ) : (
               <div className="flex h-full w-full items-center justify-center bg-gray-50 text-xs text-gray-400">
