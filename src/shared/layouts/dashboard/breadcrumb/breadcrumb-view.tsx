@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router';
-import { type BreadcrumbItem } from './breadcrumb.context';
-import { useBreadcrumbContext } from './breadcrumb.hooks';
+import type { BreadcrumbItem } from './breadcrumb-provider';
+import { useBreadcrumbContext } from './use-breadcrumb';
 
 function formatSegmentTitle(segment: string): string {
   return segment
@@ -9,14 +9,14 @@ function formatSegmentTitle(segment: string): string {
     .join(' ');
 }
 
-export interface BreadCrumbProps {
+export interface BreadcrumbProps {
   title?: string;
   description?: string;
   items?: BreadcrumbItem[];
   className?: string;
 }
 
-export default function BreadCrumb(props: BreadCrumbProps) {
+export default function Breadcrumb(props: BreadcrumbProps) {
   const { pathname } = useLocation();
   const { breadcrumbs: contextBreadcrumbs } = useBreadcrumbContext();
 

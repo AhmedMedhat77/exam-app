@@ -2,7 +2,7 @@ import { ROUTES } from '@/app/routes';
 import { useUserStore } from '@/features/user/store/user.store';
 import { ADMIN_ROLES } from '@/shared/layouts/dashboard/sidebar/constants/admin-roles';
 import { useSidebarStyles } from '@/shared/layouts/dashboard/sidebar/styles/sidebar.styles';
-import { getFirstChar } from '@/shared/layouts/dashboard/sidebar/utils/getFirstChar';
+import { getFirstChar } from '@/shared/layouts/dashboard/sidebar/utils/get-first-char';
 import { cn } from '@/shared/lib/utils';
 import {
   DropdownMenu,

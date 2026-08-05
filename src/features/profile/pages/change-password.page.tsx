@@ -1,7 +1,7 @@
 import { useChangePassword } from '@/features/profile/hooks/use-change-password';
 import { changePasswordSchema } from '@/features/profile/schema/change-password.schema';
 import type { IChangePasswordInput } from '@/features/profile/types/user';
-import CustomError from '@/shared/components/custom-error';
+import ErrorAlert from '@/shared/components/error-alert';
 import { Button } from '@/shared/ui/button';
 import { Field, FieldError, FieldLabel } from '@/shared/ui/field';
 import { Input } from '@/shared/ui/input';
@@ -72,7 +72,7 @@ export default function UserChangePasswordPage() {
         />
       </Field>
 
-      {isError && <CustomError error={error} />}
+      {isError && <ErrorAlert error={error} />}
 
       <Button disabled={isPending} size={'xl'} type="submit">
         {isPending ? 'Updating...' : 'Update Password'}

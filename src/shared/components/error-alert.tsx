@@ -2,18 +2,18 @@ import { cn } from '@/shared/lib/utils';
 import { CircleX } from 'lucide-react';
 import React from 'react';
 
-export interface CustomErrorProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ErrorAlertProps extends React.HTMLAttributes<HTMLDivElement> {
   message?: string | null;
   error?: any;
 }
 
-export function CustomError({
+export function ErrorAlert({
   message,
   error,
   className,
   children,
   ...props
-}: CustomErrorProps) {
+}: ErrorAlertProps) {
   const errorMessage =
     message ||
     (typeof error === 'string'
@@ -41,4 +41,4 @@ export function CustomError({
   );
 }
 
-export default CustomError;
+export default ErrorAlert;

@@ -1,4 +1,4 @@
-import { BreadcrumbProvider } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.context';
+import { BreadcrumbProvider } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb-provider';
 import Sidebar from '@/shared/layouts/dashboard/sidebar/sidebar';
 import type { PropsWithChildren } from 'react';
 

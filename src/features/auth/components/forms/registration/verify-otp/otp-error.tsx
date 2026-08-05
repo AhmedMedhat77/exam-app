@@ -1,11 +1,11 @@
 import { useFormContext } from 'react-hook-form';
 
-interface IErrorProps {
+interface OtpErrorAlertProps {
   error: Error | null;
   isError?: boolean;
 }
 
-export default function Error({ error, isError }: IErrorProps) {
+export default function OtpErrorAlert({ error, isError }: OtpErrorAlertProps) {
   const {
     formState: { errors, isSubmitted },
   } = useFormContext();

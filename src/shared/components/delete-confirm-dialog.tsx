@@ -9,7 +9,7 @@ import {
 } from '@/shared/ui/dialog';
 import { AlertTriangle } from 'lucide-react';
 
-export interface DeleteConfirmModalProps {
+export interface DeleteConfirmDialogProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
@@ -19,7 +19,7 @@ export interface DeleteConfirmModalProps {
   confirmLabel?: string;
 }
 
-export default function DeleteConfirmModal({
+export default function DeleteConfirmDialog({
   isOpen,
   onClose,
   onConfirm,
@@ -27,7 +27,7 @@ export default function DeleteConfirmModal({
   description = 'Are you sure you want to delete this item? This action cannot be undone.',
   isDeleting = false,
   confirmLabel = 'Delete',
-}: DeleteConfirmModalProps) {
+}: DeleteConfirmDialogProps) {
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="max-w-md font-mono">

@@ -9,7 +9,7 @@ export function useBreadcrumbContext(): BreadcrumbContextType {
   return useContext(BreadcrumbContext);
 }
 
-export function useBreadcrumb(data?: BreadcrumbData) {
+export function useBreadcrumb(data: BreadcrumbData = {}) {
   const { setBreadcrumbs } = useBreadcrumbContext();
 
   const title = data?.title;

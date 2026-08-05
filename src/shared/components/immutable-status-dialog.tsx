@@ -9,7 +9,7 @@ import {
 } from '@/shared/ui/dialog';
 import { ShieldAlert } from 'lucide-react';
 
-export interface ToggleImmutableModalProps {
+export interface ImmutableStatusDialogProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
@@ -18,14 +18,14 @@ export interface ToggleImmutableModalProps {
   entityName?: string;
 }
 
-export default function ToggleImmutableModal({
+export default function ImmutableStatusDialog({
   isOpen,
   onClose,
   onConfirm,
   currentImmutable,
   isLoading = false,
   entityName = 'item',
-}: ToggleImmutableModalProps) {
+}: ImmutableStatusDialogProps) {
   const targetState = !currentImmutable;
 
   return (

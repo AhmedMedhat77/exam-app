@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { type PropsWithChildren, useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import {
   BreadcrumbContext,
@@ -8,11 +8,7 @@ import {
 
 export type { BreadcrumbData, BreadcrumbItem };
 
-export function BreadcrumbProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export function BreadcrumbProvider({ children }: PropsWithChildren) {
   const [breadcrumbs, setBreadcrumbs] = useState<BreadcrumbData>({});
   const { pathname } = useLocation();
 
