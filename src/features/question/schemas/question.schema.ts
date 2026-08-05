@@ -15,9 +15,12 @@ export const QuestionSchema = z.object({
     .array(answerSchema)
     .min(2, { message: 'Question must have at least 2 answers' })
     .max(4, { message: 'Question cannot have more than 4 answers' })
-    .refine((answers) => answers.some((a) => a.isCorrect), {
-      message: 'One answer must be set as correct',
-    }),
+    .refine(
+      (answers) => answers.filter((answer) => answer.isCorrect).length === 1,
+      {
+        message: 'Exactly one answer must be set as correct',
+      }
+    ),
 });
 
 export const bulkQuestionSchema = z.object({

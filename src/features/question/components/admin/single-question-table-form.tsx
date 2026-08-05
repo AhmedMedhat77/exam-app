@@ -151,13 +151,15 @@ export default function SingleQuestionTableForm({
           {answers.map((answer, index) => (
             <TableRow key={index} className="hover:bg-gray-50/50">
               {/* Delete icon */}
-              <TableCell
-                className="w-12 cursor-pointer border-r border-gray-200 bg-red-50/70 p-0 text-center transition-colors duration-200 hover:bg-red-50"
-                onClick={() => handleRemoveAnswer(index)}
-              >
-                <span className="flex h-full w-full items-center justify-center p-3 text-red-500 hover:text-red-700">
+              <TableCell className="w-12 border-r border-gray-200 bg-red-50/70 p-0 text-center transition-colors duration-200 hover:bg-red-50">
+                <button
+                  type="button"
+                  onClick={() => handleRemoveAnswer(index)}
+                  aria-label={`Delete answer ${index + 1}`}
+                  className="flex h-full w-full cursor-pointer items-center justify-center p-3 text-red-500 hover:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-red-600"
+                >
                   <Trash2 className="size-4" />
-                </span>
+                </button>
               </TableCell>
 
               {/* Answer Text Input */}

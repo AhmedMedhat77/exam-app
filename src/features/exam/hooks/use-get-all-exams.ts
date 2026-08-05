@@ -8,7 +8,7 @@ export const useGetAllExams = (params?: IGetExamsParams) => {
     queryKey: EXAMS_KEY.all(params),
     queryFn: ({ pageParam = 1 }) =>
       ExamsService.getAllApi({ ...params, page: pageParam }),
-    initialPageParam: 1,
+    initialPageParam: params?.page ?? 1,
     getNextPageParam: (lastPage) => {
       const currentPage = lastPage?.payload?.metadata?.page ?? 1;
       const totalPages = lastPage?.payload?.metadata?.totalPages ?? 1;
