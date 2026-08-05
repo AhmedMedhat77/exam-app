@@ -41,4 +41,15 @@ export class ExamsService {
     const response = await axiosInstance.delete(`${BASE_URL}/${id}`);
     return response?.data;
   }
+
+  static async updateImmutableApi(
+    id: string,
+    immutable: boolean
+  ): Promise<IApiResponse<{ message?: string }>> {
+    const response = await axiosInstance.patch(
+      `/api/admin/exams/${id}/immutable`,
+      { immutable }
+    );
+    return response?.data;
+  }
 }

@@ -10,9 +10,11 @@ import {
 } from '@/features/exam/components/constants/search-params.keys';
 import { useDeleteExam } from '@/features/exam/hooks/use-delete-exam';
 import { useGetExamById } from '@/features/exam/hooks/use-get-exam-by-id';
+import { useUpdateExamImmutable } from '@/features/exam/hooks/use-update-exam-immutable';
 import type { IExam } from '@/features/exam/types/exams.d';
 import AddQuestionModal from '@/features/question/components/admin/add-question-modal';
 import DeleteQuestionModal from '@/features/question/components/admin/delete-question-modal';
+import ToggleImmutableModal from '@/features/exam/components/admin/toggle-immutable-modal';
 import { useDeleteQuestion } from '@/features/question/hooks/use-delete-question';
 import useGetExamQuestions from '@/features/question/hooks/use-get-exam-questions';
 import type {
@@ -32,6 +34,7 @@ export default function AdminExamDetailPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [isAddQuestionOpen, setIsAddQuestionOpen] = useState(false);
+  const [isToggleImmutableOpen, setIsToggleImmutableOpen] = useState(false);
   const [questionToDeleteId, setQuestionToDeleteId] = useState<string | null>(
     null
   );
@@ -47,6 +50,8 @@ export default function AdminExamDetailPage() {
   // ========================== APIS ==========================
   const { data, isLoading, isError } = useGetExamById(id);
   const { mutate: deleteExam, isPending: isDeleting } = useDeleteExam();
+  const { mutate: updateImmutable, isPending: isUpdatingImmutable } =
+    useUpdateExamImmutable();
   const { mutate: deleteQuestion, isPending: isDeletingQuestion } =
     useDeleteQuestion();
   const { data: examQuestions } = useGetExamQuestions({
@@ -85,6 +90,21 @@ export default function AdminExamDetailPage() {
         },
       });
     }
+  };
+
+  const handleConfirmToggleImmutable = () => {
+    if (!exam?.id) return;
+    updateImmutable(
+      { id: exam.id, immutable: !exam.immutable },
+      {
+        onSuccess: () => {
+          setIsToggleImmutableOpen(false);
+        },
+        onError: () => {
+          setIsToggleImmutableOpen(false);
+        },
+      }
+    );
   };
 
   const handleRemoveQuestion = (questionId: string) => {
@@ -174,8 +194,10 @@ export default function AdminExamDetailPage() {
         title={exam.title}
         immutable={exam.immutable}
         isDeleting={isDeleting}
+        isTogglingImmutable={isUpdatingImmutable}
         onEdit={() => navigate(`/exams/${exam.id}/manage`)}
         onDelete={handleDelete}
+        onToggleImmutable={() => setIsToggleImmutableOpen(true)}
       />
 
       {/* Exam Detail Info Card */}
@@ -199,6 +221,14 @@ export default function AdminExamDetailPage() {
         onClose={() => setQuestionToDeleteId(null)}
         onConfirm={handleConfirmDeleteQuestion}
         isDeleting={isDeletingQuestion}
+      />
+
+      <ToggleImmutableModal
+        isOpen={isToggleImmutableOpen}
+        onClose={() => setIsToggleImmutableOpen(false)}
+        onConfirm={handleConfirmToggleImmutable}
+        currentImmutable={Boolean(exam.immutable)}
+        isLoading={isUpdatingImmutable}
       />
     </div>
   );
