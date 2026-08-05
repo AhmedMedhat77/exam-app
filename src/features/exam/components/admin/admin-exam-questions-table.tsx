@@ -36,7 +36,7 @@ interface AdminExamQuestionsCardProps {
   onRemoveQuestion?: (id: string) => void;
 }
 
-export default function AdminExamQuestionsCard({
+export default function AdminExamQuestionsTable({
   questions,
   onAddQuestion,
   onRemoveQuestion,
@@ -53,8 +53,8 @@ export default function AdminExamQuestionsCard({
         <Button
           type="button"
           onClick={onAddQuestion}
-          size="sm"
-          className="h-8 w-auto gap-1.5 border border-white/20 bg-white/10 px-3 font-mono text-xs font-medium text-white hover:bg-white/20 active:bg-white/30"
+          size="lg"
+          className="w-fit"
         >
           <Plus className="size-3.5" />
           <span>Add Questions</span>

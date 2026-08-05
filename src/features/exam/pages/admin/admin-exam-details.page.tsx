@@ -1,6 +1,6 @@
 import { ROUTES } from '@/app/routes';
 import AdminExamDetailsCard from '@/features/exam/components/admin/admin-exam-details-card';
-import AdminExamQuestionsCard from '@/features/exam/components/admin/admin-exam-questions-card';
+import AdminExamQuestionsTable from '@/features/exam/components/admin/admin-exam-questions-table';
 import ExamImmutableStatusDialog from '@/features/exam/components/admin/exam-immutable-status-dialog';
 import {
   IMMUTABLE_QUERY_KEY,
@@ -37,6 +37,7 @@ export default function AdminExamDetailsPage() {
     null
   );
 
+  // ========================== PARAMS ==========================
   const search = searchParams.get(SEARCH_QUERY_KEY) || undefined;
   const sortBy = (searchParams.get(SORT_BY_KEY) as QuestionSortBy) || undefined;
   const sortOrder =
@@ -69,7 +70,7 @@ export default function AdminExamDetailsPage() {
 
   const exam = fetchedExam;
 
-  // ========================== USEBREADCRUMB ==========================
+  // ========================== BREADCRUMBS ==========================
   useBreadcrumb({
     items: [
       { title: 'Exams', href: ROUTES.EXAMS },
@@ -198,11 +199,13 @@ export default function AdminExamDetailsPage() {
       <AdminExamDetailsCard exam={exam} />
 
       {/* Exam Questions Section Card */}
-      <AdminExamQuestionsCard
+      <AdminExamQuestionsTable
         questions={examQuestions?.payload?.questions}
         onAddQuestion={handleAddQuestion}
         onRemoveQuestion={handleRemoveQuestion}
       />
+
+      {/* ========================== MODALS ========================== */}
 
       <DeleteConfirmDialog
         isOpen={!!questionToDeleteId}

@@ -1,6 +1,6 @@
 import { ROUTES } from '@/app/routes';
 import AdminExamInformationCard from '@/features/exam/components/admin/admin-exam-information-card';
-import AdminExamQuestionsCard from '@/features/exam/components/admin/admin-exam-questions-card';
+import AdminExamQuestionsTable from '@/features/exam/components/admin/admin-exam-questions-table';
 import {
   IMMUTABLE_QUERY_KEY,
   SEARCH_QUERY_KEY,
@@ -254,7 +254,7 @@ export default function AdminExamFormPage() {
 
         {/* Section 2: Exam Questions Card */}
         {id && (
-          <AdminExamQuestionsCard
+          <AdminExamQuestionsTable
             questions={examQuestions?.payload?.questions}
             onRemoveQuestion={handleRemoveQuestion}
             onAddQuestion={handleAddQuestion}
