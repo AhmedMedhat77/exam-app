@@ -33,4 +33,16 @@ export default class QuestionService {
 
     return data;
   };
+
+  static updateQuestionImmutableApi = async (
+    id: string,
+    immutable: boolean
+  ): Promise<IApiResponse<{ message?: string }>> => {
+    const { data } = await axiosInstance.patch(
+      `/api/admin/questions/${id}/immutable`,
+      { immutable }
+    );
+
+    return data;
+  };
 }
