@@ -25,4 +25,12 @@ export default class QuestionService {
 
     return data;
   };
+
+  static createQuestionApi = async (
+    payload: import('@/features/question/types/questions').ICreateQuestionPayload
+  ): Promise<IApiResponse<{ question: IQuestion }>> => {
+    const { data } = await axiosInstance.post(BASE_RUL, payload);
+
+    return data;
+  };
 }
