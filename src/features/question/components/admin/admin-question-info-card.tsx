@@ -37,7 +37,7 @@ export default function AdminQuestionInfoCard({
   }));
 
   return (
-    <div className="overflow-hidden  border border-gray-200 bg-white shadow-sm">
+    <div className="overflow-hidden border border-gray-200 bg-white shadow-sm">
       {/* Header Banner */}
       <div className="bg-primary px-5 py-3 text-white">
         <h3 className="font-mono text-sm font-semibold tracking-wide">

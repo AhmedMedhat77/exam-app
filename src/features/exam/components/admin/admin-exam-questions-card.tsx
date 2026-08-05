@@ -44,7 +44,7 @@ export default function AdminExamQuestionsCard({
   const navigate = useNavigate();
 
   return (
-    <div className="overflow-hidden  border border-gray-200 bg-white shadow-2xs">
+    <div className="overflow-hidden border border-gray-200 bg-white shadow-2xs">
       {/* Header Bar */}
       <div className="flex items-center justify-between bg-blue-600 px-5 py-3 text-white">
         <h3 className="font-mono text-sm font-semibold tracking-wide">
@@ -128,7 +128,7 @@ export default function AdminExamQuestionsCard({
                           Edit Question
                         </DropdownMenuItem>
                         <DropdownMenuItem
-                          className="cursor-pointer gap-2 text-danger focus:bg-red-50 focus:text-red-700"
+                          className="text-danger cursor-pointer gap-2 focus:bg-red-50 focus:text-red-700"
                           onClick={() => onRemoveQuestion?.(q.id)}
                         >
                           <Trash2 className="size-3.5" />
