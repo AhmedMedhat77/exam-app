@@ -1,11 +1,5 @@
 import { AppProviders } from '@/app/providers';
-import {
-  ADMIN_ROUTES,
-  ALL_ROUTES,
-  AUTH_ROUTES,
-  ROUTES,
-  USER_ROUTES,
-} from '@/app/routes';
+import { ADMIN_ROUTES, AUTH_ROUTES, ROUTES, USER_ROUTES } from '@/app/routes';
 import UserProfileLayout from '@/features/profile/layout/profile-layout';
 import UserChangePasswordPage from '@/features/profile/pages/change-password.page';
 import UserProfilePage from '@/features/profile/pages/profile.page';
@@ -18,7 +12,7 @@ export function App() {
   const isAdmin = useUserStore((state) => state.isAdmin);
   const isAuth = !!token;
 
-  const routes = !isAuth ? ALL_ROUTES : isAdmin ? ADMIN_ROUTES : USER_ROUTES;
+  const routes = isAdmin ? ADMIN_ROUTES : USER_ROUTES;
 
   return (
     <AppProviders>
