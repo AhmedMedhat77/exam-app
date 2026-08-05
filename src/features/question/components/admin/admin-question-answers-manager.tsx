@@ -1,11 +1,11 @@
 import type { ICreateAnswerPayload } from '@/features/question/types/questions';
 import { Button } from '@/shared/ui/button';
+import CustomInput from '@/shared/ui/custom-input';
 import { Input } from '@/shared/ui/input';
 import {
   Table,
   TableBody,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -152,7 +152,7 @@ export default function AdminQuestionAnswersManager({
             <TableRow key={index} className="hover:bg-gray-50/50">
               {/* Delete icon */}
               <TableCell
-                className="w-12 cursor-pointer border-r border-gray-200 bg-red-50/70 p-0 text-center"
+                className="w-12 cursor-pointer border-r border-gray-200 bg-red-50/70 p-0 text-center transition-colors duration-200 hover:bg-red-50"
                 onClick={() => handleRemoveAnswer(index)}
               >
                 <span className="flex h-full w-full items-center justify-center p-3 text-red-500 hover:text-red-700">
@@ -191,17 +191,11 @@ export default function AdminQuestionAnswersManager({
             </TableRow>
           ))}
         </TableBody>
-        <TableFooter>
-          <TableRow className="flex w-full flex-1 items-center">
-            <Input className="w-full flex-1" />
-            <Button>+ Add Answer</Button>
-          </TableRow>
-        </TableFooter>
       </Table>
 
       {/* Bottom Input Row for Adding New Answer (Appears when isAdding is true and answers < 4) */}
       {isAdding && answers.length < 4 && (
-        <div className="flex h-10 items-center border-t border-gray-200 bg-white">
+        <div className="flex min-h-10 items-center gap-3 border-t border-gray-200 bg-emerald-50 p-2">
           {/* Cancel/Clear Icon (Left) */}
           <button
             type="button"
@@ -210,14 +204,14 @@ export default function AdminQuestionAnswersManager({
               setInputError('');
               setIsAdding(false);
             }}
-            className="flex size-10 shrink-0 items-center justify-center rounded-full border-r border-gray-200 bg-emerald-50/30 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600"
+            className="flex size-8 cursor-pointer items-center justify-center rounded-full border border-gray-300 transition-all duration-200 hover:border-emerald-500"
             title="Cancel"
           >
             <X className="size-4" />
           </button>
 
           {/* New Answer Text Input (Middle) */}
-          <Input
+          <CustomInput
             id="new-answer-body-input"
             value={newAnswerText}
             onChange={(e) => {
@@ -231,15 +225,16 @@ export default function AdminQuestionAnswersManager({
               }
             }}
             placeholder="Enter answer body"
-            className="h-full flex-1 rounded-none border-none bg-transparent px-4 font-mono text-sm focus:ring-1 focus:ring-emerald-500 focus:outline-none"
+            className="h-full bg-transparent px-4 font-mono text-sm hover:border-emerald-500 focus:border-emerald-500!"
           />
 
           {/* Add Button (Right) */}
           <Button
             type="button"
             variant="success"
+            size={'lg'}
             onClick={handleAddAnswer}
-            className="h-full min-w-24 shrink-0 gap-1.5 rounded-none bg-emerald-500 px-5 font-mono text-xs font-semibold hover:bg-emerald-600"
+            className="min-h-10 w-fit gap-1.5 rounded-none bg-emerald-500"
           >
             <Plus className="size-4" />
             <span>Add</span>
