@@ -17,6 +17,8 @@ import AdminExamsPage from '@/features/exam/pages/admin/admin-exams.page';
 import UserExamDetailPage from '@/features/exam/pages/user/user-exam-detail.page';
 import ExamsPage from '@/features/exam/pages/user/user-exams.page';
 import UserProfileLayout from '@/features/profile/layout/profile-layout';
+import AdminQuestionDetailPage from '@/features/question/pages/admin/admin-question-detail.page';
+import AdminQuestionManagePage from '@/features/question/pages/admin/admin-question-manage.page';
 import UserSubmissionResultPage from '@/features/submission/pages/user-submission-result.page';
 import { BookOpenCheck, GraduationCap, Logs, UserRound } from 'lucide-react';
 
@@ -46,6 +48,12 @@ export const ROUTES = {
 
   DIPLOMA_CREATE: '/diplomas/manage',
   DIPLOMA_MANAGE: '/diplomas/:id?/manage',
+
+  // Questions
+  QUESTIONS: '/questions',
+  QUESTION_DETAIL: '/questions/:id',
+  QUESTION_CREATE: '/questions/manage',
+  QUESTION_MANAGE: '/questions/:id?/manage',
 } as const;
 
 type route = {
@@ -131,6 +139,19 @@ export const ADMIN_ROUTES: route[] = [
     title: 'Exam Manage',
     path: ROUTES.EXAM_MANAGE,
     element: AdminExamManagePage,
+    hidden: true,
+  },
+
+  {
+    title: 'Question Detail',
+    path: ROUTES.QUESTION_DETAIL,
+    element: AdminQuestionDetailPage,
+    hidden: true,
+  },
+  {
+    title: 'Question Manage',
+    path: ROUTES.QUESTION_MANAGE,
+    element: AdminQuestionManagePage,
     hidden: true,
   },
 

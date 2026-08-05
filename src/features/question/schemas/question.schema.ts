@@ -27,7 +27,9 @@ export const bulkQuestionSchema = z.object({
       z.object({
         text: z
           .string()
-          .min(3, { message: 'Question headline must be at least 3 characters' }),
+          .min(3, {
+            message: 'Question headline must be at least 3 characters',
+          }),
         answers: z
           .array(answerSchema)
           .min(2, { message: 'Question must have at least 2 answers' })
