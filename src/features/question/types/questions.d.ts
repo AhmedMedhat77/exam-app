@@ -32,3 +32,14 @@ export interface IAnswer {
   text: string;
   isCorrect: boolean;
 }
+
+export interface ICreateAnswerPayload {
+  text: string;
+  isCorrect: boolean;
+}
+
+export interface ICreateQuestionPayload {
+  text: string;
+  examId: string;
+  answers: ICreateAnswerPayload[];
+}
