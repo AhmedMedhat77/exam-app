@@ -19,13 +19,17 @@ export default function AdminExamInformationCard() {
     formState: { errors },
   } = useFormContext<ExamFormValues>();
 
-  const { data: diplomaData } = useGetDiplomas({ page: 1, limit: 100 });
+  const { data: diplomaData } = useGetDiplomas();
   const diplomas = diplomaData?.payload?.data ?? [];
+  const diplomaItems = diplomas.map((d) => ({
+    value: d.id,
+    label: d.title,
+  }));
 
   return (
     <div className="w-full overflow-hidden rounded-md border border-gray-200 bg-white shadow-2xs">
       {/* Top Banner Header */}
-      <div className="bg-blue-600 px-5 py-3 text-white">
+      <div className="bg-primary px-5 py-3 text-white">
         <h2 className="font-mono text-sm font-semibold tracking-wide">
           Exam Information
         </h2>
@@ -58,6 +62,7 @@ export default function AdminExamInformationCard() {
                   <Select
                     value={field.value || ''}
                     onValueChange={field.onChange}
+                    items={diplomaItems}
                   >
                     <SelectTrigger className="h-9 w-full rounded-md border-gray-200 bg-white font-mono text-xs text-gray-800 focus:ring-1 focus:ring-blue-500 sm:text-sm">
                       <SelectValue placeholder="Select Diploma" />
