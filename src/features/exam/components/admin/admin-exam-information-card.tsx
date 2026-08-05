@@ -133,7 +133,7 @@ export default function AdminExamInformationCard() {
               label="Duration (min)"
               type="number"
               min={1}
-              max={300}
+              // max={300}
               {...register('duration')}
               error={errors.duration?.message}
               placeholder="20"

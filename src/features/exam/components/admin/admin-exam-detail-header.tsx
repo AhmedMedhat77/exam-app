@@ -25,13 +25,12 @@ export default function AdminExamDetailHeader({
       <h1 className="font-mono text-xl font-bold tracking-tight text-gray-900 sm:text-2xl">
         {title}
       </h1>
-      <div className="flex items-center gap-2.5">
+      <div className="grid grid-cols-3 items-center gap-2.5">
         <Button
-          variant="outline"
-          size="sm"
+          variant="secondary"
+          size="lg"
           onClick={onToggleImmutable}
           disabled={isTogglingImmutable}
-          className="h-9 w-auto cursor-pointer gap-1.5 border-gray-200 bg-gray-100 px-3.5 font-mono text-xs font-medium text-gray-700 hover:bg-gray-200"
         >
           <Ban className="size-3.5 text-gray-600" />
           <span>
@@ -43,17 +42,16 @@ export default function AdminExamDetailHeader({
           </span>
         </Button>
         <Button
-          size="sm"
-          className="bg-primary h-9 w-auto gap-1.5 px-4 font-mono text-xs font-medium text-white hover:bg-blue-700"
+          size="lg"
+
           onClick={onEdit}
         >
           <Pencil className="size-3.5" />
           <span>Edit</span>
         </Button>
         <Button
-          size="sm"
+          size="lg"
           variant="destructive"
-          className="h-9 w-auto gap-1.5 bg-red-600 px-4 font-mono text-xs font-medium text-white hover:bg-red-700"
           onClick={onDelete}
           disabled={isDeleting}
         >
