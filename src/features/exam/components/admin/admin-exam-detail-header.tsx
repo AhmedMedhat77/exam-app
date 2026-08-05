@@ -5,16 +5,20 @@ interface AdminExamDetailHeaderProps {
   title: string;
   immutable: boolean;
   isDeleting: boolean;
+  isTogglingImmutable?: boolean;
   onEdit: () => void;
   onDelete: () => void;
+  onToggleImmutable?: () => void;
 }
 
 export default function AdminExamDetailHeader({
   title,
   immutable,
   isDeleting,
+  isTogglingImmutable,
   onEdit,
   onDelete,
+  onToggleImmutable,
 }: AdminExamDetailHeaderProps) {
   return (
     <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -25,10 +29,18 @@ export default function AdminExamDetailHeader({
         <Button
           variant="outline"
           size="sm"
-          className="h-9 w-auto cursor-default gap-1.5 border-gray-200 bg-gray-100 px-3.5 font-mono text-xs font-medium text-gray-700 hover:bg-gray-200"
+          onClick={onToggleImmutable}
+          disabled={isTogglingImmutable}
+          className="h-9 w-auto cursor-pointer gap-1.5 border-gray-200 bg-gray-100 px-3.5 font-mono text-xs font-medium text-gray-700 hover:bg-gray-200"
         >
           <Ban className="size-3.5 text-gray-600" />
-          <span>{immutable ? 'Immutable' : 'Mutable'}</span>
+          <span>
+            {isTogglingImmutable
+              ? 'Updating...'
+              : immutable
+                ? 'Immutable'
+                : 'Mutable'}
+          </span>
         </Button>
         <Button
           size="sm"
