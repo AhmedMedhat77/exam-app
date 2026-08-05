@@ -1,7 +1,7 @@
 import { useGetExamsSelect } from '@/features/exam/hooks/use-get-exams-select';
 import type { IExam } from '@/features/exam/types/exams.d';
-import AdminQuestionAnswersManager from '@/features/question/components/admin/admin-question-answers-manager';
-import type { BulkQuestionFormValues } from '@/features/question/schemas/question.schema';
+import SingleQuestionTableForm from '@/features/question/components/admin/single-question-table-form';
+import type { IBulkQuestionFormValues } from '@/features/question/schemas/question.schema';
 import { Button } from '@/shared/ui/button';
 import { Field, FieldError, FieldLabel } from '@/shared/ui/field';
 import { Input } from '@/shared/ui/input';
@@ -20,10 +20,8 @@ export default function AdminBulkQuestionForm() {
   const {
     register,
     control,
-    setValue,
-    watch,
     formState: { errors },
-  } = useFormContext<BulkQuestionFormValues>();
+  } = useFormContext<IBulkQuestionFormValues>();
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -33,8 +31,6 @@ export default function AdminBulkQuestionForm() {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
   const { data: examsData, isLoading: isLoadingExams } = useGetExamsSelect();
-
-  const questions = watch('questions') || [];
 
   const exams: IExam[] =
     examsData?.payload?.data ||
@@ -197,7 +193,7 @@ export default function AdminBulkQuestionForm() {
           </Field>
 
           {/* Active Question Answers Manager */}
-          <AdminQuestionAnswersManager
+          <SingleQuestionTableForm
             name={`questions.${activeTabIndex}.answers`}
           />
         </div>

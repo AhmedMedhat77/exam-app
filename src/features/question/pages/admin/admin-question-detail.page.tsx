@@ -18,6 +18,7 @@ export default function AdminQuestionDetailPage() {
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
+  // ====================== APIS ======================
   const { data, isLoading, isError } = useGetQuestionById(id);
   const { mutate: deleteQuestion, isPending: isDeleting } = useDeleteQuestion();
   const { mutate: updateImmutable } = useUpdateQuestionImmutable();
@@ -108,6 +109,7 @@ export default function AdminQuestionDetailPage() {
       </div>
 
       {/* Main Question View Card */}
+
       <AdminQuestionViewCard
         question={question}
         onEdit={() => navigate(`/questions/${question.id}/manage`)}

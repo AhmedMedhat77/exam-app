@@ -21,7 +21,7 @@ interface AdminQuestionAnswersManagerProps {
   error?: string;
 }
 
-export default function AdminQuestionAnswersManager({
+export default function SingleQuestionTableForm({
   name = 'answers',
   answers: propAnswers,
   onChange: propOnChange,
