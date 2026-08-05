@@ -190,3 +190,12 @@ export const AUTH_ROUTES: route[] = [
     element: ResetPasswordPage,
   },
 ];
+
+export const ALL_ROUTES: route[] = [
+  ...ADMIN_ROUTES,
+  ...USER_ROUTES.filter(
+    (ur) => !ADMIN_ROUTES.some((ar) => ar.path === ur.path)
+  ),
+];
+
+
