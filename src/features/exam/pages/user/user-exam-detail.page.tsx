@@ -1,16 +1,13 @@
 import { ROUTES } from '@/app/routes';
-import DonutBar from '@/features/exam/components/user/donut-bar';
-import ProgressBar from '@/features/exam/components/user/progressbar';
-import QuestionStepCounter from '@/features/exam/components/user/question-step-counter';
+import { UserExamHeaderCard } from '@/features/exam/components/user/user-exam-header-card';
+import { UserExamQuestionsForm } from '@/features/exam/components/user/user-exam-questions-form';
 import { useGetExamById } from '@/features/exam/hooks/use-get-exam-by-id';
-import QuestionsList from '@/features/question/components/user/questions-list';
 import useGetExamQuestions from '@/features/question/hooks/use-get-exam-questions';
 import useGetExamSubmissions from '@/features/submission/hooks/use-get-exam-submissions';
 import useSubmitExam from '@/features/submission/hooks/use-submit-exam';
-import UserDashboardHeader from '@/shared/components/user-dashboard-header';
 import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';
 import { Button } from '@/shared/ui/button';
-import { ArrowLeft, CircleQuestionMark, Loader2 } from 'lucide-react';
+import { ArrowLeft, Loader2 } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
@@ -21,7 +18,9 @@ export default function UserExamDetailPage() {
   const storageKey = `exam_session_${id}`;
 
   const [startedAt, setStartedAt] = useState<string>('');
-  const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [initialAnswers, setInitialAnswers] = useState<Record<string, string>>(
+    {}
+  );
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
@@ -74,7 +73,7 @@ export default function UserExamDetailPage() {
           hasSubmittedRef.current = true;
         }
         if (parsed.startedAt) setStartedAt(parsed.startedAt);
-        if (parsed.answers) setAnswers(parsed.answers);
+        if (parsed.answers) setInitialAnswers(parsed.answers);
         if (parsed.currentStep) setCurrentStep(parsed.currentStep);
       } catch {
         const newStart = new Date().toISOString();
@@ -97,37 +96,9 @@ export default function UserExamDetailPage() {
     setIsInitialized(true);
   }, [id, storageKey]);
 
-  // 2. Persist progress to sessionStorage whenever answers or step changes
-  useEffect(() => {
-    if (!id || !startedAt || !isInitialized || isSubmitted) return;
-
-    sessionStorage.setItem(
-      storageKey,
-      JSON.stringify({
-        examId: id,
-        startedAt,
-        answers,
-        currentStep,
-        isSubmitted,
-      })
-    );
-  }, [
-    id,
-    startedAt,
-    answers,
-    currentStep,
-    isSubmitted,
-    isInitialized,
-    storageKey,
-  ]);
-
-  const handleAnswerSelect = (questionId: string, answerId: string) => {
-    setAnswers((prev) => ({ ...prev, [questionId]: answerId }));
-  };
-
   const handleSubmitExam = useCallback(
     (selectedAnswers?: Record<string, string>) => {
-      const targetAnswers = selectedAnswers ?? answers;
+      const targetAnswers = selectedAnswers ?? initialAnswers;
       if (!examData?.exam.id || hasSubmittedRef.current) return;
       hasSubmittedRef.current = true;
 
@@ -166,7 +137,7 @@ export default function UserExamDetailPage() {
       );
     },
     [
-      answers,
+      initialAnswers,
       examData?.exam.id,
       latestSubmission?.id,
       navigate,
@@ -202,7 +173,7 @@ export default function UserExamDetailPage() {
       !autoSubmitFiredRef.current
     ) {
       autoSubmitFiredRef.current = true;
-      handleSubmitExam(answers);
+      handleSubmitExam(initialAnswers);
     }
   }, [
     isInitialized,
@@ -210,11 +181,11 @@ export default function UserExamDetailPage() {
     examData,
     totalDurationSeconds,
     remainingSeconds,
-    answers,
+    initialAnswers,
     handleSubmitExam,
   ]);
 
-  const totalSteps = examData?.exam.questionsCount || 0;
+  const totalSteps = examData?.exam.questionsCount || questions.length || 0;
 
   if (isLoading || !isInitialized) {
     return (
@@ -244,39 +215,20 @@ export default function UserExamDetailPage() {
 
   return (
     <div className="w-full space-y-6 py-4">
-      <UserDashboardHeader
-        icon={<CircleQuestionMark size={45} className="text-white" />}
+      <UserExamHeaderCard
         title={examData.exam.title || ''}
+        currentStep={currentStep}
+        totalSteps={totalSteps}
+        totalDurationSeconds={totalDurationSeconds}
+        remainingSeconds={remainingSeconds}
+        onTimeUp={() => handleSubmitExam()}
       />
-      <div className="flex items-center gap-4">
-        {/* Header + Progressbar */}
-        <div className="flex-1 space-y-2">
-          <div className="flex items-center justify-between">
-            <h4 className="text-gray-800">{examData.exam.title}</h4>
-            <QuestionStepCounter
-              currentStep={currentStep}
-              totalSteps={totalSteps}
-            />
-          </div>
 
-          <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
-        </div>
-        <div className="size-16 shrink-0">
-          <DonutBar
-            time={totalDurationSeconds}
-            remainingTime={remainingSeconds}
-            onTimeUp={() => handleSubmitExam(answers)}
-          />
-        </div>
-      </div>
-
-      {/* Questions List */}
-      <QuestionsList
+      <UserExamQuestionsForm
         questions={questions}
         currentStep={currentStep}
         onStepChange={setCurrentStep}
-        answers={answers}
-        onAnswerSelect={handleAnswerSelect}
+        initialAnswers={initialAnswers}
         onSubmit={handleSubmitExam}
         isSubmitting={submitExamMutation.isPending}
       />

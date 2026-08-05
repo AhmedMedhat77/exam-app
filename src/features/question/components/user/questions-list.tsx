@@ -3,6 +3,11 @@ import type { IQuestion } from '@/features/question/types/questions';
 import { Button } from '@/shared/ui/button';
 import { ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 import { useState } from 'react';
+import { useFormContext } from 'react-hook-form';
+
+export interface UserExamFormValues {
+  answers: Record<string, string>;
+}
 
 interface QuestionsListProps {
   questions: IQuestion[];
@@ -23,14 +28,26 @@ export default function QuestionsList({
   onSubmit,
   isSubmitting,
 }: QuestionsListProps) {
+  const formContext = useFormContext<UserExamFormValues>();
   const [internalAnswers, setInternalAnswers] = useState<
     Record<string, string>
   >({});
-  const answers = controlledAnswers ?? internalAnswers;
+
+  const formAnswers = formContext?.watch('answers');
+  const answers = controlledAnswers ?? formAnswers ?? internalAnswers;
 
   const handleAnswerSelect = (questionId: string, answerId: string) => {
     if (onAnswerSelect) {
       onAnswerSelect(questionId, answerId);
+    } else if (formContext) {
+      formContext.setValue(
+        'answers',
+        {
+          ...formContext.getValues('answers'),
+          [questionId]: answerId,
+        },
+        { shouldDirty: true }
+      );
     } else {
       setInternalAnswers((prev) => ({ ...prev, [questionId]: answerId }));
     }
@@ -50,15 +67,17 @@ export default function QuestionsList({
 
   return (
     <div className="space-y-6">
-      <Question
-        questionNumber={currentStep}
-        text={currentQuestion.text}
-        answers={currentQuestion.answers}
-        selectedAnswer={answers[currentQuestion.id]}
-        onAnswerSelect={(answerId) =>
-          handleAnswerSelect(currentQuestion.id, answerId)
-        }
-      />
+      {currentQuestion && (
+        <Question
+          questionNumber={currentStep}
+          text={currentQuestion.text}
+          answers={currentQuestion.answers}
+          selectedAnswer={answers[currentQuestion.id]}
+          onAnswerSelect={(answerId) =>
+            handleAnswerSelect(currentQuestion.id, answerId)
+          }
+        />
+      )}
 
       {/* Navigation Buttons */}
       <div className="flex items-center gap-3">
@@ -95,7 +114,7 @@ export default function QuestionsList({
             size={'xl'}
             onClick={() => onStepChange(currentStep + 1)}
           >
-            {currentStep === questions.length ? 'Submit' : 'Next'}
+            Next
             <ChevronRight className="h-4 w-4" />
           </Button>
         )}
