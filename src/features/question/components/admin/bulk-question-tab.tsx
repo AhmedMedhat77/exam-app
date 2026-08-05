@@ -23,7 +23,7 @@ export default function BulkQuestionTab({
   return (
     <div
       className={cn(
-        'group relative flex max-w-48 min-w-16 items-center justify-center gap-1.5 border-r border-gray-200 px-2 font-mono text-xs font-semibold whitespace-nowrap transition-colors select-none',
+        'group relative flex max-w-48 min-w-34 cursor-pointer items-center justify-center gap-1.5 border-r border-gray-200 px-2 font-mono text-xs font-semibold whitespace-nowrap transition-colors select-none',
         isActive
           ? 'bg-primary/10 text-primary border-b-primary border-b-2 font-bold'
           : 'bg-white text-gray-600 hover:bg-gray-100/80 hover:text-gray-900',
@@ -44,10 +44,10 @@ export default function BulkQuestionTab({
         <button
           type="button"
           onClick={onRemove}
-          className="hover:bg-destructive/10 hover:text-destructive flex size-5 shrink-0 items-center justify-center rounded text-gray-400 transition-all md:opacity-0 md:group-hover:opacity-100 md:focus-visible:opacity-100"
+          className="hover:bg-destructive/10 hover:text-destructive absolute right-1 flex size-5 shrink-0 cursor-pointer items-center justify-center rounded text-gray-400 transition-all md:opacity-0 md:group-hover:opacity-100 md:focus-visible:opacity-100"
           aria-label={`Delete question ${index + 1}`}
         >
-          <Trash2 className="size-3" />
+          <Trash2 className="size-4" />
         </button>
       )}
     </div>
