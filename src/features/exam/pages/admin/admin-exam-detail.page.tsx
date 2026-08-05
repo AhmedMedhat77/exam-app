@@ -12,7 +12,6 @@ import { useDeleteExam } from '@/features/exam/hooks/use-delete-exam';
 import { useGetExamById } from '@/features/exam/hooks/use-get-exam-by-id';
 import { useUpdateExamImmutable } from '@/features/exam/hooks/use-update-exam-immutable';
 import type { IExam } from '@/features/exam/types/exams.d';
-import AddQuestionModal from '@/features/question/components/admin/add-question-modal';
 import DeleteQuestionModal from '@/features/question/components/admin/delete-question-modal';
 import ToggleImmutableModal from '@/features/exam/components/admin/toggle-immutable-modal';
 import { useDeleteQuestion } from '@/features/question/hooks/use-delete-question';
@@ -34,7 +33,6 @@ export default function AdminExamDetailPage() {
   const { id = '' } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [isAddQuestionOpen, setIsAddQuestionOpen] = useState(false);
   const [isToggleImmutableOpen, setIsToggleImmutableOpen] = useState(false);
   const [isDeleteExamOpen, setIsDeleteExamOpen] = useState(false);
   const [questionToDeleteId, setQuestionToDeleteId] = useState<string | null>(
@@ -132,7 +130,7 @@ export default function AdminExamDetailPage() {
   };
 
   const handleAddQuestion = () => {
-    setIsAddQuestionOpen(true);
+    navigate(`/questions/manage?examId=${id}`);
   };
 
   // ========================== RENDER ==========================
@@ -216,12 +214,6 @@ export default function AdminExamDetailPage() {
         questions={examQuestions?.payload?.questions}
         onAddQuestion={handleAddQuestion}
         onRemoveQuestion={handleRemoveQuestion}
-      />
-
-      <AddQuestionModal
-        isOpen={isAddQuestionOpen}
-        onClose={() => setIsAddQuestionOpen(false)}
-        examId={id}
       />
 
       <DeleteQuestionModal

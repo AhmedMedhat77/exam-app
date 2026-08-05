@@ -12,7 +12,6 @@ import { useGetExamById } from '@/features/exam/hooks/use-get-exam-by-id';
 import { useUpdateExam } from '@/features/exam/hooks/use-update-exam';
 import { examSchema } from '@/features/exam/schemas/exam.schema';
 import type { IExam } from '@/features/exam/types/exams.d';
-import AddQuestionModal from '@/features/question/components/admin/add-question-modal';
 import DeleteQuestionModal from '@/features/question/components/admin/delete-question-modal';
 import { useDeleteQuestion } from '@/features/question/hooks/use-delete-question';
 import useGetExamQuestions from '@/features/question/hooks/use-get-exam-questions';
@@ -34,7 +33,6 @@ import { useNavigate, useParams, useSearchParams } from 'react-router';
 export default function AdminExamManagePage() {
   const { id = '' } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [isAddQuestionOpen, setIsAddQuestionOpen] = useState(false);
   const [questionToDeleteId, setQuestionToDeleteId] = useState<string | null>(
     null
   );
@@ -180,7 +178,7 @@ export default function AdminExamManagePage() {
   };
 
   const handleAddQuestion = () => {
-    setIsAddQuestionOpen(true);
+    navigate(`/questions/manage?examId=${id}`);
   };
 
   if (id && isLoading && !fetchedExam) {
@@ -264,20 +262,12 @@ export default function AdminExamManagePage() {
       </form>
 
       {id && (
-        <>
-          <AddQuestionModal
-            isOpen={isAddQuestionOpen}
-            onClose={() => setIsAddQuestionOpen(false)}
-            examId={id}
-          />
-
-          <DeleteQuestionModal
-            isOpen={!!questionToDeleteId}
-            onClose={() => setQuestionToDeleteId(null)}
-            onConfirm={handleConfirmDeleteQuestion}
-            isDeleting={isDeletingQuestion}
-          />
-        </>
+        <DeleteQuestionModal
+          isOpen={!!questionToDeleteId}
+          onClose={() => setQuestionToDeleteId(null)}
+          onConfirm={handleConfirmDeleteQuestion}
+          isDeleting={isDeletingQuestion}
+        />
       )}
     </FormProvider>
   );

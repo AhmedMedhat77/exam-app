@@ -20,7 +20,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/shared/ui/table';
-import { MoreHorizontal, Plus } from 'lucide-react';
+import { Eye, MoreHorizontal, Pencil, Plus, Trash2 } from 'lucide-react';
+import { useNavigate } from 'react-router';
 
 const questionSortOptions: SortOption<QuestionSortBy>[] = [
   { label: 'Title (A-Z)', sortBy: 'title', sortOrder: 'asc' },
@@ -40,6 +41,8 @@ export default function AdminExamQuestionsCard({
   onAddQuestion,
   onRemoveQuestion,
 }: AdminExamQuestionsCardProps) {
+  const navigate = useNavigate();
+
   return (
     <div className="overflow-hidden rounded-md border border-gray-200 bg-white shadow-2xs">
       {/* Header Bar */}
@@ -92,7 +95,10 @@ export default function AdminExamQuestionsCard({
                   key={q.id}
                   className="border-b border-gray-100 transition-colors hover:bg-gray-50/60"
                 >
-                  <TableCell className="px-6 py-3 font-mono text-xs font-medium text-gray-800">
+                  <TableCell
+                    onClick={() => navigate(`/questions/${q.id}`)}
+                    className="cursor-pointer px-6 py-3 font-mono text-xs font-medium text-gray-800 hover:text-blue-600 hover:underline"
+                  >
                     {q.text}
                   </TableCell>
                   <TableCell className="px-6 py-3 text-right">
@@ -109,12 +115,27 @@ export default function AdminExamQuestionsCard({
                       </DropdownMenuTrigger>
                       <DropdownMenuContent
                         align="end"
-                        className="w-36 font-mono text-xs"
+                        className="w-40 font-mono text-xs"
                       >
                         <DropdownMenuItem
-                          className="cursor-pointer text-red-600 focus:bg-red-50 focus:text-red-700"
+                          className="cursor-pointer gap-2"
+                          onClick={() => navigate(`/questions/${q.id}`)}
+                        >
+                          <Eye className="size-3.5" />
+                          View Question
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="cursor-pointer gap-2"
+                          onClick={() => navigate(`/questions/${q.id}/manage`)}
+                        >
+                          <Pencil className="size-3.5" />
+                          Edit Question
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="cursor-pointer gap-2 text-red-600 focus:bg-red-50 focus:text-red-700"
                           onClick={() => onRemoveQuestion?.(q.id)}
                         >
+                          <Trash2 className="size-3.5" />
                           Remove Question
                         </DropdownMenuItem>
                       </DropdownMenuContent>
