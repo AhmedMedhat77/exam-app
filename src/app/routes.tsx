@@ -197,5 +197,3 @@ export const ALL_ROUTES: route[] = [
     (ur) => !ADMIN_ROUTES.some((ar) => ar.path === ur.path)
   ),
 ];
-
-

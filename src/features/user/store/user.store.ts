@@ -25,7 +25,14 @@ export const useUserStore = create<UserStore>()(
           isAdmin: true,
         });
       },
-      logout: () => set({ user: null, token: null, isAdmin: false }),
+      logout: () =>
+        set((state) => ({
+          ...state,
+          user: null,
+          token: null,
+          isAdmin: false,
+        })),
+      navigate: () => window.location.replace('/login'),
     }),
     { name: 'user-storage' }
   )

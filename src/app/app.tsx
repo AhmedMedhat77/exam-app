@@ -18,11 +18,7 @@ export function App() {
   const isAdmin = useUserStore((state) => state.isAdmin);
   const isAuth = !!token;
 
-  const routes = !isAuth
-    ? ALL_ROUTES
-    : isAdmin
-      ? ADMIN_ROUTES
-      : USER_ROUTES;
+  const routes = !isAuth ? ALL_ROUTES : isAdmin ? ADMIN_ROUTES : USER_ROUTES;
 
   return (
     <AppProviders>
