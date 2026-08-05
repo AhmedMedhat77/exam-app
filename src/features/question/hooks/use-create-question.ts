@@ -1,5 +1,6 @@
 import QuestionService from '@/features/question/services/questions.service';
 import type { ICreateQuestionPayload } from '@/features/question/types/questions';
+import toastUtil from '@/shared/lib/toast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QUESTION_KEYS } from '../constants/question-keys';
 
@@ -10,6 +11,7 @@ export function useCreateQuestion() {
     mutationFn: (payload: ICreateQuestionPayload) =>
       QuestionService.createQuestionApi(payload),
     onSuccess: () => {
+      toastUtil('Question created successfully', undefined, 'success');
       queryClient.invalidateQueries({
         queryKey: QUESTION_KEYS.allExamQuestions(),
       });
