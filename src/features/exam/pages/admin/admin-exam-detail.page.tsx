@@ -1,46 +1,51 @@
 import { ROUTES } from '@/app/routes';
 import AdminExamQuestionsCard from '@/features/exam/components/admin/admin-exam-questions-card';
+import {
+  IMMUTABLE_QUERY_KEY,
+  SEARCH_QUERY_KEY,
+  SORT_BY_KEY,
+  SORT_ORDER_KEY,
+} from '@/features/exam/components/constants/search-params.keys';
 import { useDeleteExam } from '@/features/exam/hooks/use-delete-exam';
 import { useGetExamById } from '@/features/exam/hooks/use-get-exam-by-id';
 import type { IExam } from '@/features/exam/types/exams.d';
 import useGetExamQuestions from '@/features/question/hooks/use-get-exam-questions';
+import type {
+  QuestionSortBy,
+  QuestionSortOrder,
+} from '@/features/question/types/questions';
 import BreadCrumb from '@/shared/layouts/dashboard/breadcrumb/BreadCrumb';
 import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';
 
 import { Button } from '@/shared/ui/button';
 import { ArrowLeft, Ban, ExternalLink, Pencil, Trash2 } from 'lucide-react';
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router';
-
-// Sample fallback mock for initial view demonstration matching mockup
-const MOCK_EXAM: IExam = {
-  id: 'final-fullstack-exam',
-  title: 'Final Full Stack Development Certification Exam',
-  description:
-    'Comprehensive exam covering all full stack development topics in this diploma.',
-  image:
-    'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80',
-  duration: 20,
-  questionsCount: 10,
-  diplomaId: 'full-stack-dev',
-  diploma: {
-    id: 'full-stack-dev',
-    title: 'Full Stack Development',
-  },
-  immutable: true,
-  createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString(),
-};
+import { useNavigate, useParams, useSearchParams } from 'react-router';
 
 export default function AdminExamDetailPage() {
   const { id = '' } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [imageError, setImageError] = useState(false);
+
+  const search = searchParams.get(SEARCH_QUERY_KEY) || undefined;
+  const sortBy = (searchParams.get(SORT_BY_KEY) as QuestionSortBy) || undefined;
+  const sortOrder =
+    (searchParams.get(SORT_ORDER_KEY) as QuestionSortOrder) || undefined;
+  const immutableParam = searchParams.get(IMMUTABLE_QUERY_KEY);
+  const immutable =
+    immutableParam !== null ? immutableParam === 'true' : undefined;
 
   // ========================== APIS ==========================
   const { data, isLoading, isError } = useGetExamById(id);
   const { mutate: deleteExam, isPending: isDeleting } = useDeleteExam();
-  const { data: examQuestions } = useGetExamQuestions({ examId: id });
+  const { data: examQuestions } = useGetExamQuestions({
+    examId: id,
+    search,
+    sortBy,
+    sortOrder,
+    immutable,
+  });
 
   // ========================== MEMOS ==========================
   const examPayload = data?.payload;
@@ -49,13 +54,13 @@ export default function AdminExamDetailPage() {
       ? (examPayload as { exam: IExam }).exam
       : (examPayload as IExam | undefined);
 
-  const exam: IExam = fetchedExam || MOCK_EXAM;
+  const exam = fetchedExam;
 
   // ========================== USEBREADCRUMB ==========================
   useBreadcrumb({
     items: [
       { title: 'Exams', href: ROUTES.EXAMS },
-      { title: exam.title || 'Exam Details' },
+      { title: exam?.title || 'Exam Details' },
     ],
   });
 
@@ -72,6 +77,10 @@ export default function AdminExamDetailPage() {
     }
   };
 
+  const handleAddExam = () => {
+    navigate({ pathname: ROUTES.EXAM_CREATE });
+  };
+
   // ========================== RENDER ==========================
   if (isLoading && !fetchedExam && id !== 'final-fullstack-exam') {
     return (
@@ -82,6 +91,27 @@ export default function AdminExamDetailPage() {
   }
 
   if (isError && !exam) {
+    return (
+      <div className="mx-auto max-w-xl space-y-4 py-12 text-center">
+        <div className="rounded-lg border border-red-200 bg-red-50 p-6 text-red-700">
+          <h3 className="font-mono text-base font-semibold">Exam Not Found</h3>
+          <p className="mt-1 font-mono text-xs text-red-600">
+            The requested exam could not be loaded or does not exist.
+          </p>
+        </div>
+        <Button
+          onClick={() => navigate(ROUTES.EXAMS)}
+          className="mx-auto w-auto gap-2 bg-gray-900 text-white hover:bg-gray-800"
+        >
+          <ArrowLeft className="size-4" />
+          Back to Exams
+        </Button>
+      </div>
+    );
+  }
+
+  // Handle the case where exam is not found (isError is false but exam is undefined)
+  if (!exam) {
     return (
       <div className="mx-auto max-w-xl space-y-4 py-12 text-center">
         <div className="rounded-lg border border-red-200 bg-red-50 p-6 text-red-700">
@@ -221,7 +251,7 @@ export default function AdminExamDetailPage() {
       {/* Exam Questions Section Card */}
       <AdminExamQuestionsCard
         questions={examQuestions?.payload?.questions}
-        onAddQuestion={() => {}}
+        onAddQuestion={handleAddExam}
         onRemoveQuestion={() => {}}
       />
     </div>

@@ -1,4 +1,10 @@
-import type { IQuestion } from '@/features/question/types/questions';
+import type {
+  IQuestion,
+  QuestionSortBy,
+} from '@/features/question/types/questions';
+import AdminSortDropdown, {
+  type SortOption,
+} from '@/shared/components/admin-sort-dropdown';
 import { Button } from '@/shared/ui/button';
 import {
   DropdownMenu,
@@ -14,7 +20,14 @@ import {
   TableHeader,
   TableRow,
 } from '@/shared/ui/table';
-import { ArrowDownWideNarrow, MoreHorizontal, Plus } from 'lucide-react';
+import { MoreHorizontal, Plus } from 'lucide-react';
+
+const questionSortOptions: SortOption<QuestionSortBy>[] = [
+  { label: 'Title (A-Z)', sortBy: 'title', sortOrder: 'asc' },
+  { label: 'Title (Z-A)', sortBy: 'title', sortOrder: 'desc' },
+  { label: 'Newest First', sortBy: 'createdAt', sortOrder: 'desc' },
+  { label: 'Oldest First', sortBy: 'createdAt', sortOrder: 'asc' },
+];
 
 interface AdminExamQuestionsCardProps {
   questions?: IQuestion[];
@@ -53,21 +66,12 @@ export default function AdminExamQuestionsCard({
               <TableHead className="px-6 py-2.5 font-mono text-xs font-semibold text-gray-700">
                 Title
               </TableHead>
-              <TableHead className="flex items-center justify-end gap-2 px-6 py-2.5 text-end font-mono text-xs font-semibold text-gray-800">
-                <DropdownMenu>
-                  <DropdownMenuTrigger className="flex items-center gap-2">
-                    Sort
-                    <ArrowDownWideNarrow className="size-5" />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuItem>
-                      <div className="flex items-center gap-2">
-                        <span>A-Z</span>
-                        <ArrowDownWideNarrow className="size-4" />
-                      </div>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+              <TableHead className="px-6 py-2.5 text-end font-mono text-xs font-semibold text-gray-800">
+                <AdminSortDropdown<QuestionSortBy>
+                  options={questionSortOptions}
+                  triggerLabel="Sort"
+                  className="text-gray-800"
+                />
               </TableHead>
             </TableRow>
           </TableHeader>

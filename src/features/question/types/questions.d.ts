@@ -1,10 +1,14 @@
 import type { IPaginatedParams } from '@/shared/types/api';
 
+export type QuestionSortBy = 'title' | 'createdAt';
+export type QuestionSortOrder = 'asc' | 'desc';
+
 export interface IExamQuestionParams extends Omit<
   Partial<IPaginatedParams>,
-  'page' | 'limit'
+  'page' | 'limit' | 'sortBy'
 > {
   examId?: string;
+  sortBy?: QuestionSortBy;
   immutable?: boolean;
 }
 
