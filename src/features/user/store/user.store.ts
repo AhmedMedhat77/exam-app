@@ -18,11 +18,10 @@ export const useUserStore = create<UserStore>()(
       token: null,
       isAdmin: false,
       setUser: (user, token) => {
-        const patchedUser = { ...user, role: 'admin' };
+        const patchedUser = { ...user };
         set({
           user: patchedUser,
           token,
-          isAdmin: true,
         });
       },
       logout: () =>
