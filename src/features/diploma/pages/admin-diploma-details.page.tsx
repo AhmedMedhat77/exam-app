@@ -4,10 +4,10 @@ import { useGetDiplomaById } from '@/features/diploma/hooks/use-get-diploma-by-i
 import { useUpdateDiplomaImmutable } from '@/features/diploma/hooks/use-update-diploma-immutable';
 import AdminDiplomaDetailSkeleton from '@/features/diploma/skeletons/admin-diploma-detail-skeleton';
 import type { IDiploma } from '@/features/diploma/types/diploma.d';
-import AdminDetailsScreenHeader from '@/features/shared/components/admin/admin-details-screen-header';
-import DeleteConfirmModal from '@/shared/components/delete-confirm-modal';
-import ToggleImmutableModal from '@/shared/components/toggle-immutable-modal';
-import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';
+import AdminEntityDetailsHeader from '@/features/shared/components/admin/admin-entity-details-header';
+import DeleteConfirmDialog from '@/shared/components/delete-confirm-dialog';
+import ImmutableStatusDialog from '@/shared/components/immutable-status-dialog';
+import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/use-breadcrumb';
 import { Button } from '@/shared/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import { useState } from 'react';
@@ -98,7 +98,7 @@ export default function AdminDiplomaDetailsPage() {
 
   return (
     <div className="max-w-full space-y-6">
-      <AdminDetailsScreenHeader
+      <AdminEntityDetailsHeader
         breadcrumbItems={[
           { title: 'Diplomas', href: ROUTES.DIPLOMAS },
           { title: diploma.title },
@@ -151,7 +151,7 @@ export default function AdminDiplomaDetailsPage() {
         </div>
       </div>
 
-      <DeleteConfirmModal
+      <DeleteConfirmDialog
         isOpen={isDeleteDiplomaOpen}
         onClose={() => setIsDeleteDiplomaOpen(false)}
         onConfirm={handleConfirmDelete}
@@ -161,7 +161,7 @@ export default function AdminDiplomaDetailsPage() {
         confirmLabel="Delete Diploma"
       />
 
-      <ToggleImmutableModal
+      <ImmutableStatusDialog
         isOpen={isToggleImmutableOpen}
         onClose={() => setIsToggleImmutableOpen(false)}
         onConfirm={handleConfirmToggleImmutable}

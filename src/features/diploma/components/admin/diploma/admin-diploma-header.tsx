@@ -1,9 +1,9 @@
-import AdminHeader, {
-  type AdminHeaderProps,
-} from '@/features/shared/components/admin/admin-header';
+import AdminListHeader, {
+  type AdminListHeaderProps,
+} from '@/features/shared/components/admin/admin-list-header';
 
-export type AdminDiplomaHeaderProps = AdminHeaderProps;
+export type AdminDiplomaHeaderProps = AdminListHeaderProps;
 
 export default function AdminDiplomaHeader(props: AdminDiplomaHeaderProps) {
-  return <AdminHeader addNewLabel="Add New Diploma" {...props} />;
+  return <AdminListHeader addNewLabel="Add New Diploma" {...props} />;
 }

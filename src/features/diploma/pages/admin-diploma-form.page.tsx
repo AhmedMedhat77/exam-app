@@ -1,12 +1,12 @@
 import { ROUTES } from '@/app/routes';
 import AdminDiplomaInformationCard from '@/features/diploma/components/admin/diploma/admin-diploma-information-card';
-import AdminDiplomaManageHeader from '@/features/diploma/components/admin/diploma/admin-diploma-manage-header';
+import AdminDiplomaFormHeader from '@/features/diploma/components/admin/diploma/admin-diploma-form-header';
 import { useCreateDiploma } from '@/features/diploma/hooks/use-create-diploma';
 import { useGetDiplomaById } from '@/features/diploma/hooks/use-get-diploma-by-id';
 import { useUpdateDiploma } from '@/features/diploma/hooks/use-update-diploma';
 import { diplomaSchema } from '@/features/diploma/schemas/diploma.schema';
 import type { IDiploma } from '@/features/diploma/types/diploma.d';
-import CustomError from '@/shared/components/custom-error';
+import ErrorAlert from '@/shared/components/error-alert';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router';
@@ -91,12 +91,9 @@ export default function AdminDiplomaFormPage() {
   return (
     <FormProvider {...form}>
       <form onSubmit={onSubmit}>
-        <AdminDiplomaManageHeader
-          diploma={diploma}
-          isSubmitting={isSubmitting}
-        />
+        <AdminDiplomaFormHeader diploma={diploma} isSubmitting={isSubmitting} />
         <div className="mt-10 space-y-4 p-5">
-          <CustomError error={apiError} />
+          <ErrorAlert error={apiError} />
           <div className="col-span-12 lg:col-span-8">
             <AdminDiplomaInformationCard />
           </div>

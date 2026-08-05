@@ -11,8 +11,8 @@ import {
 } from '@/features/diploma/components/constants/search-params.keys';
 import { useGetDiplomas } from '@/features/diploma/hooks/use-get-diploma';
 import type { SortBy, SortOrder } from '@/features/diploma/types/diploma.d';
-import AdminFiltersContainer from '@/features/shared/components/admin/admin-filters-container';
-import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';
+import AdminFiltersPanel from '@/features/shared/components/admin/admin-filters-panel';
+import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/use-breadcrumb';
 import { SlidersHorizontal } from 'lucide-react';
 import { useNavigate, useSearchParams } from 'react-router';
 
@@ -56,12 +56,12 @@ export default function AdminDiplomaListPage() {
         isLoading={isLoading}
         onAddNew={() => navigate(ROUTES.DIPLOMA_CREATE)}
       />
-      <AdminFiltersContainer
+      <AdminFiltersPanel
         title="Search & Filters"
         icon={<SlidersHorizontal className="size-6" />}
       >
         <AdminDiplomaFilterContent />
-      </AdminFiltersContainer>
+      </AdminFiltersPanel>
       <AdminDiplomaList diplomas={diplomas} isLoading={isLoading} />
     </div>
   );
