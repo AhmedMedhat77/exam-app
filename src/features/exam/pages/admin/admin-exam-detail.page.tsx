@@ -1,4 +1,6 @@
 import { ROUTES } from '@/app/routes';
+import AdminExamDetailHeader from '@/features/exam/components/admin/admin-exam-detail-header';
+import AdminExamDetailInfoCard from '@/features/exam/components/admin/admin-exam-detail-info-card';
 import AdminExamQuestionsCard from '@/features/exam/components/admin/admin-exam-questions-card';
 import {
   IMMUTABLE_QUERY_KEY,
@@ -19,15 +21,13 @@ import BreadCrumb from '@/shared/layouts/dashboard/breadcrumb/BreadCrumb';
 import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';
 
 import { Button } from '@/shared/ui/button';
-import { ArrowLeft, Ban, ExternalLink, Pencil, Trash2 } from 'lucide-react';
-import { useState } from 'react';
+import { ArrowLeft } from 'lucide-react';
 import { useNavigate, useParams, useSearchParams } from 'react-router';
 
 export default function AdminExamDetailPage() {
   const { id = '' } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [imageError, setImageError] = useState(false);
 
   const search = searchParams.get(SEARCH_QUERY_KEY) || undefined;
   const sortBy = (searchParams.get(SORT_BY_KEY) as QuestionSortBy) || undefined;
@@ -152,109 +152,16 @@ export default function AdminExamDetailPage() {
       </div>
 
       {/* Top Controls Bar */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <h1 className="font-mono text-xl font-bold tracking-tight text-gray-900 sm:text-2xl">
-          {exam.title}
-        </h1>
-        <div className="flex items-center gap-2.5">
-          <Button
-            variant="outline"
-            size="sm"
-            className="h-9 w-auto cursor-default gap-1.5 border-gray-200 bg-gray-100 px-3.5 font-mono text-xs font-medium text-gray-700 hover:bg-gray-200"
-          >
-            <Ban className="size-3.5 text-gray-600" />
-            <span>{exam.immutable ? 'Immutable' : 'In-active'}</span>
-          </Button>
-          <Button
-            size="sm"
-            className="h-9 w-auto gap-1.5 bg-blue-600 px-4 font-mono text-xs font-medium text-white hover:bg-blue-700"
-            onClick={() => navigate(`/exams/${exam.id}/manage`)}
-          >
-            <Pencil className="size-3.5" />
-            <span>Edit</span>
-          </Button>
-          <Button
-            size="sm"
-            variant="destructive"
-            className="h-9 w-auto gap-1.5 bg-red-600 px-4 font-mono text-xs font-medium text-white hover:bg-red-700"
-            onClick={handleDelete}
-            disabled={isDeleting}
-          >
-            <Trash2 className="size-3.5" />
-            <span>{isDeleting ? 'Deleting...' : 'Delete'}</span>
-          </Button>
-        </div>
-      </div>
+      <AdminExamDetailHeader
+        title={exam.title}
+        immutable={exam.immutable}
+        isDeleting={isDeleting}
+        onEdit={() => navigate(`/exams/${exam.id}/manage`)}
+        onDelete={handleDelete}
+      />
 
       {/* Exam Detail Info Card */}
-      <div className="space-y-6 rounded-md border border-gray-200 bg-white p-6 shadow-2xs sm:p-8">
-        <div className="space-y-2">
-          <p className="font-mono text-xs font-medium tracking-wide text-gray-400">
-            Image
-          </p>
-          <div className="w-full max-w-sm overflow-hidden rounded-md border border-gray-200 bg-gray-50">
-            {!imageError && exam.image ? (
-              <img
-                src={exam.image}
-                alt={exam.title}
-                className="size-75 w-full object-contain"
-                onError={() => setImageError(true)}
-              />
-            ) : (
-              <div className="flex h-48 w-full items-center justify-center bg-gray-100 font-mono text-xs text-gray-400">
-                No image available
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div className="space-y-1">
-          <p className="font-mono text-xs font-medium tracking-wide text-gray-400">
-            Title
-          </p>
-          <p className="font-mono text-sm font-semibold text-gray-900 sm:text-base">
-            {exam.title}
-          </p>
-        </div>
-
-        <div className="space-y-1">
-          <p className="font-mono text-xs font-medium tracking-wide text-gray-400">
-            Description
-          </p>
-          <p className="font-mono text-xs leading-relaxed text-gray-700 sm:text-sm">
-            {exam.description || 'No description provided.'}
-          </p>
-        </div>
-
-        <div className="space-y-1">
-          <p className="font-mono text-xs font-medium tracking-wide text-gray-400">
-            Diploma
-          </p>
-          <div className="flex items-center gap-1.5 font-mono text-xs font-medium text-gray-800 sm:text-sm">
-            <span>{exam.diploma?.title || 'Full Stack Development'}</span>
-            <ExternalLink className="size-3.5 cursor-pointer text-gray-400 hover:text-blue-600" />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-6 pt-2">
-          <div className="space-y-1">
-            <p className="font-mono text-xs font-medium tracking-wide text-gray-400">
-              Duration
-            </p>
-            <p className="font-mono text-xs font-semibold text-gray-800 sm:text-sm">
-              {exam.duration} Minutes
-            </p>
-          </div>
-          <div className="space-y-1">
-            <p className="font-mono text-xs font-medium tracking-wide text-gray-400">
-              No. of Questions
-            </p>
-            <p className="font-mono text-xs font-semibold text-gray-800 sm:text-sm">
-              {exam.questionsCount || 10}
-            </p>
-          </div>
-        </div>
-      </div>
+      <AdminExamDetailInfoCard exam={exam} />
 
       {/* Exam Questions Section Card */}
       <AdminExamQuestionsCard
