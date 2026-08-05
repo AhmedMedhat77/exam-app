@@ -11,6 +11,8 @@ import {
 import { useDeleteExam } from '@/features/exam/hooks/use-delete-exam';
 import { useGetExamById } from '@/features/exam/hooks/use-get-exam-by-id';
 import type { IExam } from '@/features/exam/types/exams.d';
+import AddQuestionModal from '@/features/question/components/admin/add-question-modal';
+import DeleteQuestionModal from '@/features/question/components/admin/delete-question-modal';
 import { useDeleteQuestion } from '@/features/question/hooks/use-delete-question';
 import useGetExamQuestions from '@/features/question/hooks/use-get-exam-questions';
 import type {
@@ -22,12 +24,17 @@ import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.
 
 import { Button } from '@/shared/ui/button';
 import { ArrowLeft } from 'lucide-react';
+import { useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router';
 
 export default function AdminExamDetailPage() {
   const { id = '' } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const [isAddQuestionOpen, setIsAddQuestionOpen] = useState(false);
+  const [questionToDeleteId, setQuestionToDeleteId] = useState<string | null>(
+    null
+  );
 
   const search = searchParams.get(SEARCH_QUERY_KEY) || undefined;
   const sortBy = (searchParams.get(SORT_BY_KEY) as QuestionSortBy) || undefined;
@@ -40,7 +47,8 @@ export default function AdminExamDetailPage() {
   // ========================== APIS ==========================
   const { data, isLoading, isError } = useGetExamById(id);
   const { mutate: deleteExam, isPending: isDeleting } = useDeleteExam();
-  const { mutate: deleteQuestion } = useDeleteQuestion();
+  const { mutate: deleteQuestion, isPending: isDeletingQuestion } =
+    useDeleteQuestion();
   const { data: examQuestions } = useGetExamQuestions({
     examId: id,
     search,
@@ -80,13 +88,23 @@ export default function AdminExamDetailPage() {
   };
 
   const handleRemoveQuestion = (questionId: string) => {
-    if (confirm('Are you sure you want to delete this question?')) {
-      deleteQuestion(questionId);
-    }
+    setQuestionToDeleteId(questionId);
   };
 
-  const handleAddExam = () => {
-    navigate({ pathname: ROUTES.EXAM_CREATE });
+  const handleConfirmDeleteQuestion = () => {
+    if (!questionToDeleteId) return;
+    deleteQuestion(questionToDeleteId, {
+      onSuccess: () => {
+        setQuestionToDeleteId(null);
+      },
+      onError: () => {
+        setQuestionToDeleteId(null);
+      },
+    });
+  };
+
+  const handleAddQuestion = () => {
+    setIsAddQuestionOpen(true);
   };
 
   // ========================== RENDER ==========================
@@ -166,8 +184,21 @@ export default function AdminExamDetailPage() {
       {/* Exam Questions Section Card */}
       <AdminExamQuestionsCard
         questions={examQuestions?.payload?.questions}
-        onAddQuestion={handleAddExam}
+        onAddQuestion={handleAddQuestion}
         onRemoveQuestion={handleRemoveQuestion}
+      />
+
+      <AddQuestionModal
+        isOpen={isAddQuestionOpen}
+        onClose={() => setIsAddQuestionOpen(false)}
+        examId={id}
+      />
+
+      <DeleteQuestionModal
+        isOpen={!!questionToDeleteId}
+        onClose={() => setQuestionToDeleteId(null)}
+        onConfirm={handleConfirmDeleteQuestion}
+        isDeleting={isDeletingQuestion}
       />
     </div>
   );
