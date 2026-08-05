@@ -21,6 +21,7 @@ import type {
   QuestionSortBy,
   QuestionSortOrder,
 } from '@/features/question/types/questions';
+import DeleteConfirmModal from '@/shared/components/delete-confirm-modal';
 import BreadCrumb from '@/shared/layouts/dashboard/breadcrumb/BreadCrumb';
 import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';
 
@@ -35,6 +36,7 @@ export default function AdminExamDetailPage() {
   const [searchParams] = useSearchParams();
   const [isAddQuestionOpen, setIsAddQuestionOpen] = useState(false);
   const [isToggleImmutableOpen, setIsToggleImmutableOpen] = useState(false);
+  const [isDeleteExamOpen, setIsDeleteExamOpen] = useState(false);
   const [questionToDeleteId, setQuestionToDeleteId] = useState<string | null>(
     null
   );
@@ -82,14 +84,20 @@ export default function AdminExamDetailPage() {
   // ========================== HANDLERS ==========================
 
   const handleDelete = () => {
+    setIsDeleteExamOpen(true);
+  };
+
+  const handleConfirmDeleteExam = () => {
     if (!exam?.id) return;
-    if (confirm(`Are you sure you want to delete "${exam.title}"?`)) {
-      deleteExam(exam.id, {
-        onSuccess: () => {
-          navigate(ROUTES.EXAMS);
-        },
-      });
-    }
+    deleteExam(exam.id, {
+      onSuccess: () => {
+        setIsDeleteExamOpen(false);
+        navigate(ROUTES.EXAMS);
+      },
+      onError: () => {
+        setIsDeleteExamOpen(false);
+      },
+    });
   };
 
   const handleConfirmToggleImmutable = () => {
@@ -229,6 +237,16 @@ export default function AdminExamDetailPage() {
         onConfirm={handleConfirmToggleImmutable}
         currentImmutable={Boolean(exam.immutable)}
         isLoading={isUpdatingImmutable}
+      />
+
+      <DeleteConfirmModal
+        isOpen={isDeleteExamOpen}
+        onClose={() => setIsDeleteExamOpen(false)}
+        onConfirm={handleConfirmDeleteExam}
+        isDeleting={isDeleting}
+        title="Delete Exam"
+        description={`Are you sure you want to delete "${exam.title}"? This action cannot be undone.`}
+        confirmLabel="Delete Exam"
       />
     </div>
   );
