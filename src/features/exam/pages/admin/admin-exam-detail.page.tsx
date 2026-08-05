@@ -3,6 +3,7 @@ import AdminExamQuestionsCard from '@/features/exam/components/admin/admin-exam-
 import { useDeleteExam } from '@/features/exam/hooks/use-delete-exam';
 import { useGetExamById } from '@/features/exam/hooks/use-get-exam-by-id';
 import type { IExam } from '@/features/exam/types/exams.d';
+import useGetExamQuestions from '@/features/question/hooks/use-get-exam-questions';
 import BreadCrumb from '@/shared/layouts/dashboard/breadcrumb/BreadCrumb';
 import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';
 
@@ -36,9 +37,12 @@ export default function AdminExamDetailPage() {
   const navigate = useNavigate();
   const [imageError, setImageError] = useState(false);
 
+  // ========================== APIS ==========================
   const { data, isLoading, isError } = useGetExamById(id);
   const { mutate: deleteExam, isPending: isDeleting } = useDeleteExam();
+  const { data: examQuestions } = useGetExamQuestions({ examId: id });
 
+  // ========================== MEMOS ==========================
   const examPayload = data?.payload;
   const fetchedExam: IExam | undefined =
     examPayload && 'exam' in examPayload
@@ -47,12 +51,15 @@ export default function AdminExamDetailPage() {
 
   const exam: IExam = fetchedExam || MOCK_EXAM;
 
+  // ========================== USEBREADCRUMB ==========================
   useBreadcrumb({
     items: [
       { title: 'Exams', href: ROUTES.EXAMS },
       { title: exam.title || 'Exam Details' },
     ],
   });
+
+  // ========================== HANDLERS ==========================
 
   const handleDelete = () => {
     if (!exam?.id) return;
@@ -65,6 +72,7 @@ export default function AdminExamDetailPage() {
     }
   };
 
+  // ========================== RENDER ==========================
   if (isLoading && !fetchedExam && id !== 'final-fullstack-exam') {
     return (
       <div className="flex h-64 items-center justify-center font-mono text-sm text-gray-500">
@@ -211,7 +219,11 @@ export default function AdminExamDetailPage() {
       </div>
 
       {/* Exam Questions Section Card */}
-      <AdminExamQuestionsCard />
+      <AdminExamQuestionsCard
+        questions={examQuestions?.payload?.questions}
+        onAddQuestion={() => {}}
+        onRemoveQuestion={() => {}}
+      />
     </div>
   );
 }
