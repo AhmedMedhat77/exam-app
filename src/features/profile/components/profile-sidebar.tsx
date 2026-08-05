@@ -12,7 +12,7 @@ export default function ProfileSidebar() {
     <aside className="flex w-70.5 flex-col justify-between border-r border-gray-100 bg-white p-6 pr-6">
       <nav className="space-y-1.5">
         {Object.values(PROFILE_ROUTES).map((route) => {
-          const isActive = location.pathname.includes(route.path);
+          const isActive = location.pathname.startsWith(route.path);
 
           return (
             <ProfileSidebarItem
