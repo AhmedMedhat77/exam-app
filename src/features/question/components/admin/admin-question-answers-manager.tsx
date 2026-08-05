@@ -5,6 +5,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -190,6 +191,12 @@ export default function AdminQuestionAnswersManager({
             </TableRow>
           ))}
         </TableBody>
+        <TableFooter>
+          <TableRow className="flex w-full flex-1 items-center">
+            <Input className="w-full flex-1" />
+            <Button>+ Add Answer</Button>
+          </TableRow>
+        </TableFooter>
       </Table>
 
       {/* Bottom Input Row for Adding New Answer (Appears when isAdding is true and answers < 4) */}
