@@ -14,19 +14,19 @@ import { Check, CheckCheck, Plus, Trash2, X } from 'lucide-react';
 import { useState } from 'react';
 import { get, useFormContext, useWatch } from 'react-hook-form';
 
-interface AdminQuestionAnswersManagerProps {
+interface QuestionAnswersFieldProps {
   name?: string;
   answers?: ICreateAnswerPayload[];
   onChange?: (answers: ICreateAnswerPayload[]) => void;
   error?: string;
 }
 
-export default function SingleQuestionTableForm({
+export default function QuestionAnswersField({
   name = 'answers',
   answers: propAnswers,
   onChange: propOnChange,
   error: propError,
-}: AdminQuestionAnswersManagerProps = {}) {
+}: QuestionAnswersFieldProps = {}) {
   const formContext = useFormContext();
 
   const watchedAnswers = useWatch({

@@ -4,10 +4,10 @@ import { useDeleteQuestion } from '@/features/question/hooks/use-delete-question
 import { useGetQuestionById } from '@/features/question/hooks/use-get-question-by-id';
 import { useUpdateQuestionImmutable } from '@/features/question/hooks/use-update-question-immutable';
 import type { IQuestion } from '@/features/question/types/questions';
-import DeleteConfirmModal from '@/shared/components/delete-confirm-modal';
-import ToggleImmutableModal from '@/shared/components/toggle-immutable-modal';
-import BreadCrumb from '@/shared/layouts/dashboard/breadcrumb/BreadCrumb';
-import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';
+import DeleteConfirmDialog from '@/shared/components/delete-confirm-dialog';
+import ImmutableStatusDialog from '@/shared/components/immutable-status-dialog';
+import Breadcrumb from '@/shared/layouts/dashboard/breadcrumb/breadcrumb-view';
+import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/use-breadcrumb';
 import { Button } from '@/shared/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import { useState } from 'react';
@@ -18,7 +18,7 @@ export default function AdminQuestionDetailsPage() {
   const navigate = useNavigate();
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isToggleImmutableModalOpen, setIsToggleImmutableModalOpen] =
+  const [isImmutableStatusDialogOpen, setIsImmutableStatusDialogOpen] =
     useState(false);
 
   // ====================== APIS ======================
@@ -67,7 +67,7 @@ export default function AdminQuestionDetailsPage() {
       },
       {
         onSuccess: () => {
-          setIsToggleImmutableModalOpen(false);
+          setIsImmutableStatusDialogOpen(false);
         },
       }
     );
@@ -106,7 +106,7 @@ export default function AdminQuestionDetailsPage() {
   return (
     <>
       {/* Delete Question Modal */}
-      <DeleteConfirmModal
+      <DeleteConfirmDialog
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
         onConfirm={handleConfirmDelete}
@@ -116,9 +116,9 @@ export default function AdminQuestionDetailsPage() {
         confirmLabel="Delete Question"
       />
 
-      <ToggleImmutableModal
-        isOpen={isToggleImmutableModalOpen}
-        onClose={() => setIsToggleImmutableModalOpen(false)}
+      <ImmutableStatusDialog
+        isOpen={isImmutableStatusDialogOpen}
+        onClose={() => setIsImmutableStatusDialogOpen(false)}
         onConfirm={handleToggleImmutable}
         currentImmutable={question.immutable}
         entityName={question.text}
@@ -128,7 +128,7 @@ export default function AdminQuestionDetailsPage() {
       <div className="max-w-full space-y-6">
         {/* Top Header Navigation */}
         <div className="-mx-4 -mt-7 border-b border-gray-100 bg-white px-4 py-5">
-          <BreadCrumb
+          <Breadcrumb
             items={[
               { title: 'Exams', href: ROUTES.EXAMS },
               {
@@ -142,7 +142,7 @@ export default function AdminQuestionDetailsPage() {
             question={question}
             onDelete={() => setIsDeleteModalOpen(true)}
             onEdit={() => navigate(`/questions/${question.id}/manage`)}
-            onToggleImmutable={() => setIsToggleImmutableModalOpen(true)}
+            onToggleImmutable={() => setIsImmutableStatusDialogOpen(true)}
           />
         </div>
 

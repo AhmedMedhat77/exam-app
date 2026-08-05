@@ -2,7 +2,7 @@ import { Button } from '@/shared/ui/button';
 import { CopyPlus, Save, X } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
-interface IAdminHeader {
+interface AdminQuestionFormHeaderProps {
   isBulkMode: boolean;
   isEdit: boolean;
   isSubmitting: boolean;
@@ -10,13 +10,13 @@ interface IAdminHeader {
   handleSubmit: () => void;
 }
 
-export default function AdminManageHeader({
+export default function AdminQuestionFormHeader({
   isBulkMode,
   isEdit,
   isSubmitting,
   handleBulkClick,
   handleSubmit,
-}: IAdminHeader) {
+}: AdminQuestionFormHeaderProps) {
   const navigate = useNavigate();
   return (
     <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">

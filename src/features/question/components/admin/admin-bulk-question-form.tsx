@@ -1,6 +1,6 @@
 import { useGetExamsSelect } from '@/features/exam/hooks/use-get-exams-select';
 import type { IExam } from '@/features/exam/types/exams.d';
-import SingleQuestionTableForm from '@/features/question/components/admin/single-question-table-form';
+import QuestionAnswersField from '@/features/question/components/admin/question-answers-field';
 import type { IBulkQuestionFormValues } from '@/features/question/schemas/question.schema';
 import { Button } from '@/shared/ui/button';
 import { Field, FieldError, FieldLabel } from '@/shared/ui/field';
@@ -193,9 +193,7 @@ export default function AdminBulkQuestionForm() {
           </Field>
 
           {/* Active Question Answers Manager */}
-          <SingleQuestionTableForm
-            name={`questions.${activeTabIndex}.answers`}
-          />
+          <QuestionAnswersField name={`questions.${activeTabIndex}.answers`} />
         </div>
       </div>
     </div>

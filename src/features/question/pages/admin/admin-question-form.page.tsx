@@ -1,8 +1,8 @@
 import { ROUTES } from '@/app/routes';
 import AdminBulkQuestionForm from '@/features/question/components/admin/admin-bulk-question-form';
-import AdminManageHeader from '@/features/question/components/admin/admin-manage-header';
+import AdminQuestionFormHeader from '@/features/question/components/admin/admin-question-form-header';
 import AdminQuestionInfoCard from '@/features/question/components/admin/admin-question-info-card';
-import SingleQuestionTableForm from '@/features/question/components/admin/single-question-table-form';
+import QuestionAnswersField from '@/features/question/components/admin/question-answers-field';
 import { useCreateBulkQuestions } from '@/features/question/hooks/use-create-bulk-questions';
 import { useCreateQuestion } from '@/features/question/hooks/use-create-question';
 import { useGetQuestionById } from '@/features/question/hooks/use-get-question-by-id';
@@ -19,9 +19,9 @@ import type {
   ICreateAnswerPayload,
   IQuestion,
 } from '@/features/question/types/questions';
-import CustomError from '@/shared/components/custom-error';
-import BreadCrumb from '@/shared/layouts/dashboard/breadcrumb/BreadCrumb';
-import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';
+import ErrorAlert from '@/shared/components/error-alert';
+import Breadcrumb from '@/shared/layouts/dashboard/breadcrumb/breadcrumb-view';
+import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/use-breadcrumb';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -188,7 +188,7 @@ export default function AdminQuestionFormPage() {
     <div className="max-w-full space-y-6">
       {/* Top Header Navigation */}
       <div className="-mx-4 -mt-7 flex flex-col justify-between gap-4 border-b border-gray-100 bg-white px-4 py-5 sm:flex-row sm:items-center">
-        <BreadCrumb
+        <Breadcrumb
           items={[
             { title: 'Questions', href: ROUTES.EXAMS },
             { title: isEdit ? 'Edit Question' : 'Create New Question' },
@@ -197,7 +197,7 @@ export default function AdminQuestionFormPage() {
       </div>
 
       {/* Header */}
-      <AdminManageHeader
+      <AdminQuestionFormHeader
         handleBulkClick={() => setIsBulkMode((prev) => !prev)}
         handleSubmit={handleSingleSubmit}
         isBulkMode={isBulkMode}
@@ -205,7 +205,7 @@ export default function AdminQuestionFormPage() {
         isSubmitting={isSubmitting}
       />
 
-      <CustomError error={apiError} />
+      <ErrorAlert error={apiError} />
 
       {/* Bulk mode Form */}
       {isBulkMode && !isEdit && (
@@ -223,7 +223,7 @@ export default function AdminQuestionFormPage() {
             {/* Card 1: Question Information */}
             <AdminQuestionInfoCard />
             {/* Card 2: Question Answers */}
-            <SingleQuestionTableForm />
+            <QuestionAnswersField />
           </form>
         </FormProvider>
       )}
