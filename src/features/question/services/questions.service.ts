@@ -17,4 +17,12 @@ export default class QuestionService {
 
     return data;
   };
+
+  static deleteQuestionApi = async (
+    id: string
+  ): Promise<IApiResponse<{ message?: string }>> => {
+    const { data } = await axiosInstance.delete(`${BASE_RUL}/${id}`);
+
+    return data;
+  };
 }
