@@ -9,24 +9,10 @@ export function useCreateBulkQuestions() {
 
   return useMutation({
     mutationFn: async (payload: ICreateBulkQuestionsPayload) => {
-      // Promise.all to create questions sequentially/in parallel for the given exam
-      const results = await Promise.all(
-        payload.questions.map((q) =>
-          QuestionService.createQuestionApi({
-            examId: payload.examId,
-            text: q.text,
-            answers: q.answers,
-          })
-        )
-      );
-      return results;
+      await QuestionService.createQuestionBulkApi(payload);
     },
-    onSuccess: (data) => {
-      toastUtil(
-        `${data.length} question(s) created successfully`,
-        undefined,
-        'success'
-      );
+    onSuccess: () => {
+      toastUtil(`Question(s) created successfully`, undefined, 'success');
       queryClient.invalidateQueries({
         queryKey: QUESTION_KEYS.allExamQuestions(),
       });

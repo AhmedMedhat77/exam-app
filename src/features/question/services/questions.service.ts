@@ -1,4 +1,5 @@
 import type {
+  ICreateBulkQuestionsPayload,
   ICreateQuestionPayload,
   IExamQuestionParams,
   IQuestion,
@@ -41,6 +42,16 @@ export default class QuestionService {
   ): Promise<IApiResponse<{ question: IQuestion }>> => {
     const { data } = await axiosInstance.post(BASE_URL, payload);
     return data;
+  };
+
+  static createQuestionBulkApi = async (
+    payload: ICreateBulkQuestionsPayload
+  ): Promise<IApiResponse<{ questions: IQuestion[] }>> => {
+    const response = await axiosInstance.post(
+      `${BASE_URL}/exam/${payload.examId}/bulk`,
+      payload
+    );
+    return response.data;
   };
 
   static updateQuestionApi = async (
