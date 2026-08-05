@@ -22,7 +22,7 @@ import { useNavigate, useSearchParams } from 'react-router';
 
 const LIMIT = 12;
 
-export default function AdminExamsPage() {
+export default function AdminExamListPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 

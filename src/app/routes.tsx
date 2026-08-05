@@ -7,18 +7,18 @@ import EmailPage from '@/features/auth/pages/registration/email.page';
 import PasswordPage from '@/features/auth/pages/registration/password.page';
 import UserInfoPage from '@/features/auth/pages/registration/user-info.page';
 import VerifyOtpPage from '@/features/auth/pages/registration/verify-otp.page';
-import AdminDiplomaDetailPage from '@/features/diploma/pages/admin-diploma-detail.page';
-import AdminDiplomaManagePage from '@/features/diploma/pages/admin-diploma-manage.page';
-import AdminDiplomaPage from '@/features/diploma/pages/admin-diploma.page';
-import UserDiplomaPage from '@/features/diploma/pages/user-diploma.page';
-import AdminExamDetailPage from '@/features/exam/pages/admin/admin-exam-detail.page';
-import AdminExamManagePage from '@/features/exam/pages/admin/admin-exam-manage.page';
-import AdminExamsPage from '@/features/exam/pages/admin/admin-exams.page';
-import UserExamDetailPage from '@/features/exam/pages/user/user-exam-detail.page';
-import ExamsPage from '@/features/exam/pages/user/user-exams.page';
+import AdminDiplomaDetailsPage from '@/features/diploma/pages/admin-diploma-details.page';
+import AdminDiplomaFormPage from '@/features/diploma/pages/admin-diploma-form.page';
+import AdminDiplomaListPage from '@/features/diploma/pages/admin-diploma-list.page';
+import UserDiplomaListPage from '@/features/diploma/pages/user-diploma-list.page';
+import AdminExamDetailsPage from '@/features/exam/pages/admin/admin-exam-details.page';
+import AdminExamFormPage from '@/features/exam/pages/admin/admin-exam-form.page';
+import AdminExamListPage from '@/features/exam/pages/admin/admin-exam-list.page';
+import UserExamDetailsPage from '@/features/exam/pages/user/user-exam-details.page';
+import UserExamListPage from '@/features/exam/pages/user/user-exam-list.page';
 import UserProfileLayout from '@/features/profile/layout/profile-layout';
-import AdminQuestionDetailPage from '@/features/question/pages/admin/admin-question-detail.page';
-import AdminQuestionManagePage from '@/features/question/pages/admin/admin-question-manage.page';
+import AdminQuestionDetailsPage from '@/features/question/pages/admin/admin-question-details.page';
+import AdminQuestionFormPage from '@/features/question/pages/admin/admin-question-form.page';
 import UserSubmissionResultPage from '@/features/submission/pages/user-submission-result.page';
 import { BookOpenCheck, GraduationCap, Logs, UserRound } from 'lucide-react';
 
@@ -69,12 +69,12 @@ export const USER_ROUTES: route[] = [
     title: 'Diplomas',
     path: ROUTES.DIPLOMAS,
     icon: <GraduationCap />,
-    element: UserDiplomaPage,
+    element: UserDiplomaListPage,
   },
   {
     title: 'Diploma Detail',
     path: ROUTES.DIPLOMA_DETAIL,
-    element: AdminDiplomaDetailPage,
+    element: AdminDiplomaDetailsPage,
     hidden: true,
   },
   {
@@ -86,13 +86,13 @@ export const USER_ROUTES: route[] = [
   {
     title: 'Exams',
     path: ROUTES.EXAMS,
-    element: ExamsPage,
+    element: UserExamListPage,
     hidden: true,
   },
   {
     title: 'Exam Detail',
     path: ROUTES.EXAM_DETAIL,
-    element: UserExamDetailPage,
+    element: UserExamDetailsPage,
     hidden: true,
   },
   {
@@ -108,18 +108,18 @@ export const ADMIN_ROUTES: route[] = [
     title: 'Diplomas',
     path: ROUTES.DIPLOMAS,
     icon: <GraduationCap />,
-    element: AdminDiplomaPage,
+    element: AdminDiplomaListPage,
   },
   {
     title: 'Diploma Detail',
     path: ROUTES.DIPLOMA_DETAIL,
-    element: AdminDiplomaDetailPage,
+    element: AdminDiplomaDetailsPage,
     hidden: true,
   },
   {
     title: 'Diploma Manage',
     path: ROUTES.DIPLOMA_MANAGE,
-    element: AdminDiplomaManagePage,
+    element: AdminDiplomaFormPage,
     hidden: true,
   },
 
@@ -127,31 +127,31 @@ export const ADMIN_ROUTES: route[] = [
     title: 'Exams',
     path: ROUTES.EXAMS,
     icon: <BookOpenCheck />,
-    element: AdminExamsPage,
+    element: AdminExamListPage,
   },
   {
     title: 'Exam Detail',
     path: ROUTES.EXAM_DETAIL,
-    element: AdminExamDetailPage,
+    element: AdminExamDetailsPage,
     hidden: true,
   },
   {
     title: 'Exam Manage',
     path: ROUTES.EXAM_MANAGE,
-    element: AdminExamManagePage,
+    element: AdminExamFormPage,
     hidden: true,
   },
 
   {
     title: 'Question Detail',
     path: ROUTES.QUESTION_DETAIL,
-    element: AdminQuestionDetailPage,
+    element: AdminQuestionDetailsPage,
     hidden: true,
   },
   {
     title: 'Question Manage',
     path: ROUTES.QUESTION_MANAGE,
-    element: AdminQuestionManagePage,
+    element: AdminQuestionFormPage,
     hidden: true,
   },
 

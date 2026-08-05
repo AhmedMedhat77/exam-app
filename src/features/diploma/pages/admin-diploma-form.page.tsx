@@ -11,7 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router';
 
-export default function AdminDiplomaManagePage() {
+export default function AdminDiplomaFormPage() {
   const { id = '' } = useParams<{ id: string }>();
   const navigate = useNavigate();
 

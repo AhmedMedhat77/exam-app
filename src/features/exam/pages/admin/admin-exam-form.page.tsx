@@ -31,7 +31,7 @@ import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate, useParams, useSearchParams } from 'react-router';
 
-export default function AdminExamManagePage() {
+export default function AdminExamFormPage() {
   const { id = '' } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [questionToDeleteId, setQuestionToDeleteId] = useState<string | null>(

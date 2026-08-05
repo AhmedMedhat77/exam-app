@@ -18,7 +18,7 @@ import { useNavigate, useSearchParams } from 'react-router';
 
 const LIMIT = 12;
 
-export default function AdminDiplomaPage() {
+export default function AdminDiplomaListPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 

@@ -27,7 +27,7 @@ import { ArrowLeft } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router';
 
-export default function AdminExamDetailPage() {
+export default function AdminExamDetailsPage() {
   const { id = '' } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();

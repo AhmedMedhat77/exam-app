@@ -6,7 +6,7 @@ import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.
 import { GraduationCap } from 'lucide-react';
 import { useSearchParams } from 'react-router';
 
-export default function ExamsPage() {
+export default function UserExamListPage() {
   const [searchParams] = useSearchParams();
   const diplomaId = searchParams.get('diplomaId') || '';
 

@@ -27,7 +27,7 @@ import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate, useParams, useSearchParams } from 'react-router';
 
-export default function AdminQuestionManagePage() {
+export default function AdminQuestionFormPage() {
   const { id = '' } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
   const defaultExamId = searchParams.get('examId') || '';

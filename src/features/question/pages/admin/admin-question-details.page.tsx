@@ -13,7 +13,7 @@ import { ArrowLeft } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
-export default function AdminQuestionDetailPage() {
+export default function AdminQuestionDetailsPage() {
   const { id = '' } = useParams<{ id: string }>();
   const navigate = useNavigate();
 

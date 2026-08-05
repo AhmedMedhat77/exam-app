@@ -11,7 +11,7 @@ import { ArrowLeft, Loader2 } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
-export default function UserExamDetailPage() {
+export default function UserExamDetailsPage() {
   const { id = '' } = useParams<{ id: string }>();
   const navigate = useNavigate();
 

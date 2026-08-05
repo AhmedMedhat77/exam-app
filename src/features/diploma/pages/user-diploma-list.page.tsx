@@ -4,7 +4,7 @@ import { GraduationCap } from 'lucide-react';
 
 import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/breadcrumb.hooks';
 
-export default function UserDiplomaPage() {
+export default function UserDiplomaListPage() {
   useBreadcrumb({
     items: [{ title: 'Diplomas', href: '/' }],
   });
