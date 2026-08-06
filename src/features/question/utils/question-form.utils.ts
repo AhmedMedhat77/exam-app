@@ -74,3 +74,23 @@ export function toQuestionFormValues(question: IQuestion): IQuestionFormValues {
     })),
   };
 }
+
+export function getFormErrorMessages(errors: Record<string, any>): string[] {
+  const messages: string[] = [];
+
+  function extract(obj: Record<string, any>) {
+    if (!obj || typeof obj !== 'object') return;
+    if (typeof obj.message === 'string' && obj.message) {
+      messages.push(obj.message);
+    }
+    for (const key of Object.keys(obj)) {
+      if (key === 'ref') continue;
+      if (typeof obj[key] === 'object' && obj[key] !== null) {
+        extract(obj[key]);
+      }
+    }
+  }
+
+  extract(errors);
+  return Array.from(new Set(messages));
+}

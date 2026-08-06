@@ -14,5 +14,6 @@ export const useGetAllExams = (params?: IGetExamsParams) => {
       const totalPages = lastPage?.payload?.metadata?.totalPages ?? 1;
       return currentPage < totalPages ? currentPage + 1 : undefined;
     },
+    staleTime: 1000 * 60 * 5,
   });
 };

@@ -1,5 +1,6 @@
 import { ROUTES } from '@/app/routes';
 import AdminQuestionFormHeader from '@/features/question/components/admin/admin-question-form-header';
+import AdminQuestionInfoCard from '@/features/question/components/admin/admin-question-info-card';
 import BulkQuestionForm from '@/features/question/components/admin/bulk-question-form';
 import SingleQuestionForm from '@/features/question/components/admin/single-question-form';
 import {
@@ -23,6 +24,7 @@ import type { IQuestion } from '@/features/question/types/questions';
 import {
   createBulkQuestionDefaults,
   createSingleQuestionDefaults,
+  getFormErrorMessages,
   toBulkQuestionPayload,
   toQuestionFormValues,
   toQuestionPayload,
@@ -32,7 +34,7 @@ import Breadcrumb from '@/shared/layouts/dashboard/breadcrumb/breadcrumb-view';
 import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/use-breadcrumb';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate, useParams, useSearchParams } from 'react-router';
 
 export default function AdminQuestionFormPage() {
@@ -114,6 +116,22 @@ export default function AdminQuestionFormPage() {
     defaultValues: createBulkQuestionDefaults(defaultExamId),
   });
 
+  // Keep examId in sync between single and bulk forms
+  const singleExamId = singleForm.watch('examId');
+  const bulkExamId = bulkForm.watch('examId');
+
+  useEffect(() => {
+    if (singleExamId && singleExamId !== bulkForm.getValues('examId')) {
+      bulkForm.setValue('examId', singleExamId, { shouldValidate: true });
+    }
+  }, [singleExamId, bulkForm]);
+
+  useEffect(() => {
+    if (bulkExamId && bulkExamId !== singleForm.getValues('examId')) {
+      singleForm.setValue('examId', bulkExamId, { shouldValidate: true });
+    }
+  }, [bulkExamId, singleForm]);
+
   // ========================== Breadcrumb ==========================
   useBreadcrumb({
     items: [
@@ -130,6 +148,12 @@ export default function AdminQuestionFormPage() {
     ? isCreatingBulk
     : isCreatingSingle || isUpdatingSingle;
   const apiError = isBulkMode ? bulkError : createError || updateError;
+
+  const activeForm = isBulkMode ? bulkForm : singleForm;
+  const formValidationErrors =
+    activeForm.formState.submitCount > 0
+      ? getFormErrorMessages(activeForm.formState.errors)
+      : [];
 
   // ========================== Form handlers ==========================
   const handleSingleSubmit = singleForm.handleSubmit((values) => {
@@ -215,6 +239,21 @@ export default function AdminQuestionFormPage() {
       />
 
       <ErrorAlert error={apiError} />
+
+      {formValidationErrors.length > 0 && (
+        <ErrorAlert>
+          <div className="flex flex-col items-center gap-1">
+            {formValidationErrors.map((msg, idx) => (
+              <span key={idx}>{msg}</span>
+            ))}
+          </div>
+        </ErrorAlert>
+      )}
+
+      {/* Shared Question Info Card (renders continuously so ExamDropDown doesn't unmount/refetch) */}
+      <FormProvider {...((isBulkMode ? bulkForm : singleForm) as any)}>
+        <AdminQuestionInfoCard mode={mode} />
+      </FormProvider>
 
       {/* Bulk mode Form */}
       {isBulkMode ? (
