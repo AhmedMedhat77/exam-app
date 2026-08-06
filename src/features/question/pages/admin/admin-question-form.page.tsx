@@ -32,6 +32,7 @@ import {
 import ErrorAlert from '@/shared/components/error-alert';
 import Breadcrumb from '@/shared/layouts/dashboard/breadcrumb/breadcrumb-view';
 import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/use-breadcrumb';
+import toastUtil from '@/shared/lib/toast';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -170,18 +171,8 @@ export default function AdminQuestionFormPage() {
       );
     } else {
       createQuestion(payload, {
-        onSuccess: (res) => {
-          const newQ =
-            res?.payload && 'question' in res.payload
-              ? res.payload.question
-              : (res?.payload as IQuestion | undefined);
-          if (newQ?.id) {
-            navigate(`/questions/${newQ.id}`);
-          } else if (values.examId) {
-            navigate(`/exams/${values.examId}`);
-          } else {
-            navigate(ROUTES.EXAMS);
-          }
+        onSuccess: () => {
+          toastUtil('Created Successfully', 'success');
         },
       });
     }
@@ -191,11 +182,7 @@ export default function AdminQuestionFormPage() {
   const handleBulkSubmit = bulkForm.handleSubmit((values) => {
     createBulkQuestions(toBulkQuestionPayload(values), {
       onSuccess: () => {
-        if (values.examId) {
-          navigate(`/exams/${values.examId}`);
-        } else {
-          navigate(ROUTES.EXAMS);
-        }
+        toastUtil('Created Successfully', 'success');
       },
     });
   });

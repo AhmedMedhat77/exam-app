@@ -4,8 +4,8 @@ export type ToastType = 'success' | 'error' | 'warning' | 'info';
 
 export default function toastUtil(
   message: string,
-  description?: string,
-  type: ToastType = 'info'
+  type: ToastType = 'success',
+  description?: string
 ) {
   if (!message) return;
 
