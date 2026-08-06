@@ -1,4 +1,3 @@
-import { useGetDiplomas } from '@/features/diploma/hooks/use-get-diploma';
 import type { ExamFormValues } from '@/features/exam/schemas/exam.schema';
 import DiplomaDropDown from '@/shared/components/diploma-dropdown';
 import CustomInput from '@/shared/ui/custom-input';
@@ -12,13 +11,6 @@ export default function AdminExamForm() {
     control,
     formState: { errors },
   } = useFormContext<ExamFormValues>();
-
-  const { data: diplomaData } = useGetDiplomas();
-  const diplomas = diplomaData?.payload?.data ?? [];
-  const diplomaItems = diplomas.map((d) => ({
-    value: d.id,
-    label: d.title,
-  }));
 
   return (
     <div className="w-full overflow-hidden rounded-md border border-gray-200 bg-white shadow-2xs">
@@ -78,7 +70,7 @@ export default function AdminExamForm() {
                 {...register('description')}
                 rows={4}
                 placeholder="Comprehensive exam covering all full stack development topics in this diploma."
-                className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 font-mono text-xs text-gray-900 transition-colors outline-none hover:border-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                className="w-full resize-none rounded-md border border-gray-200 bg-white px-3 py-2 font-mono text-xs text-gray-900 transition-colors outline-none hover:border-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 sm:text-sm"
               />
               {errors.description && (
                 <span className="font-mono text-xs text-red-500">
@@ -96,7 +88,6 @@ export default function AdminExamForm() {
               label="Duration (min)"
               type="number"
               min={1}
-              // max={300}
               {...register('duration')}
               error={errors.duration?.message}
               placeholder="20"
