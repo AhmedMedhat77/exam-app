@@ -1,5 +1,5 @@
 import { ROUTES } from '@/app/routes';
-import AdminExamInformationCard from '@/features/exam/components/admin/admin-exam-information-card';
+import AdminExamForm from '@/features/exam/components/admin/admin-exam-form';
 import AdminExamQuestionsTable from '@/features/exam/components/admin/admin-exam-questions-table';
 import {
   IMMUTABLE_QUERY_KEY,
@@ -250,7 +250,7 @@ export default function AdminExamFormPage() {
         <ErrorAlert error={apiError} />
 
         {/* Section 1: Exam Information Card */}
-        <AdminExamInformationCard />
+        <AdminExamForm />
 
         {/* Section 2: Exam Questions Card */}
         {id && (

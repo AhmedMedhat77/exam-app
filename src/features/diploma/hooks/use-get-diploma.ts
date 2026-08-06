@@ -12,7 +12,7 @@ export function useGetDiplomas(
   });
 }
 
-export function useGetUserDiplomas(
+export function useGetPaginatedDiplomas(
   params: IGetDiplomaParams = { page: 1, limit: 10 }
 ) {
   return useInfiniteQuery({

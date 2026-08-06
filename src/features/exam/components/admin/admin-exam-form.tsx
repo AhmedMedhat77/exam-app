@@ -1,18 +1,12 @@
 import { useGetDiplomas } from '@/features/diploma/hooks/use-get-diploma';
 import type { ExamFormValues } from '@/features/exam/schemas/exam.schema';
+import DiplomaDropDown from '@/shared/components/diploma-dropdown';
 import CustomInput from '@/shared/ui/custom-input';
 import { Field, FieldLabel } from '@/shared/ui/field';
 import FileUpload from '@/shared/ui/file-upload';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/shared/ui/select';
 import { Controller, useFormContext } from 'react-hook-form';
 
-export default function AdminExamInformationCard() {
+export default function AdminExamForm() {
   const {
     register,
     control,
@@ -51,38 +45,7 @@ export default function AdminExamInformationCard() {
 
           {/* Diploma Select */}
           <div className="flex flex-col">
-            <Controller
-              name="diplomaId"
-              control={control}
-              render={({ field }) => (
-                <Field className="flex flex-col gap-1.5">
-                  <FieldLabel className="font-mono text-xs font-medium text-gray-700">
-                    Diploma
-                  </FieldLabel>
-                  <Select
-                    value={field.value || ''}
-                    onValueChange={field.onChange}
-                    items={diplomaItems}
-                  >
-                    <SelectTrigger className="h-9 w-full rounded-md border-gray-200 bg-white font-mono text-xs text-gray-800 focus:ring-1 focus:ring-blue-500 sm:text-sm">
-                      <SelectValue placeholder="Select Diploma" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {diplomas.map((d) => (
-                        <SelectItem key={d.id} value={d.id}>
-                          {d.title}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  {errors.diplomaId && (
-                    <span className="font-mono text-xs text-red-500">
-                      {errors.diplomaId.message}
-                    </span>
-                  )}
-                </Field>
-              )}
-            />
+            <DiplomaDropDown control={control} name="diplomaId" />
           </div>
         </div>
 

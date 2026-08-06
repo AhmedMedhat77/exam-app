@@ -1,6 +1,6 @@
 import { ROUTES } from '@/app/routes';
 import UserDiplomaCard from '@/features/diploma/components/user/user-diploma-card';
-import { useGetUserDiplomas } from '@/features/diploma/hooks/use-get-diploma';
+import { useGetPaginatedDiplomas } from '@/features/diploma/hooks/use-get-diploma';
 import UserDiplomaSkeletonCard from '@/features/diploma/skeletons/user-diploma-skeleton-card';
 import { ChevronDown, Loader } from 'lucide-react';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -15,7 +15,7 @@ export default function UserDiplomaList() {
     hasNextPage,
     isError,
     error,
-  } = useGetUserDiplomas({
+  } = useGetPaginatedDiplomas({
     limit: 3,
   });
 
