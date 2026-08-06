@@ -19,8 +19,8 @@ import type {
   QuestionSortBy,
   QuestionSortOrder,
 } from '@/features/question/types/questions';
-import ErrorAlert from '@/shared/components/error-alert';
 import DeleteConfirmDialog from '@/shared/components/delete-confirm-dialog';
+import ErrorAlert from '@/shared/components/error-alert';
 import Breadcrumb from '@/shared/layouts/dashboard/breadcrumb/breadcrumb-view';
 import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/use-breadcrumb';
 import { UploadService } from '@/shared/services/upload.service';
@@ -253,13 +253,12 @@ export default function AdminExamFormPage() {
         <AdminExamForm />
 
         {/* Section 2: Exam Questions Card */}
-        {id && (
-          <AdminExamQuestionsTable
-            questions={examQuestions?.payload?.questions}
-            onRemoveQuestion={handleRemoveQuestion}
-            onAddQuestion={handleAddQuestion}
-          />
-        )}
+
+        <AdminExamQuestionsTable
+          questions={examQuestions?.payload?.questions}
+          onRemoveQuestion={handleRemoveQuestion}
+          onAddQuestion={handleAddQuestion}
+        />
       </form>
 
       {id && (
