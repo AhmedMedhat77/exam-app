@@ -16,7 +16,7 @@ export function useUpdateQuestion() {
     mutationFn: ({ id, payload }: UpdateQuestionArgs) =>
       QuestionService.updateQuestionApi(id, payload),
     onSuccess: (_, { id }) => {
-      toastUtil('Question updated successfully', undefined, 'success');
+      toastUtil('Question updated successfully', 'success');
       queryClient.invalidateQueries({
         queryKey: QUESTION_KEYS.questionDetail(id),
       });

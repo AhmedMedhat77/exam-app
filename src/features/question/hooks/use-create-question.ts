@@ -11,7 +11,7 @@ export function useCreateQuestion() {
     mutationFn: (payload: ICreateQuestionPayload) =>
       QuestionService.createQuestionApi(payload),
     onSuccess: () => {
-      toastUtil('Question created successfully', undefined, 'success');
+      toastUtil('Question created successfully', 'success');
       queryClient.invalidateQueries({
         queryKey: QUESTION_KEYS.allExamQuestions(),
       });

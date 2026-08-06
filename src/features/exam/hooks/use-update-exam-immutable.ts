@@ -10,7 +10,7 @@ export function useUpdateExamImmutable() {
     mutationFn: ({ id, immutable }: { id: string; immutable: boolean }) =>
       ExamsService.updateImmutableApi(id, immutable),
     onSuccess: (_, { id }) => {
-      toastUtil('Exam immutability updated', undefined, 'success');
+      toastUtil('Exam immutability updated', 'success');
       queryClient.invalidateQueries({
         queryKey: [EXAMS_KEY.all()[0]],
       });

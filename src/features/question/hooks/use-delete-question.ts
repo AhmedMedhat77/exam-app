@@ -9,7 +9,7 @@ export function useDeleteQuestion() {
   return useMutation({
     mutationFn: (id: string) => QuestionService.deleteQuestionApi(id),
     onSuccess: () => {
-      toastUtil('Question deleted successfully', undefined, 'success');
+      toastUtil('Question deleted successfully', 'success');
       queryClient.invalidateQueries({
         queryKey: QUESTION_KEYS.allExamQuestions(),
       });

@@ -10,7 +10,7 @@ export function useUpdateQuestionImmutable() {
     mutationFn: ({ id, immutable }: { id: string; immutable: boolean }) =>
       QuestionService.updateQuestionImmutableApi(id, immutable),
     onSuccess: () => {
-      toastUtil('Question immutability updated', undefined, 'success');
+      toastUtil('Question immutability updated', 'success');
       queryClient.invalidateQueries({
         queryKey: QUESTION_KEYS.allExamQuestions(),
       });

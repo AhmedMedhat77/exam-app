@@ -16,7 +16,7 @@ export function useUpdateExam() {
       payload: IUpdateExamPayload;
     }) => ExamsService.updateApi(id, payload),
     onSuccess: (_, { id }) => {
-      toastUtil('Exam updated successfully', undefined, 'success');
+      toastUtil('Exam updated successfully', 'success');
       queryClient.invalidateQueries({
         queryKey: [EXAMS_KEY.all()[0]],
       });

@@ -10,7 +10,7 @@ export function useUpdateDiplomaImmutable() {
     mutationFn: ({ id, immutable }: { id: string; immutable: boolean }) =>
       DiplomaService.updateImmutableDiplomaApi(id, immutable),
     onSuccess: (_, { id }) => {
-      toastUtil('Diploma immutability updated', undefined, 'success');
+      toastUtil('Diploma immutability updated', 'success');
       queryClient.invalidateQueries({
         queryKey: DIPLOMA_QUERY_KEYS.diplomas.all,
       });

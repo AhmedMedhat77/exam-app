@@ -12,7 +12,7 @@ export function useCreateDiploma() {
     mutationFn: (payload: IDiplomaPayload) =>
       DiplomaService.createDiplomaApi(payload),
     onSuccess: () => {
-      toastUtil('Diploma created successfully', undefined, 'success');
+      toastUtil('Diploma created successfully', 'success');
       queryClient.invalidateQueries({
         queryKey: DIPLOMA_QUERY_KEYS.diplomas.all,
       });

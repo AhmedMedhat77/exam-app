@@ -11,7 +11,7 @@ export function useCreateExam() {
     mutationFn: (payload: ICreateExamPayload) =>
       ExamsService.createApi(payload),
     onSuccess: () => {
-      toastUtil('Exam created successfully', undefined, 'success');
+      toastUtil('Exam created successfully', 'success');
       queryClient.invalidateQueries({
         queryKey: [EXAMS_KEY.all()],
       });

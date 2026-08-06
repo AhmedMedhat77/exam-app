@@ -12,7 +12,7 @@ export function useUpdateDiploma() {
     mutationFn: ({ id, payload }: { id: string; payload: IDiplomaPayload }) =>
       DiplomaService.updateDiplomaApi(id, payload),
     onSuccess: (_, variables) => {
-      toastUtil('Diploma updated successfully', undefined, 'success');
+      toastUtil('Diploma updated successfully', 'success');
       queryClient.invalidateQueries({
         queryKey: DIPLOMA_QUERY_KEYS.diplomas.all,
       });

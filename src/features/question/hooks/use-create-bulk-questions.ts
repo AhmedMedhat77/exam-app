@@ -12,7 +12,7 @@ export function useCreateBulkQuestions() {
       await QuestionService.createQuestionBulkApi(payload);
     },
     onSuccess: () => {
-      toastUtil(`Question(s) created successfully`, undefined, 'success');
+      toastUtil(`Question(s) created successfully`, 'success');
       queryClient.invalidateQueries({
         queryKey: QUESTION_KEYS.allExamQuestions(),
       });

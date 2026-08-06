@@ -9,7 +9,7 @@ export function useDeleteDiploma() {
   return useMutation({
     mutationFn: (id: string) => DiplomaService.deleteDiplomaApi(id),
     onSuccess: (_, id) => {
-      toastUtil('Diploma deleted successfully', undefined, 'success');
+      toastUtil('Diploma deleted successfully', 'success');
       queryClient.invalidateQueries({
         queryKey: DIPLOMA_QUERY_KEYS.diplomas.all,
       });

@@ -9,7 +9,7 @@ export function useDeleteExam() {
   return useMutation({
     mutationFn: (id: string) => ExamsService.deleteApi(id),
     onSuccess: () => {
-      toastUtil('Exam deleted successfully', undefined, 'success');
+      toastUtil('Exam deleted successfully', 'success');
       queryClient.invalidateQueries({
         queryKey: [EXAMS_KEY.all()[0]],
       });
