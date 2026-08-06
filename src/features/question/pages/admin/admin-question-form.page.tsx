@@ -1,9 +1,14 @@
 import { ROUTES } from '@/app/routes';
-import AdminQuestionFormHeader, {
-  type QuestionFormMode,
-} from '@/features/question/components/admin/admin-question-form-header';
+import AdminQuestionFormHeader from '@/features/question/components/admin/admin-question-form-header';
 import BulkQuestionForm from '@/features/question/components/admin/bulk-question-form';
 import SingleQuestionForm from '@/features/question/components/admin/single-question-form';
+import {
+  EXAM_ID_QUERY_KEY,
+  QUESTION_FORM_MODES,
+  QUESTION_MODE_QUERY_KEY,
+  QUESTION_MODE_STORAGE_KEY,
+  type QuestionFormMode,
+} from '@/features/question/constants/search-params.keys';
 import { useCreateBulkQuestions } from '@/features/question/hooks/use-create-bulk-questions';
 import { useCreateQuestion } from '@/features/question/hooks/use-create-question';
 import { useGetQuestionById } from '@/features/question/hooks/use-get-question-by-id';
@@ -26,18 +31,48 @@ import ErrorAlert from '@/shared/components/error-alert';
 import Breadcrumb from '@/shared/layouts/dashboard/breadcrumb/breadcrumb-view';
 import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/use-breadcrumb';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams, useSearchParams } from 'react-router';
 
 export default function AdminQuestionFormPage() {
   const { id = '' } = useParams<{ id: string }>();
-  const [searchParams] = useSearchParams();
-  const defaultExamId = searchParams.get('examId') || '';
+  const [searchParams, setSearchParams] = useSearchParams();
+  const defaultExamId = searchParams.get(EXAM_ID_QUERY_KEY) || '';
   const navigate = useNavigate();
 
   const isEdit = Boolean(id);
-  const [mode, setMode] = useState<QuestionFormMode>('single');
+
+  const paramMode = searchParams.get(QUESTION_MODE_QUERY_KEY);
+  const storedMode =
+    typeof window !== 'undefined'
+      ? sessionStorage.getItem(QUESTION_MODE_STORAGE_KEY)
+      : null;
+
+  const mode: QuestionFormMode =
+    paramMode === QUESTION_FORM_MODES.BULK ||
+    paramMode === QUESTION_FORM_MODES.SINGLE
+      ? paramMode
+      : storedMode === QUESTION_FORM_MODES.BULK ||
+          storedMode === QUESTION_FORM_MODES.SINGLE
+        ? (storedMode as QuestionFormMode)
+        : QUESTION_FORM_MODES.SINGLE;
+
+  useEffect(() => {
+    sessionStorage.setItem(QUESTION_MODE_STORAGE_KEY, mode);
+  }, [mode]);
+
+  const handleModeChange = (newMode: QuestionFormMode) => {
+    sessionStorage.setItem(QUESTION_MODE_STORAGE_KEY, newMode);
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.set(QUESTION_MODE_QUERY_KEY, newMode);
+        return next;
+      },
+      { replace: true }
+    );
+  };
 
   // ==================== APIs  ====================
   const { data: fetchedData, isLoading: isLoadingQuestion } =
@@ -87,7 +122,7 @@ export default function AdminQuestionFormPage() {
     ],
   });
 
-  const isBulkMode = mode === 'bulk';
+  const isBulkMode = mode === QUESTION_FORM_MODES.BULK;
   const activeFormId = isBulkMode
     ? 'bulk-question-form'
     : 'single-question-form';
@@ -174,7 +209,7 @@ export default function AdminQuestionFormPage() {
       {/* Header */}
       <AdminQuestionFormHeader
         mode={mode}
-        onModeChange={setMode}
+        onModeChange={handleModeChange}
         activeFormId={activeFormId}
         isSubmitting={isSubmitting}
       />

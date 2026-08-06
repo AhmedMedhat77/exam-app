@@ -1,8 +1,12 @@
+import {
+  QUESTION_FORM_MODES,
+  type QuestionFormMode,
+} from '@/features/question/constants/search-params.keys';
 import { Button } from '@/shared/ui/button';
 import { CopyPlus, Save, X } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
-export type QuestionFormMode = 'single' | 'bulk';
+export type { QuestionFormMode };
 
 interface AdminQuestionFormHeaderProps {
   mode: QuestionFormMode;
@@ -19,6 +23,14 @@ export default function AdminQuestionFormHeader({
 }: AdminQuestionFormHeaderProps) {
   const navigate = useNavigate();
 
+  const handleToggleMode = () => {
+    const nextMode =
+      mode === QUESTION_FORM_MODES.SINGLE
+        ? QUESTION_FORM_MODES.BULK
+        : QUESTION_FORM_MODES.SINGLE;
+    onModeChange(nextMode);
+  };
+
   return (
     <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
       <div
@@ -29,9 +41,9 @@ export default function AdminQuestionFormHeader({
         <Button
           type="button"
           size="xl"
-          onClick={() => onModeChange(mode === 'single' ? 'bulk' : 'single')}
-          variant={mode === 'bulk' ? 'default' : 'secondary'}
-          aria-pressed={mode === 'bulk'}
+          onClick={handleToggleMode}
+          variant={mode === QUESTION_FORM_MODES.BULK ? 'default' : 'secondary'}
+          aria-pressed={mode === QUESTION_FORM_MODES.BULK}
         >
           <CopyPlus className="size-4" />
           Bulk Questions
@@ -65,3 +77,4 @@ export default function AdminQuestionFormHeader({
     </div>
   );
 }
+
