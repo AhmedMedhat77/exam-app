@@ -173,6 +173,11 @@ export default function AdminQuestionFormPage() {
       createQuestion(payload, {
         onSuccess: () => {
           toastUtil('Created Successfully', 'success');
+          if (payload.examId) {
+            navigate(ROUTES.EXAM_DETAIL.replace(':id', payload.examId));
+          } else {
+            navigate(ROUTES.EXAMS);
+          }
         },
       });
     }
@@ -180,9 +185,15 @@ export default function AdminQuestionFormPage() {
 
   // Bulk Question Form Submit Handler
   const handleBulkSubmit = bulkForm.handleSubmit((values) => {
-    createBulkQuestions(toBulkQuestionPayload(values), {
+    const payload = toBulkQuestionPayload(values);
+    createBulkQuestions(payload, {
       onSuccess: () => {
         toastUtil('Created Successfully', 'success');
+        if (payload.examId) {
+          navigate(ROUTES.EXAM_DETAIL.replace(':id', payload.examId));
+        } else {
+          navigate(ROUTES.EXAMS);
+        }
       },
     });
   });

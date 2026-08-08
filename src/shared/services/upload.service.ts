@@ -3,7 +3,7 @@ import { axiosInstance } from '@/shared/lib/axios';
 export class UploadService {
   static async uploadApi(file: File): Promise<string> {
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('image', file);
     const { data } = await axiosInstance.post<{
       status: boolean;
       payload: { url: string };

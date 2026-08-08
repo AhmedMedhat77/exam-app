@@ -11,9 +11,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router';
 
+import { UploadService } from '@/shared/services/upload.service';
+import { useState } from 'react';
+
 export default function AdminDiplomaFormPage() {
   const { id = '' } = useParams<{ id: string }>();
   const navigate = useNavigate();
+
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<Error | null>(null);
 
   const { data, isLoading, error: getError } = useGetDiplomaById(id);
   const {
@@ -27,8 +33,8 @@ export default function AdminDiplomaFormPage() {
     error: updateError,
   } = useUpdateDiploma();
 
-  const isSubmitting = isCreating || isUpdating;
-  const apiError = createError || updateError || getError;
+  const isSubmitting = isCreating || isUpdating || isUploading;
+  const apiError = createError || updateError || getError || uploadError;
 
   const diplomaPayload = data?.payload;
   const diploma: IDiploma | undefined =
@@ -46,11 +52,31 @@ export default function AdminDiplomaFormPage() {
     },
   });
 
-  const onSubmit = form.handleSubmit((values) => {
+  const onSubmit = form.handleSubmit(async (values) => {
+    setUploadError(null);
+    let imageUrl: string | undefined = undefined;
+
+    if (values.image instanceof File) {
+      setIsUploading(true);
+      try {
+        imageUrl = await UploadService.uploadApi(values.image);
+      } catch (err) {
+        console.error('Failed to upload image:', err);
+        setUploadError(
+          err instanceof Error ? err : new Error('Failed to upload image')
+        );
+        setIsUploading(false);
+        return;
+      }
+      setIsUploading(false);
+    } else if (typeof values.image === 'string') {
+      imageUrl = values.image;
+    }
+
     const payload = {
       title: values.title,
       description: values.description,
-      image: values.image,
+      image: imageUrl,
     };
 
     if (id) {

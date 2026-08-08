@@ -47,9 +47,10 @@ export default class QuestionService {
   static createQuestionBulkApi = async (
     payload: ICreateBulkQuestionsPayload
   ): Promise<IApiResponse<{ questions: IQuestion[] }>> => {
+    const { examId, questions } = payload;
     const response = await axiosInstance.post(
-      `${BASE_URL}/exam/${payload.examId}/bulk`,
-      payload
+      `${BASE_URL}/exam/${examId}/bulk`,
+      { questions }
     );
     return response.data;
   };
