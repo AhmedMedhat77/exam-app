@@ -92,9 +92,12 @@ export default function AdminExamFilterContent() {
           value={diplomaId}
           onValueChange={(val) => val !== null && setDiplomaId(val)}
         >
-          <SelectTrigger className={`min-h-full ${isSuperAdmin ? 'w-1/2' : 'w-full'} rounded-xs px-3 text-gray-700`}>
+          <SelectTrigger
+            className={`min-h-full ${isSuperAdmin ? 'w-1/2' : 'w-full'} rounded-xs px-3 text-gray-700`}
+          >
             <SelectValue placeholder="Diploma">
-              {diplomas.find((d) => d.id === diplomaId)?.title || 'All Diplomas'}
+              {diplomas.find((d) => d.id === diplomaId)?.title ||
+                'All Diplomas'}
             </SelectValue>
             <ChevronsUpDown className="text-muted-foreground size-4" />
           </SelectTrigger>

@@ -34,7 +34,9 @@ export default function AdminEntityDetailsHeader({
         <h1 className="font-mono text-xl font-bold tracking-tight text-gray-900 sm:text-2xl">
           {title}
         </h1>
-        <div className={`grid items-center gap-2.5 ${isSuperAdmin ? 'grid-cols-3' : 'grid-cols-2'}`}>
+        <div
+          className={`grid items-center gap-2.5 ${isSuperAdmin ? 'grid-cols-3' : 'grid-cols-2'}`}
+        >
           {isSuperAdmin && (
             <Button
               variant="secondary"

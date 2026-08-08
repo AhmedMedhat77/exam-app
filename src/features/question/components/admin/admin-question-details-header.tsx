@@ -32,7 +32,9 @@ export default function AdminQuestionDetailsHeader({
           Exam:{question?.exam?.title} <ExternalLink className="size-3" />
         </Link>
       </div>
-      <div className={`grid gap-2.5 ${isSuperAdmin ? 'grid-cols-3' : 'grid-cols-2'}`}>
+      <div
+        className={`grid gap-2.5 ${isSuperAdmin ? 'grid-cols-3' : 'grid-cols-2'}`}
+      >
         {isSuperAdmin && (
           <Button onClick={onToggleImmutable} size="lg" variant="secondary">
             <Ban className="size-4" />
