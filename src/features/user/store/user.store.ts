@@ -1,5 +1,5 @@
 import type { User } from '@/features/user/types/user.d';
-// import { ADMIN_ROLES } from '@/shared/layouts/dashboard/sidebar/constants/admin-roles';
+import { ADMIN_ROLES } from '@/shared/layouts/dashboard/sidebar/constants/admin-roles';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -22,6 +22,7 @@ export const useUserStore = create<UserStore>()(
         set({
           user: patchedUser,
           token,
+          isAdmin: ADMIN_ROLES.includes(user.role || ''),
         });
       },
       logout: () =>
@@ -36,3 +37,14 @@ export const useUserStore = create<UserStore>()(
     { name: 'user-storage' }
   )
 );
+
+export const isSuperAdmin = (role?: string | null): boolean => {
+  if (!role) return false;
+  const normalized = role.toLowerCase().replace(/[-_]/g, '');
+  return normalized === 'superadmin';
+};
+
+export const useIsSuperAdmin = (): boolean => {
+  const role = useUserStore((s) => s.user?.role);
+  return isSuperAdmin(role);
+};

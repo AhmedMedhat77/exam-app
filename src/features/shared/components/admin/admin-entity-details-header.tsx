@@ -1,3 +1,4 @@
+import { useIsSuperAdmin } from '@/features/user/store/user.store';
 import Breadcrumb from '@/shared/layouts/dashboard/breadcrumb/breadcrumb-view';
 import { Button } from '@/shared/ui/button';
 import { Ban, Pencil, Trash2 } from 'lucide-react';
@@ -23,6 +24,8 @@ export default function AdminEntityDetailsHeader({
   onToggleImmutable,
   breadcrumbItems,
 }: AdminEntityDetailsHeaderProps) {
+  const isSuperAdmin = useIsSuperAdmin();
+
   return (
     <div className="-mx-4 -mt-7 space-y-2 bg-white px-4 pb-4">
       <Breadcrumb items={breadcrumbItems} />
@@ -31,22 +34,24 @@ export default function AdminEntityDetailsHeader({
         <h1 className="font-mono text-xl font-bold tracking-tight text-gray-900 sm:text-2xl">
           {title}
         </h1>
-        <div className="grid grid-cols-3 items-center gap-2.5">
-          <Button
-            variant="secondary"
-            size="lg"
-            onClick={onToggleImmutable}
-            disabled={isTogglingImmutable}
-          >
-            <Ban className="size-3.5 text-gray-600" />
-            <span>
-              {isTogglingImmutable
-                ? 'Updating...'
-                : immutable
-                  ? 'Immutable'
-                  : 'Mutable'}
-            </span>
-          </Button>
+        <div className={`grid items-center gap-2.5 ${isSuperAdmin ? 'grid-cols-3' : 'grid-cols-2'}`}>
+          {isSuperAdmin && (
+            <Button
+              variant="secondary"
+              size="lg"
+              onClick={onToggleImmutable}
+              disabled={isTogglingImmutable}
+            >
+              <Ban className="size-3.5 text-gray-600" />
+              <span>
+                {isTogglingImmutable
+                  ? 'Updating...'
+                  : immutable
+                    ? 'Immutable'
+                    : 'Mutable'}
+              </span>
+            </Button>
+          )}
           <Button
             size="lg"
 

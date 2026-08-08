@@ -1,3 +1,4 @@
+import { useIsSuperAdmin } from '@/features/user/store/user.store';
 import { useGetDiplomas } from '@/features/diploma/hooks/use-get-diploma';
 import {
   DIPLOMA_ID_QUERY_KEY,
@@ -19,6 +20,7 @@ import { useState } from 'react';
 import { useSearchParams } from 'react-router';
 
 export default function AdminExamFilterContent() {
+  const isSuperAdmin = useIsSuperAdmin();
   const [query, setQuery] = useSearchParams();
   const [search, setSearch] = useState(() => query.get(SEARCH_QUERY_KEY) || '');
   const [immutable, setImmutable] = useState<string>(
@@ -90,11 +92,9 @@ export default function AdminExamFilterContent() {
           value={diplomaId}
           onValueChange={(val) => val !== null && setDiplomaId(val)}
         >
-          <SelectTrigger className="min-h-full w-1/2 rounded-xs px-3 text-gray-700">
+          <SelectTrigger className={`min-h-full ${isSuperAdmin ? 'w-1/2' : 'w-full'} rounded-xs px-3 text-gray-700`}>
             <SelectValue placeholder="Diploma">
-              {diplomaId !== 'none'
-                ? (diplomas.find((d) => d.id === diplomaId)?.title ?? 'Unknown')
-                : 'All Diplomas'}
+              {diplomas.find((d) => d.id === diplomaId)?.title || 'All Diplomas'}
             </SelectValue>
             <ChevronsUpDown className="text-muted-foreground size-4" />
           </SelectTrigger>
@@ -117,41 +117,43 @@ export default function AdminExamFilterContent() {
           </SelectContent>
         </Select>
 
-        <Select
-          value={immutable}
-          onValueChange={(val) => val !== null && setImmutable(val)}
-        >
-          <SelectTrigger className="min-h-full w-1/2 rounded-xs px-3 text-gray-700">
-            <SelectValue placeholder="Immutability">
-              {immutable === 'true'
-                ? 'Immutable'
-                : immutable === 'false'
-                  ? 'Mutable'
-                  : 'None'}
-            </SelectValue>
-            <ChevronsUpDown className="text-muted-foreground size-4" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem
-              className="text-gray-500 hover:text-gray-300"
-              value="none"
-            >
-              None
-            </SelectItem>
-            <SelectItem
-              className="text-gray-500 hover:text-gray-300"
-              value="true"
-            >
-              Immutable
-            </SelectItem>
-            <SelectItem
-              className="text-gray-500 hover:text-gray-300"
-              value="false"
-            >
-              Mutable
-            </SelectItem>
-          </SelectContent>
-        </Select>
+        {isSuperAdmin && (
+          <Select
+            value={immutable}
+            onValueChange={(val) => val !== null && setImmutable(val)}
+          >
+            <SelectTrigger className="min-h-full w-1/2 rounded-xs px-3 text-gray-700">
+              <SelectValue placeholder="Immutability">
+                {immutable === 'true'
+                  ? 'Immutable'
+                  : immutable === 'false'
+                    ? 'Mutable'
+                    : 'None'}
+              </SelectValue>
+              <ChevronsUpDown className="text-muted-foreground size-4" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem
+                className="text-gray-500 hover:text-gray-300"
+                value="none"
+              >
+                None
+              </SelectItem>
+              <SelectItem
+                className="text-gray-500 hover:text-gray-300"
+                value="true"
+              >
+                Immutable
+              </SelectItem>
+              <SelectItem
+                className="text-gray-500 hover:text-gray-300"
+                value="false"
+              >
+                Mutable
+              </SelectItem>
+            </SelectContent>
+          </Select>
+        )}
       </div>
 
       <div className="flex w-full justify-end gap-2">
