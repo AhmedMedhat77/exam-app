@@ -40,7 +40,6 @@ export interface AdminListHeaderProps {
 
   /** Custom class names for header container */
   className?: string;
-  
 }
 
 export default function AdminListHeader({
