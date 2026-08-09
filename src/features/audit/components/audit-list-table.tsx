@@ -1,4 +1,3 @@
-import AuditDetailDialog from '@/features/audit/components/audit-detail-dialog';
 import { useDeleteAuditLog } from '@/features/audit/hooks/use-delete-audit-log';
 import type {
   AuditAction,
@@ -12,6 +11,7 @@ import AdminSortDropdown, {
 import AdminTable, {
   type AdminTableColumn,
 } from '@/features/shared/components/admin/admin-table';
+import DeleteConfirmDialog from '@/shared/components/delete-confirm-dialog';
 import toastUtil from '@/shared/lib/toast';
 import { cn } from '@/shared/lib/utils';
 import { Button } from '@/shared/ui/button';
@@ -44,19 +44,21 @@ export default function AuditListTable({
   logs,
   isLoading = false,
 }: AuditListTableProps) {
-  const { mutate: deleteLog } = useDeleteAuditLog();
+  const { mutate: deleteLog, isPending: isDeleting } = useDeleteAuditLog();
 
-  const [selectedLog, setSelectedLog] = useState<IAdminAuditLog | null>(null);
-  const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
 
-  const handleViewDetails = (log: IAdminAuditLog) => {
-    setSelectedLog(log);
-    setIsDetailOpen(true);
+  const handleDeleteClick = (id: string) => {
+    setDeleteTargetId(id);
   };
 
-  const handleDelete = (id: string) => {
-    if (confirm('Are you sure you want to delete this audit log entry?')) {
-      deleteLog(id);
+  const handleConfirmDelete = () => {
+    if (deleteTargetId) {
+      deleteLog(deleteTargetId, {
+        onSuccess: () => {
+          setDeleteTargetId(null);
+        },
+      });
     }
   };
 
@@ -70,17 +72,17 @@ export default function AuditListTable({
   const getActionBadge = (action: AuditAction) => {
     switch (action) {
       case 'CREATE':
-        return 'text-emerald-600 ';
+        return 'text-emerald-600';
       case 'UPDATE':
         return 'text-amber-600';
       case 'DELETE':
-        return 'text-rose-600 ';
+        return 'text-rose-600';
       case 'SET_IMMUTABLE':
         return 'text-sky-600';
       case 'SEED_DATA':
         return 'text-purple-600';
       default:
-        return 'text-gray-600 ';
+        return 'text-gray-600';
     }
   };
 
@@ -246,16 +248,14 @@ export default function AuditListTable({
             <span className="sr-only">Actions</span>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-44 p-1">
-            <DropdownMenuItem
-              onClick={() => handleViewDetails(item)}
-              className="flex cursor-pointer items-center gap-2 font-mono text-xs"
-            >
+            <DropdownMenuItem className="flex cursor-pointer items-center gap-2 font-mono text-xs">
               <Eye className="size-3.5 text-emerald-500" />
+              {/* Todo View Details Screen */}
               <span>View Details</span>
             </DropdownMenuItem>
 
             <DropdownMenuItem
-              onClick={() => handleDelete(item.id)}
+              onClick={() => handleDeleteClick(item.id)}
               className="flex cursor-pointer items-center gap-2 font-mono text-xs text-rose-600 focus:text-rose-600"
             >
               <Trash2 className="size-3.5" />
@@ -278,10 +278,13 @@ export default function AuditListTable({
         minWidthClassName="min-w-200"
       />
 
-      <AuditDetailDialog
-        log={selectedLog}
-        open={isDetailOpen}
-        onOpenChange={setIsDetailOpen}
+      <DeleteConfirmDialog
+        isOpen={!!deleteTargetId}
+        onClose={() => setDeleteTargetId(null)}
+        onConfirm={handleConfirmDelete}
+        isDeleting={isDeleting}
+        title="Delete Audit Log Entry"
+        description="Are you sure you want to delete this audit log entry? This action cannot be undone."
       />
     </>
   );
