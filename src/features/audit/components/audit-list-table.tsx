@@ -12,7 +12,6 @@ import AdminSortDropdown, {
 import AdminTable, {
   type AdminTableColumn,
 } from '@/features/shared/components/admin/admin-table';
-import { useIsSuperAdmin } from '@/features/user/store/user.store';
 import toastUtil from '@/shared/lib/toast';
 import { cn } from '@/shared/lib/utils';
 import { Button } from '@/shared/ui/button';
@@ -22,7 +21,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/shared/ui/dropdown-menu';
-import { Copy, ExternalLink, Eye, MoreHorizontal, Trash2 } from 'lucide-react';
+import { ExternalLink, Eye, MoreHorizontal, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 
 interface AuditListTableProps {
@@ -45,7 +44,6 @@ export default function AuditListTable({
   logs,
   isLoading = false,
 }: AuditListTableProps) {
-  const isSuperAdmin = useIsSuperAdmin();
   const { mutate: deleteLog } = useDeleteAuditLog();
 
   const [selectedLog, setSelectedLog] = useState<IAdminAuditLog | null>(null);
@@ -252,25 +250,17 @@ export default function AuditListTable({
               onClick={() => handleViewDetails(item)}
               className="flex cursor-pointer items-center gap-2 font-mono text-xs"
             >
-              <Eye className="size-3.5 text-gray-500" />
+              <Eye className="size-3.5 text-emerald-500" />
               <span>View Details</span>
             </DropdownMenuItem>
+
             <DropdownMenuItem
-              onClick={() => handleCopyId(item.id)}
-              className="flex cursor-pointer items-center gap-2 font-mono text-xs"
+              onClick={() => handleDelete(item.id)}
+              className="flex cursor-pointer items-center gap-2 font-mono text-xs text-rose-600 focus:text-rose-600"
             >
-              <Copy className="size-3.5 text-gray-500" />
-              <span>Copy Log ID</span>
+              <Trash2 className="size-3.5" />
+              <span>Delete Log</span>
             </DropdownMenuItem>
-            {isSuperAdmin && (
-              <DropdownMenuItem
-                onClick={() => handleDelete(item.id)}
-                className="flex cursor-pointer items-center gap-2 font-mono text-xs text-rose-600 focus:text-rose-600"
-              >
-                <Trash2 className="size-3.5" />
-                <span>Delete Log</span>
-              </DropdownMenuItem>
-            )}
           </DropdownMenuContent>
         </DropdownMenu>
       ),
