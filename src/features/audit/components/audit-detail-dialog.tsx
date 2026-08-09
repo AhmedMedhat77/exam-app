@@ -33,7 +33,7 @@ export default function AuditDetailDialog({
       <DialogContent className="max-w-xl font-mono">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-lg font-semibold">
-            <Shield className="size-5 text-primary" />
+            <Shield className="text-primary size-5" />
             Audit Log Entry Details
           </DialogTitle>
           <DialogDescription className="text-xs text-gray-500">
@@ -49,7 +49,7 @@ export default function AuditDetailDialog({
                 Action & Method
               </span>
               <div className="mt-1 flex items-center gap-2 font-semibold">
-                <span className="rounded-xs bg-primary/10 px-2 py-0.5 text-primary">
+                <span className="bg-primary/10 text-primary rounded-xs px-2 py-0.5">
                   {log.action}
                 </span>
                 {log.httpMethod && (
@@ -126,7 +126,7 @@ export default function AuditDetailDialog({
             <div className="mt-2 space-y-1.5 text-gray-600">
               <div>
                 <span className="text-[10px] text-gray-400">Path:</span>
-                <p className="break-all font-mono text-gray-900">
+                <p className="font-mono break-all text-gray-900">
                   {log.path || 'N/A'}
                 </p>
               </div>
@@ -148,7 +148,7 @@ export default function AuditDetailDialog({
               {log.userAgent && (
                 <div>
                   <span className="text-[10px] text-gray-400">User Agent:</span>
-                  <p className="break-all font-mono text-[11px] text-gray-700">
+                  <p className="font-mono text-[11px] break-all text-gray-700">
                     {log.userAgent}
                   </p>
                 </div>

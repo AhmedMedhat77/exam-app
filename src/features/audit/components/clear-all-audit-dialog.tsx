@@ -38,16 +38,18 @@ export default function ClearAllAuditDialog({
             Clear All Audit Logs
           </DialogTitle>
           <DialogDescription className="pt-2 text-sm text-gray-600">
-            Are you sure you want to permanently delete every row from the
-            audit log table?
+            Are you sure you want to permanently delete every row from the audit
+            log table?
           </DialogDescription>
         </DialogHeader>
 
         <div className="rounded-md border border-red-100 bg-red-50 p-3 text-xs text-red-700">
-          <p className="font-semibold">Warning: This action cannot be undone.</p>
+          <p className="font-semibold">
+            Warning: This action cannot be undone.
+          </p>
           <p className="mt-1">
-            This operation will clear all mutation trail history across diplomas,
-            exams, questions, users, and system activities.
+            This operation will clear all mutation trail history across
+            diplomas, exams, questions, users, and system activities.
           </p>
         </div>
 
