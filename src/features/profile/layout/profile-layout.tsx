@@ -16,7 +16,7 @@ export default function UserProfileLayout() {
       <div className="flex h-[calc(100dvh-12rem)] gap-3 rounded-xl shadow-xs">
         <ProfileSidebar />
         {/* Right Content Pane (Renders child routes profile page / change password page) */}
-        <div className="max-w-full flex-1 bg-white pl-6">
+        <div className="flex-1 overflow-y-auto bg-white pl-6">
           <Outlet />
         </div>
       </div>

@@ -16,6 +16,7 @@ import { Controller, useForm } from 'react-hook-form';
 
 export default function UserProfilePage() {
   const { data } = useGetProfile();
+
   const {
     mutate: updateProfile,
     isPending: isUpdating,
