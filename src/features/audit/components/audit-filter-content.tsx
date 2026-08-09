@@ -5,8 +5,8 @@ import {
   SEARCH_QUERY_KEY,
   USER_QUERY_KEY,
 } from '@/features/audit/constants/search-params.keys';
+import UserDropDown from '@/shared/components/user-dropdown';
 import { Button } from '@/shared/ui/button';
-import { Input } from '@/shared/ui/input';
 import {
   Select,
   SelectContent,
@@ -121,12 +121,11 @@ export default function AuditFilterContent() {
           </SelectContent>
         </Select>
 
-        {/* User Input */}
-        <Input
-          placeholder="User"
+        {/* User Select (Paginated API) */}
+        <UserDropDown
           value={user}
-          onChange={(e) => setUser(e.target.value)}
-          className="h-11"
+          onChange={(val) => setUser(val)}
+          placeholder="User"
         />
       </div>
 
