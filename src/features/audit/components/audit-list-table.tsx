@@ -131,7 +131,7 @@ export default function AuditListTable({
       const d = new Date(dateStr);
       return d.toLocaleDateString('en-US', {
         weekday: 'short',
-        month: 'short',
+        month: 'long',
         day: 'numeric',
         year: 'numeric',
       });
@@ -169,7 +169,7 @@ export default function AuditListTable({
       colClassName: 'w-56 sm:w-64',
       cell: (item) => (
         <div className="flex flex-col gap-0.5">
-          <span className="font-mono text-xs font-bold text-gray-900">
+          <span className="font-mono text-xs font-bold text-gray-800">
             {item.actorUsername || 'Unknown User'}
           </span>
           <span className="font-mono text-[11px] text-gray-400">
@@ -192,7 +192,7 @@ export default function AuditListTable({
       colClassName: 'w-56 sm:w-64',
       cell: (item) => (
         <div className="flex flex-col gap-0.5">
-          <span className="font-mono text-xs font-semibold text-gray-900 capitalize">
+          <span className="font-mono text-xs font-semibold text-gray-800 capitalize">
             {item.entityType}
           </span>
           {item.entityId && (
@@ -203,7 +203,7 @@ export default function AuditListTable({
               <button
                 type="button"
                 onClick={() => handleCopyId(item.entityId)}
-                className="cursor-pointer text-gray-400 transition-colors hover:text-gray-700"
+                className="cursor-pointer text-gray-400 transition-colors hover:text-gray-500"
                 title="Copy Entity ID"
               >
                 <ExternalLink className="size-3" />
@@ -218,13 +218,9 @@ export default function AuditListTable({
       key: 'time',
       colClassName: 'w-48 sm:w-56',
       cell: (item) => (
-        <div className="flex flex-col gap-0.5 font-mono text-xs">
-          <span className="font-medium text-gray-800">
-            {formatTime(item.createdAt)}
-          </span>
-          <span className="text-[11px] text-gray-400">
-            {formatDate(item.createdAt)}
-          </span>
+        <div className="flex flex-col font-mono text-xs leading-snug text-gray-800">
+          <span>{formatTime(item.createdAt)}</span>
+          <span>{formatDate(item.createdAt)}</span>
         </div>
       ),
     },
