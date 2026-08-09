@@ -184,7 +184,7 @@ function ControlledUserCombobox({
       <ComboboxInput
         placeholder={isLoading ? 'Loading users...' : placeholder}
         disabled={disabled}
-        className={`h-11 border-gray-200 font-mono text-xs ${className || ''}`}
+        className={`h-11! border-gray-200 font-mono text-xs ${className || ''}`}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           onSearchChange(e.target.value)
         }

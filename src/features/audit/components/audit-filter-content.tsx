@@ -84,7 +84,7 @@ export default function AuditFilterContent() {
           value={category}
           onValueChange={(val) => val !== null && setCategory(val)}
         >
-          <SelectTrigger className="h-11 w-full rounded-md border border-gray-200 bg-white px-3 text-gray-700">
+          <SelectTrigger className="h-11! w-full rounded-md border border-gray-200 bg-white px-3 font-mono text-xs text-gray-700">
             <SelectValue placeholder="Category">
               {category === 'all' || !category ? 'Category' : category}
             </SelectValue>
@@ -105,7 +105,7 @@ export default function AuditFilterContent() {
           value={action}
           onValueChange={(val) => val !== null && setAction(val)}
         >
-          <SelectTrigger className="h-11 w-full rounded-md border border-gray-200 bg-white px-3 text-gray-700">
+          <SelectTrigger className="h-11! w-full rounded-md border border-gray-200 bg-white px-3 font-mono text-xs text-gray-700">
             <SelectValue placeholder="Action">
               {action === 'all' || !action ? 'Action' : action}
             </SelectValue>
