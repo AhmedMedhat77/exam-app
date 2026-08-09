@@ -1,3 +1,4 @@
+import AuditLogDetailsPage from '@/features/audit/pages/audit-details.page';
 import AuditLogsPage from '@/features/audit/pages/audit.page';
 import ForgotPasswordPage from '@/features/auth/pages/forgot-password/forgot-password.page';
 import ResetLinkSentPage from '@/features/auth/pages/forgot-password/reset-link-sent.page';
@@ -43,6 +44,7 @@ export const ROUTES = {
   EXAM_MANAGE: '/exams/:id?/manage',
   EXAM_RESULT: '/submissions/:id',
   LOGS: '/logs',
+  LOG_DETAIL: '/logs/:id',
   PAYMENTS: '/payments',
   PAYMENT_DETAIL: '/payments/:paymentId',
 
@@ -166,6 +168,12 @@ export const ADMIN_ROUTES: route[] = [
     path: ROUTES.LOGS,
     icon: <Logs />,
     element: AuditLogsPage,
+  },
+  {
+    title: 'Audit Log Details',
+    path: ROUTES.LOG_DETAIL,
+    element: AuditLogDetailsPage,
+    hidden: true,
   },
 ];
 

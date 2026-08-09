@@ -23,6 +23,7 @@ import {
 } from '@/shared/ui/dropdown-menu';
 import { ExternalLink, Eye, MoreHorizontal, Trash2 } from 'lucide-react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 interface AuditListTableProps {
   logs: IAdminAuditLog[];
@@ -44,6 +45,7 @@ export default function AuditListTable({
   logs,
   isLoading = false,
 }: AuditListTableProps) {
+  const navigate = useNavigate();
   const { mutate: deleteLog, isPending: isDeleting } = useDeleteAuditLog();
 
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
@@ -248,9 +250,11 @@ export default function AuditListTable({
             <span className="sr-only">Actions</span>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-44 p-1">
-            <DropdownMenuItem className="flex cursor-pointer items-center gap-2 font-mono text-xs">
+            <DropdownMenuItem
+              onClick={() => navigate(`/logs/${item.id}`)}
+              className="flex cursor-pointer items-center gap-2 font-mono text-xs"
+            >
               <Eye className="size-3.5 text-emerald-500" />
-              {/* Todo View Details Screen */}
               <span>View Details</span>
             </DropdownMenuItem>
 
