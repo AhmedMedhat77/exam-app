@@ -1,18 +1,9 @@
 import type { IPaginatedParams } from '@/shared/types/api';
 
-export type AuditCategory =
-  | 'DIPLOMA'
-  | 'EXAM'
-  | 'QUESTION'
-  | 'USER'
-  | 'SYSTEM';
+export type AuditCategory = 'DIPLOMA' | 'EXAM' | 'QUESTION' | 'USER' | 'SYSTEM';
 
 export type AuditAction =
-  | 'CREATE'
-  | 'UPDATE'
-  | 'DELETE'
-  | 'SET_IMMUTABLE'
-  | 'SEED_DATA';
+  'CREATE' | 'UPDATE' | 'DELETE' | 'SET_IMMUTABLE' | 'SEED_DATA';
 
 export type AuditRole = 'USER' | 'ADMIN' | 'SUPER_ADMIN';
 
