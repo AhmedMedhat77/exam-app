@@ -11,7 +11,9 @@ import AdminSortDropdown, {
 import AdminTable, {
   type AdminTableColumn,
 } from '@/features/shared/components/admin/admin-table';
+import { ROLE_ENUM } from '@/features/profile/types/user';
 import DeleteConfirmDialog from '@/shared/components/delete-confirm-dialog';
+import RoleProtection from '@/shared/lib/role-protection';
 import toastUtil from '@/shared/lib/toast';
 import { cn } from '@/shared/lib/utils';
 import { Button } from '@/shared/ui/button';
@@ -258,13 +260,15 @@ export default function AuditListTable({
               <span>View Details</span>
             </DropdownMenuItem>
 
-            <DropdownMenuItem
-              onClick={() => handleDeleteClick(item.id)}
-              className="flex cursor-pointer items-center gap-2 font-mono text-xs text-rose-600 focus:text-rose-600"
-            >
-              <Trash2 className="size-3.5" />
-              <span>Delete Log</span>
-            </DropdownMenuItem>
+            <RoleProtection allowedRoles={[ROLE_ENUM.SUPER_ADMIN]}>
+              <DropdownMenuItem
+                onClick={() => handleDeleteClick(item.id)}
+                className="flex cursor-pointer items-center gap-2 font-mono text-xs text-rose-600 focus:text-rose-600"
+              >
+                <Trash2 className="size-3.5" />
+                <span>Delete Log</span>
+              </DropdownMenuItem>
+            </RoleProtection>
           </DropdownMenuContent>
         </DropdownMenu>
       ),

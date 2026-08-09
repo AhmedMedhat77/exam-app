@@ -6,9 +6,11 @@ import type {
   AuditRole,
   IAdminAuditLog,
 } from '@/features/audit/types/audit.d';
+import { ROLE_ENUM } from '@/features/profile/types/user';
 import DeleteConfirmDialog from '@/shared/components/delete-confirm-dialog';
 import Breadcrumb from '@/shared/layouts/dashboard/breadcrumb/breadcrumb-view';
 import { useBreadcrumb } from '@/shared/layouts/dashboard/breadcrumb/use-breadcrumb';
+import RoleProtection from '@/shared/lib/role-protection';
 import { cn } from '@/shared/lib/utils';
 import { Button } from '@/shared/ui/button';
 import { ArrowLeft, ExternalLink, Trash2 } from 'lucide-react';
@@ -178,15 +180,17 @@ export default function AuditLogDetailsPage() {
             )}
           </div>
 
-          <Button
-            variant="destructive"
-            size="lg"
-            onClick={() => setIsDeleteModalOpen(true)}
-            className="w-fit cursor-pointer self-start"
-          >
-            <Trash2 className="size-4" />
-            <span>Delete</span>
-          </Button>
+          <RoleProtection allowedRoles={[ROLE_ENUM.SUPER_ADMIN]}>
+            <Button
+              variant="destructive"
+              size="lg"
+              onClick={() => setIsDeleteModalOpen(true)}
+              className="w-fit cursor-pointer self-start"
+            >
+              <Trash2 className="size-4" />
+              <span>Delete</span>
+            </Button>
+          </RoleProtection>
         </div>
       </div>
 
