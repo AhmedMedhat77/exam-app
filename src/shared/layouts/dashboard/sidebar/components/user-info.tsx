@@ -11,12 +11,20 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/ui/dropdown-menu';
 import { Bolt, EllipsisVertical, LogOut, UserRound } from 'lucide-react';
-import { Link } from 'react-router';
+import { useNavigate, Link } from 'react-router';
 
 function UserInfo() {
   const user = useUserStore((state) => state.user);
   const logout = useUserStore((state) => state.logout);
+  const isAdmin = useUserStore((state) => state.isAdmin);
+  const setIsAdmin = useUserStore((state) => state.setIsAdmin);
+  const navigate = useNavigate();
   const { avatar, email, name } = useSidebarStyles();
+
+  const handleToggleDashboard = (targetIsAdmin: boolean) => {
+    setIsAdmin(targetIsAdmin);
+    navigate(ROUTES.HOME);
+  };
 
   return (
     <DropdownMenu>
@@ -36,18 +44,21 @@ function UserInfo() {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="min-w-40 space-y-4 px-4 py-2">
         <DropdownMenuItem className="border-b border-gray-100 py-2 pt-2">
-          <Link to={ROUTES.HOME} className="flex items-center gap-1">
+          <Link to={ROUTES.ACCOUNT_SETTINGS} className="flex items-center gap-1">
             <UserRound className="size-4.5" />
             <span>Account</span>
           </Link>
         </DropdownMenuItem>
         {/* For Admin OR Super user only */}
         {user?.role && ADMIN_ROLES.includes(user.role) && (
-          <DropdownMenuItem className="border-b border-gray-100 py-2 pt-2">
-            <Link to={ROUTES.HOME} className="flex items-center gap-1">
+          <DropdownMenuItem
+            onClick={() => handleToggleDashboard(!isAdmin)}
+            className="border-b border-gray-100 py-2 pt-2 cursor-pointer"
+          >
+            <div className="flex items-center gap-1">
               <Bolt className="size-4.5" />
-              <span>Dashboard</span>
-            </Link>
+              <span>{isAdmin ? 'User Dashboard' : 'Dashboard'}</span>
+            </div>
           </DropdownMenuItem>
         )}
 

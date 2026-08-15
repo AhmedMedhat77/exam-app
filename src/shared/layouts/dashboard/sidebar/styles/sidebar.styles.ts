@@ -123,9 +123,11 @@ export const isSidebarAdminRole = (role?: string | null): boolean => {
 
 // Set Admin or User role
 export const useSidebarRole = (overrideRole?: string): 'admin' | 'user' => {
-  const userRole = useUserStore((s) => s.user?.role);
-  const isAdmin = isSidebarAdminRole(overrideRole ?? userRole);
-  return isAdmin ? 'admin' : 'user';
+  const storeIsAdmin = useUserStore((s) => s.isAdmin);
+  if (overrideRole !== undefined) {
+    return isSidebarAdminRole(overrideRole) ? 'admin' : 'user';
+  }
+  return storeIsAdmin ? 'admin' : 'user';
 };
 // Use all styles
 export const useSidebarStyles = (overrideRole?: string) => {
