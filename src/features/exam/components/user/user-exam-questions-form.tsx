@@ -9,6 +9,7 @@ interface UserExamQuestionsFormProps {
   currentStep: number;
   onStepChange: (step: number) => void;
   initialAnswers: Record<string, string>;
+  onAnswerSelect?: (questionId: string, answerId: string) => void;
   onSubmit: (answers: Record<string, string>) => void;
   isSubmitting?: boolean;
 }
@@ -18,14 +19,12 @@ export function UserExamQuestionsForm({
   currentStep,
   onStepChange,
   initialAnswers,
+  onAnswerSelect,
   onSubmit,
   isSubmitting,
 }: UserExamQuestionsFormProps) {
   const methods = useForm<UserExamFormValues>({
     defaultValues: {
-      answers: initialAnswers || {},
-    },
-    values: {
       answers: initialAnswers || {},
     },
   });
@@ -36,6 +35,7 @@ export function UserExamQuestionsForm({
         questions={questions}
         currentStep={currentStep}
         onStepChange={onStepChange}
+        onAnswerSelect={onAnswerSelect}
         onSubmit={(answers) => onSubmit(answers)}
         isSubmitting={isSubmitting}
       />

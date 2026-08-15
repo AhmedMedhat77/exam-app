@@ -44,7 +44,10 @@ function UserInfo() {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="min-w-40 space-y-4 px-4 py-2">
         <DropdownMenuItem className="border-b border-gray-100 py-2 pt-2">
-          <Link to={ROUTES.ACCOUNT_SETTINGS} className="flex items-center gap-1">
+          <Link
+            to={ROUTES.ACCOUNT_SETTINGS}
+            className="flex items-center gap-1"
+          >
             <UserRound className="size-4.5" />
             <span>Account</span>
           </Link>
@@ -53,7 +56,7 @@ function UserInfo() {
         {user?.role && ADMIN_ROLES.includes(user.role) && (
           <DropdownMenuItem
             onClick={() => handleToggleDashboard(!isAdmin)}
-            className="border-b border-gray-100 py-2 pt-2 cursor-pointer"
+            className="cursor-pointer border-b border-gray-100 py-2 pt-2"
           >
             <div className="flex items-center gap-1">
               <Bolt className="size-4.5" />

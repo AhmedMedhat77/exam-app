@@ -31,9 +31,9 @@ export default function Question({
         className="gap-4"
       >
         {answers.map((answer) => (
-          <Label
+          <div
             key={answer.id}
-            htmlFor={answer.id}
+            onClick={() => onAnswerSelect?.(answer.id)}
             className={`flex h-12.5 cursor-pointer items-center gap-3 border px-4 py-3 font-mono transition-colors select-none ${
               selectedAnswer === answer.id
                 ? 'border-blue-500 bg-blue-50'
@@ -41,8 +41,13 @@ export default function Question({
             }`}
           >
             <RadioGroupItem value={answer.id} id={answer.id} />
-            <span className="text-sm text-gray-800">{answer.text}</span>
-          </Label>
+            <Label
+              htmlFor={answer.id}
+              className="flex-1 cursor-pointer text-sm text-gray-800"
+            >
+              {answer.text}
+            </Label>
+          </div>
         ))}
       </RadioGroup>
     </div>

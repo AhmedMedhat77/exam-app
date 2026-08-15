@@ -185,6 +185,28 @@ export default function UserExamDetailsPage() {
     handleSubmitExam,
   ]);
 
+  const handleAnswerSelect = useCallback(
+    (questionId: string, answerId: string) => {
+      setInitialAnswers((prev) => {
+        const updated = { ...prev, [questionId]: answerId };
+        const saved = sessionStorage.getItem(storageKey);
+        if (saved) {
+          try {
+            const parsed = JSON.parse(saved);
+            sessionStorage.setItem(
+              storageKey,
+              JSON.stringify({ ...parsed, answers: updated })
+            );
+          } catch {
+            // ignore
+          }
+        }
+        return updated;
+      });
+    },
+    [storageKey]
+  );
+
   const totalSteps = examData?.exam.questionsCount || questions.length || 0;
 
   if (isLoading || !isInitialized) {
@@ -229,6 +251,7 @@ export default function UserExamDetailsPage() {
         currentStep={currentStep}
         onStepChange={setCurrentStep}
         initialAnswers={initialAnswers}
+        onAnswerSelect={handleAnswerSelect}
         onSubmit={handleSubmitExam}
         isSubmitting={submitExamMutation.isPending}
       />

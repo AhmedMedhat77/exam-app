@@ -37,9 +37,7 @@ export default function QuestionsList({
   const answers = controlledAnswers ?? formAnswers ?? internalAnswers;
 
   const handleAnswerSelect = (questionId: string, answerId: string) => {
-    if (onAnswerSelect) {
-      onAnswerSelect(questionId, answerId);
-    } else if (formContext) {
+    if (formContext) {
       formContext.setValue(
         'answers',
         {
@@ -48,9 +46,9 @@ export default function QuestionsList({
         },
         { shouldDirty: true }
       );
-    } else {
-      setInternalAnswers((prev) => ({ ...prev, [questionId]: answerId }));
     }
+    setInternalAnswers((prev) => ({ ...prev, [questionId]: answerId }));
+    onAnswerSelect?.(questionId, answerId);
   };
 
   if (!questions.length) {
