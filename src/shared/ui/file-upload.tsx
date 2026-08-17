@@ -121,6 +121,32 @@ export function FileUpload({
     handleFile(null);
   };
 
+  const handleDownload = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!previewUrl) return;
+
+    try {
+      const response = await fetch(previewUrl);
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch {
+      const link = document.createElement('a');
+      link.href = previewUrl;
+      link.download = fileName;
+      link.target = '_blank';
+      link.rel = 'noreferrer';
+      link.click();
+    }
+  };
+
   return (
     <Field className="flex flex-col gap-1.5">
       {label && (
@@ -175,24 +201,22 @@ export function FileUpload({
             </div>
 
             <div className="flex shrink-0 items-center gap-1.5">
-              <a
-                href={previewUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="flex h-8 w-8 items-center justify-center rounded-xs border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+              <button
+                type="button"
+                onClick={handleDownload}
+                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xs border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                 aria-label="Download image"
-                onClick={(e) => e.stopPropagation()}
               >
-                <Download className="h-3.5 w-3.5" />
-              </a>
+                <Download className="size-3.5" />
+              </button>
               {!disabled && (
                 <button
                   type="button"
                   onClick={handleRemove}
-                  className="flex h-8 w-8 items-center justify-center rounded-xs border border-red-200 bg-red-50 text-red-600 hover:bg-red-100"
+                  className="text-danger hover:bg-danger/5 flex size-8 cursor-pointer items-center justify-center rounded-xs border border-red-200 bg-red-50 transition-colors"
                   aria-label="Remove image"
                 >
-                  <Trash2 className="h-3.5 w-3.5" />
+                  <Trash2 className="size-3.5" />
                 </button>
               )}
             </div>

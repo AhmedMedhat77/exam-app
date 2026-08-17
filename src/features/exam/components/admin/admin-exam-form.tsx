@@ -53,8 +53,8 @@ export default function AdminExamForm() {
                   value={field.value}
                   onChange={field.onChange}
                   error={errors.image?.message as string | undefined}
-                  fileName="Image_wlb0jw3b0jmw1b0.png"
-                  fileSize="1.48 MB"
+                  fileName={''}
+                  fileSize={''}
                 />
               )}
             />
