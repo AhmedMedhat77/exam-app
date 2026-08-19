@@ -9,26 +9,50 @@ import type {
   IQuestion,
 } from '@/features/question/types/questions';
 
-const createDefaultAnswers = () => [
+/**
+ * Creates default answers for a question
+ * @returns {IQuestionFormValues['answers']} Array of default {text: string, isCorrect: boolean}[] answers with one correct answer
+ */
+const createDefaultAnswers = (): IQuestionFormValues['answers'] => [
   { text: '', isCorrect: true },
+  { text: '', isCorrect: false },
+  { text: '', isCorrect: false },
   { text: '', isCorrect: false },
 ];
 
-export function createEmptyQuestion() {
+/**
+ * Creates default empty question
+ * @returns {IBulkQuestionFormValues['questions'][0]} Empty question
+ */
+
+export function createEmptyQuestion(): {
+  text: string;
+  answers: IQuestionFormValues['answers'];
+} {
   return {
     text: '',
     answers: createDefaultAnswers(),
   };
 }
 
-export function createSingleQuestionDefaults(examId = ''): IQuestionFormValues {
+/**
+ * Creates default single question form values
+ * @param {string} examId Exam ID
+ * @returns {IQuestionFormValues} Question form values with default questions
+ */
+export function createSingleQuestionDefaults(examId?: string): IQuestionFormValues {
   return {
-    examId,
+    examId: examId ?? '',
     text: '',
     answers: createDefaultAnswers(),
   };
 }
 
+/**
+ * Creates default bulk question form values
+ * @param {string} examId Exam ID
+ * @returns {IBulkQuestionFormValues} Bulk question form values with default questions
+ */
 export function createBulkQuestionDefaults(
   examId = ''
 ): IBulkQuestionFormValues {
@@ -51,6 +75,11 @@ export function toQuestionPayload(
   };
 }
 
+/**
+ * Converts bulk question form values to bulk question payload
+ * @param {IBulkQuestionFormValues} values Bulk question form values
+ * @returns {ICreateBulkQuestionsPayload} Bulk question payload for API
+ */
 export function toBulkQuestionPayload(
   values: IBulkQuestionFormValues
 ): ICreateBulkQuestionsPayload {
@@ -63,6 +92,11 @@ export function toBulkQuestionPayload(
   };
 }
 
+/**
+ * Converts question values to question form values
+ * @param {IQuestion} question Question object from API
+ * @returns {IQuestionFormValues} Question form values
+ */
 export function toQuestionFormValues(question: IQuestion): IQuestionFormValues {
   return {
     examId: question.examId || '',
@@ -75,6 +109,11 @@ export function toQuestionFormValues(question: IQuestion): IQuestionFormValues {
   };
 }
 
+/**
+ * Extracts error messages from form errors object
+ * @param {Record<string, any>} errors Form errors object
+ * @returns {string[]} Array of error messages
+ */
 export function getFormErrorMessages(errors: Record<string, any>): string[] {
   const messages: string[] = [];
 

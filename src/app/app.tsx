@@ -5,12 +5,12 @@ import UserChangePasswordPage from '@/features/profile/pages/change-password.pag
 import UserProfilePage from '@/features/profile/pages/profile.page';
 import { useUserStore } from '@/features/user/store/user.store';
 import RootLayout from '@/shared/layouts/root-layout';
+import NotFoundPage from '@/shared/pages/not-found.page';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
 
 export function App() {
-  const token = useUserStore((state) => state.token);
+
   const isAdmin = useUserStore((state) => state.isAdmin);
-  const isAuth = !!token;
 
   const routes = isAdmin ? ADMIN_ROUTES : USER_ROUTES;
 
@@ -54,15 +54,7 @@ export function App() {
             ))}
 
             {/* FALLBACK CATCH-ALL */}
-            <Route
-              path="*"
-              element={
-                <Navigate
-                  to={isAuth ? ROUTES.DIPLOMAS : ROUTES.LOGIN}
-                  replace
-                />
-              }
-            />
+            <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
