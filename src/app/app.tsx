@@ -9,7 +9,6 @@ import NotFoundPage from '@/shared/pages/not-found.page';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
 
 export function App() {
-
   const isAdmin = useUserStore((state) => state.isAdmin);
 
   const routes = isAdmin ? ADMIN_ROUTES : USER_ROUTES;

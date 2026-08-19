@@ -40,7 +40,9 @@ export function createEmptyQuestion(): {
  * @param {string} examId Exam ID
  * @returns {IQuestionFormValues} Question form values with default questions
  */
-export function createSingleQuestionDefaults(examId?: string): IQuestionFormValues {
+export function createSingleQuestionDefaults(
+  examId?: string
+): IQuestionFormValues {
   return {
     examId: examId ?? '',
     text: '',
