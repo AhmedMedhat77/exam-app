@@ -10,11 +10,20 @@ interface Props {
 }
 
 function SidebarLinkItem({ path, title, icon }: Props) {
-  const { pathname } = useLocation();
-  const isActive =
-    path === '/'
-      ? pathname === '/' || pathname.startsWith('/diploma')
-      : pathname.startsWith(path);
+  const { pathname, search } = useLocation();
+  const searchParams = new URLSearchParams(search);
+  const hasDiplomaId = Boolean(searchParams.get('diplomaId'));
+
+  let isActive = false;
+  if (path === ROUTES.DIPLOMAS) {
+    isActive =
+      pathname === '/' || pathname.startsWith('/diploma') || hasDiplomaId;
+  } else if (path === ROUTES.EXAMS) {
+    isActive = pathname.startsWith('/exams') && !hasDiplomaId;
+  } else {
+    isActive = pathname.startsWith(path);
+  }
+
   const { link } = useSidebarStyles();
 
   return (

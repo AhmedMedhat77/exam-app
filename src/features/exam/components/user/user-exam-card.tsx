@@ -2,9 +2,16 @@ import { ROUTES } from '@/app/routes';
 import type { IExam } from '@/features/exam/types/exams.d';
 import { Button } from '@/shared/ui/button';
 import { Clock, HelpCircle, MoveRight } from 'lucide-react';
-import { Link } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 
 export default function UserExamCard(props: Partial<IExam>) {
+  const [searchParams] = useSearchParams();
+  const diplomaId =
+    props.diplomaId || props.diploma?.id || searchParams.get('diplomaId');
+  const detailUrl = `${ROUTES.EXAM_DETAIL.replace(':id', props.id || '')}${
+    diplomaId ? `?diplomaId=${diplomaId}` : ''
+  }`;
+
   return (
     <div className="group/card relative flex h-34 w-full flex-col items-start gap-4 overflow-hidden bg-blue-50 px-4 py-4.5 transition-all hover:shadow-sm sm:flex-row">
       {/* Thumbnail Box */}
@@ -49,7 +56,7 @@ export default function UserExamCard(props: Partial<IExam>) {
         </p>
       </div>
 
-      <Link to={ROUTES.EXAM_DETAIL.replace(':id', props.id || '')}>
+      <Link to={detailUrl}>
         <Button className="absolute right-3 -bottom-12 w-fit opacity-0 transition-all duration-300 group-hover/card:bottom-3 group-hover/card:opacity-100">
           START
           <MoveRight />
